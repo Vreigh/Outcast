@@ -58,6 +58,9 @@ public class Game extends Application {
     private VBox upgradesView;
     private UpgradesController upgradesController;
     
+    private VBox unitsView;
+    private UnitsController unitsController;
+    
     private TableView<Log> table = new TableView<Log>();
     
     @Override
@@ -86,6 +89,12 @@ public class Game extends Application {
         upgradesController = upgradesLoader.<UpgradesController>getController();
         upgradesController.setGame(this);
         upgradesController.bind();
+        
+        FXMLLoader unitsLoader = new FXMLLoader(getClass().getResource("unitsView.fxml"));
+        unitsView = (VBox) unitsLoader.load();
+        unitsController = unitsLoader.<UnitsController>getController();
+        unitsController.setGame(this);
+        unitsController.bind();
         
         TableColumn<Log, Integer> roundColumn = new TableColumn<Log, Integer>("Round");
         roundColumn.setMinWidth(100);
@@ -117,7 +126,7 @@ public class Game extends Application {
                 layout.setCenter(upgradesView);
                 break;
             case 2:
-                //layout.setCenter();
+                layout.setCenter(unitsView);
                 break;
             case 3:
                 // game.getLogs().add(new Log(0, "im new here, hello!")); to dziala! ta tabela jest obserwowalna, nigdy nie musze jej odswiezać!
