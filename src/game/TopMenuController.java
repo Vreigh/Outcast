@@ -44,12 +44,12 @@ public class TopMenuController implements Initializable {
         this.game = game;
     }
     public void bind(){
-        sanityDisplay.textProperty().bind(Bindings.concat("Sanity: ", game.getPlayer().getSanityProperty().asString()));
-        spiritsDisplay.textProperty().bind(Bindings.concat("Spirits: ", game.getPlayer().getFreeSpiritsProperty().asString(), "/", game.getPlayer().getSpiritsProperty().asString()));
-        manaDisplay.textProperty().bind(Bindings.concat("Mana: ", game.getPlayer().getManaProperty().asString()));
-        cryDisplay.textProperty().bind(Bindings.concat("Crystals: ", game.getPlayer().getCrystalsProperty().asString()));
+        sanityDisplay.textProperty().bind(Bindings.concat("Sanity: ", game.getPlayer().getSanityStringBind()));
+        spiritsDisplay.textProperty().bind(Bindings.concat("Spirits: ", game.getPlayer().getFreeSpiritsStringBind(), "/", game.getPlayer().getSpiritsStringBind()));
+        manaDisplay.textProperty().bind(Bindings.concat("Mana: ", game.getPlayer().getManaStringBind()));
+        cryDisplay.textProperty().bind(Bindings.concat("Crystals: ", game.getPlayer().getCrystalsStringBind()));
         roundDisplay.textProperty().bind(Bindings.concat("Round: ", game.getRoundProperty().asString()));
-        apDisplay.textProperty().bind(Bindings.concat("Ap: ", game.getPlayer().getApProperty().asString(), " / ", game.getPlayer().getMaxApProperty().asString()));
+        apDisplay.textProperty().bind(Bindings.concat("Ap: ", game.getPlayer().getApStringBind(), " / ", game.getPlayer().getMaxApStringBind()));
     }
     
 }

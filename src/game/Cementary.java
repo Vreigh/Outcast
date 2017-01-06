@@ -1,6 +1,7 @@
 package game;
 import javafx.beans.property.*;
 import javafx.beans.binding.Bindings;
+import javafx.beans.binding.StringBinding;
 
 public class Cementary {
     protected static final int baseCapacity = 5;
@@ -17,32 +18,41 @@ public class Cementary {
     }
     
     //gettery i settery
-    public IntegerProperty getFillProperty(){
+    IntegerProperty getFillProperty(){
         return fill;
+    }
+    public StringBinding getFillStringBind(){
+        return fill.asString();
     }
     public int getFill(){
         return fill.get();
     }
-    public void addFill(int x){
+    void addFill(int x){
         fill.set(fill.get() + x);
     }
     
-    public IntegerProperty getCapacityProperty(){
+    IntegerProperty getCapacityProperty(){
         return capacity;
+    }
+    public StringBinding getCapacityStringBind(){
+        return capacity.asString();
     }
     public int getCapacity(){
         return capacity.get();
     }
     
-    public IntegerProperty getSingleOutputProperty(){
+    IntegerProperty getSingleOutputProperty(){
         return singleOutput;
+    }
+    public StringBinding getSingleOutputStringBind(){
+        return singleOutput.asString();
     }
     public int getSingleOutput(){
         return singleOutput.get();
     }
     
-    public IntegerProperty getFullOutputProperty(){
-        return fullOutput;
+    public StringBinding getFullOutputStringBind(){
+        return fullOutput.asString();
     }
     public int getFullOutput(){
         return fullOutput.get();

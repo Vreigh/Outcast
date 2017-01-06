@@ -1,6 +1,8 @@
 package game;
 import javafx.beans.property.*;
 import javafx.beans.binding.Bindings;
+import javafx.beans.binding.StringBinding;
+import javafx.collections.ObservableList;
 
 public class Upgrade {
     public static final int manaIncome = 2;
@@ -45,18 +47,8 @@ public class Upgrade {
     int getLvl(){
         return lvl.get();
     }
-    private void addLvl(int lvl){
-        this.lvl.set(lvl);
-    }
-    
-    IntegerProperty getProgressProperty(){
-        return progress;
-    }
-    int getProgress(){
-        return progress.get();
-    }
-    private void addProgress(int x){
-        progress.set(x);
+    private void addLvl(int x){
+        lvl.set(lvl.get() +x);
     }
     
     IntegerProperty getFillProperty(){
@@ -69,21 +61,41 @@ public class Upgrade {
         fill.set(fill.get() + x);
     }
     
-    IntegerProperty getRequiredProperty(){
-        return required;
+    
+    
+    public StringBinding getProgressStringBind(){
+        return progress.asString();
+    }
+    int getProgress(){
+        return progress.get();
+    }
+    private void addProgress(int x){
+        progress.set(progress.get() + x);
+    }
+    
+    StringBinding getRequiredStringBind(){
+        return required.asString();
     }
     int getRequired(){
         return required.get();
     }
-   
+    
     String getName(){
         return name;
     }
+    private int getLack(){
+        return required.get() - progress.get();
+    }
     
-    String develop(){
-        // TO DO
-        String info = "";
-        return "";
+    void develop(ObservableList<Log> logs, int round){
+        addProgress(fill.get());
+        addFill(-fill.get());
+        
+        while(progress.get() >= required.get()){
+            addProgress(-required.get());
+            addLvl(1);
+            logs.add(new Log(round, name + " upgrade lvl " + lvl.get() + " research has been completed"));
+        }
     }
     
 }

@@ -72,8 +72,8 @@ public class MainController implements Initializable {
         this.game = game;
     }
     public void bind(){
-        shrinesDisplay.textProperty().bind(Bindings.concat("Shrines: ").concat(game.getPlayer().getLitProperty().asString()).concat(" / ")
-               .concat(game.getPlayer().getShrinesProperty().asString()).concat(", max spirits: ").concat(game.getPlayer().getSpiritsCapProperty().asString()));
+        shrinesDisplay.textProperty().bind(Bindings.concat("Shrines: ").concat(game.getPlayer().getLitStringBind()).concat(" / ")
+               .concat(game.getPlayer().getShrinesStringBind()).concat(", max spirits: ").concat(game.getPlayer().getSpiritsCapStringBind()));
         btnBuildShrine.textProperty().bind(Bindings.concat("Build (").concat(Game.shrineCryCost).concat(" / ").concat(Game.shrineApCost).concat(")"));
         btnLitShrine.textProperty().bind(Bindings.concat("Lit (").concat("0").concat(" / ").concat(Game.litCost).concat(")"));
         btnExtShrine.textProperty().bind(Bindings.concat("Extinguish (").concat("0").concat(" / ").concat(Game.extCost).concat(")"));
@@ -81,10 +81,10 @@ public class MainController implements Initializable {
         btnCemAdd.textProperty().bind(Bindings.concat("Send a spirit here (").concat("0").concat(" / ").concat("1").concat(")"));
         btnMakeSeed.textProperty().bind(Bindings.concat("New seed (").concat("0").concat(" / ").concat(Game.seedCost).concat(")"));
         
-        cemDisplay.textProperty().bind(Bindings.concat("Spirits working: ").concat(game.getPlayer().getCementary().getFillProperty().asString()).concat(" / ")
-                .concat(game.getPlayer().getCementary().getCapacityProperty().asString())
-                .concat(" income per spirit: ").concat(game.getPlayer().getCementary().getSingleOutputProperty().asString())
-                .concat(" predicted total this turn: ").concat(game.getPlayer().getCementary().getFullOutputProperty().asString()));
+        cemDisplay.textProperty().bind(Bindings.concat("Spirits working: ").concat(game.getPlayer().getCementary().getFillStringBind()).concat(" / ")
+                .concat(game.getPlayer().getCementary().getCapacityStringBind())
+                .concat(" income per spirit: ").concat(game.getPlayer().getCementary().getSingleOutputStringBind())
+                .concat(" predicted total this turn: ").concat(game.getPlayer().getCementary().getFullOutputStringBind()));
         
         reloadSeeds();
     }
@@ -108,7 +108,7 @@ public class MainController implements Initializable {
                 }else{
                     Seed seed = game.getPlayer().getSeeds().get(i);
                     
-                    seedLabels.get(i).textProperty().bind(Bindings.concat("Age: ", seed.getAgeProperty().asString()));
+                    seedLabels.get(i).textProperty().bind(Bindings.concat("Age: ", seed.getAgeStringBind()));
                     topSeedBar.getChildren().add(seedLabels.get(i));
                     topSeedBar.getChildren().add(seedButtons.get(i));
                 }
@@ -119,9 +119,9 @@ public class MainController implements Initializable {
                 }else{
                     Seed seed = game.getPlayer().getSeeds().get(i);
                     
-                    seedLabels.get(i).textProperty().bind(Bindings.concat("Age: ", seed.getAgeProperty().asString()));
-                    topSeedBar.getChildren().add(seedLabels.get(i));
-                    topSeedBar.getChildren().add(seedButtons.get(i));
+                    seedLabels.get(i).textProperty().bind(Bindings.concat("Age: ", seed.getAgeStringBind()));
+                    botSeedBar.getChildren().add(seedLabels.get(i));
+                    botSeedBar.getChildren().add(seedButtons.get(i));
                 }
             }
         }

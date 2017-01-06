@@ -1,16 +1,17 @@
 package game;
+import javafx.beans.binding.StringBinding;
 import javafx.beans.property.*;
 
 public class Seed {
     private IntegerProperty age = new SimpleIntegerProperty(0);
     
-    public IntegerProperty getAgeProperty(){
-        return age;
+    public StringBinding getAgeStringBind(){
+        return age.asString();
     }
     public int getAge(){
         return age.get();
     }
-    public void addAge(int x){
+    void addAge(int x){
         age.set(age.get() + x);
     }
     

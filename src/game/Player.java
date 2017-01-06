@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
 import javafx.beans.binding.StringExpression;
 import javafx.beans.binding.Bindings;
+import javafx.beans.binding.StringBinding;
 
 public class Player {
     public static final int initialAp = 20;
@@ -70,8 +71,8 @@ public class Player {
         logs.add(new Log(0, "You have begun your journey or some shit")); 
     }
     // gettery
-    public IntegerProperty getSanityProperty(){
-        return sanity;
+    public StringBinding getSanityStringBind(){
+        return sanity.asString();
     }
     public int getSanity(){
         return sanity.get();
@@ -80,8 +81,8 @@ public class Player {
         sanity.set(sanity.get() + x);
     }
     
-    public IntegerProperty getSpiritsProperty(){
-        return spirits;
+    public StringBinding getSpiritsStringBind(){
+        return spirits.asString();
     }
     public int getSpirits(){
         return spirits.get();
@@ -90,8 +91,8 @@ public class Player {
         spirits.set(spirits.get() + x);
     }
     
-    public IntegerProperty getCrystalsProperty(){
-        return crystals;
+    public StringBinding getCrystalsStringBind(){
+        return crystals.asString();
     }
     public int getCrystals(){
         return crystals.get();
@@ -100,8 +101,8 @@ public class Player {
         crystals.set(crystals.get() + x);
     }
     
-    public IntegerProperty getManaProperty(){
-        return mana;
+    public StringBinding getManaStringBind(){
+        return mana.asString();
     }
     public int getMana(){
         return mana.get();
@@ -110,8 +111,8 @@ public class Player {
         mana.set(mana.get() + x);
     }
     
-    public IntegerProperty getApProperty(){
-        return ap;
+    public StringBinding getApStringBind(){
+        return ap.asString();
     }
     public int getAp(){
         return ap.get();
@@ -120,35 +121,35 @@ public class Player {
         ap.set(ap.get() + x);
     }
     
-    public IntegerProperty getFreeSpiritsProperty(){
-        return freeSpirits;
+    public StringBinding getFreeSpiritsStringBind(){
+        return freeSpirits.asString();
     }
     public int getFreeSpirits(){
         return freeSpirits.get();
     }
     
-    public IntegerProperty getSpiritsCapProperty(){
-        return spiritsCap;
+    public StringBinding getSpiritsCapStringBind(){
+        return spiritsCap.asString();
     }
     public int getSpiritsCap(){
         return spiritsCap.get();
     }
     
-    public IntegerProperty getBusySpiritsProperty(){
-        return busySpirits;
+    public StringBinding getBusySpiritsStringBind(){
+        return busySpirits.asString();
     }
     public int getBusySpirits(){
         return busySpirits.get();
     }
     
-    public IntegerProperty getMaxApProperty(){
-        return maxAp;
+    public StringBinding getMaxApStringBind(){
+        return maxAp.asString();
     }
     public int getMaxAp(){
         return maxAp.get();
     }
-    public IntegerProperty getShrinesProperty(){
-        return shrines;
+    public StringBinding getShrinesStringBind(){
+        return shrines.asString();
     }
     public int getShrines(){
         return shrines.get();
@@ -157,8 +158,8 @@ public class Player {
         shrines.set(shrines.get() + x);
     }
     
-    public IntegerProperty getLitProperty(){
-        return shrinesLit;
+    public StringBinding getLitStringBind(){
+        return shrinesLit.asString();
     }
     public int getLit(){
         return shrinesLit.get();
@@ -169,7 +170,7 @@ public class Player {
     public Cementary getCementary(){
         return cementary;
     }
-    public ArrayList<Seed> getSeeds(){
+    public ArrayList<Seed> getSeeds(){ //TO MI SIĘ W CHUJ NIE PODOBA
         return seeds;
     }
     public void setTable(TableView<Log> table){
@@ -181,8 +182,8 @@ public class Player {
     }
     public StringExpression getUpgradeRightLabel(int i){
         Upgrade up = upgrades.get(i);
-        return Bindings.concat("Level: ", up.getLvlProperty(), ", progress: ", up.getProgressProperty(), "/",
-                up.getRequiredProperty(), ", spirits working: ", up.getFillProperty());
+        return Bindings.concat("Level: ", up.getLvlProperty(), ", progress: ", up.getProgressStringBind(), "/",
+                up.getRequiredStringBind(), ", spirits working: ", up.getFillProperty());
     }
     
     ////////////////////////////////////////////////////////////////////////
@@ -296,7 +297,7 @@ public class Player {
         int spiritsDisplay = 0;
         addSanity(-1); // obnizenie sanity
         
-        if(mana.get() > spirits.get()){ //obnizanie many
+        if(mana.get() >= spirits.get()){ //obnizanie many
             addMana(-spirits.get());
             manaDisplay -= spirits.get();
         }else{
@@ -311,6 +312,7 @@ public class Player {
         }
         
         addAp(maxAp.get() - ap.get()); // resetowanie ap
+        
         for(Seed i : seeds){ // starzenie seedow
             i.addAge(1);
         }
@@ -330,10 +332,7 @@ public class Player {
         
         //UPGRADY
         for(Upgrade i : upgrades){
-            String info = i.develop();
-            if(info != ""){
-                logs.add(new Log(round, info));
-            }
+            i.develop(logs, round);
         }
         
         if(sanity.get() > 0){
