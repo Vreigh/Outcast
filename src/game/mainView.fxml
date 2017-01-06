@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="571.0" prefWidth="840.0" spacing="20.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.MainController">
+   <children>
+      <HBox prefHeight="100.0" prefWidth="840.0" spacing="20.0" styleClass="mainRectangle">
+         <children>
+            <Label fx:id="shrinesDisplay" prefWidth="180.0" text="Label">
+               <HBox.margin>
+                  <Insets top="20.0" />
+               </HBox.margin>
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Button fx:id="btnBuildShrine" mnemonicParsing="false" onAction="#buildShrine" prefHeight="50.0" prefWidth="120.0" text="Button">
+               <HBox.margin>
+                  <Insets left="30.0" />
+               </HBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="btnLitShrine" mnemonicParsing="false" onAction="#litShrine" prefHeight="50.0" prefWidth="120.0" text="Button">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="btnExtShrine" mnemonicParsing="false" onAction="#extShrine" prefHeight="50.0" prefWidth="120.0" text="Button">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="btnSummon" mnemonicParsing="false" onAction="#summon" prefHeight="50.0" prefWidth="120.0" text="Button">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+         <padding>
+            <Insets left="20.0" top="25.0" />
+         </padding>
+      </HBox>
+      <HBox prefHeight="100.0" prefWidth="840.0" styleClass="mainRectangle">
+         <children>
+            <Label fx:id="cemDisplay" prefWidth="400.0" text="Label" wrapText="true">
+               <HBox.margin>
+                  <Insets top="45.0" />
+               </HBox.margin>
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <Button fx:id="btnCemAdd" mnemonicParsing="false" onAction="#cemAdd" prefHeight="50.0" prefWidth="200.0" text="Send a spirit here (0/1)">
+               <HBox.margin>
+                  <Insets left="100.0" top="25.0" />
+               </HBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+         <padding>
+            <Insets left="20.0" />
+         </padding>
+      </HBox>
+      <HBox prefHeight="192.0" prefWidth="830.0" spacing="20.0" styleClass="mainRectangle">
+         <children>
+            <Button fx:id="btnMakeSeed" mnemonicParsing="false" onAction="#makeSeed" prefHeight="50.0" prefWidth="130.0" text="Button">
+               <HBox.margin>
+                  <Insets top="65.0" />
+               </HBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <VBox prefHeight="180.0" prefWidth="680.0" spacing="10.0">
+               <children>
+                  <HBox fx:id="topSeedBar" prefHeight="85.0" prefWidth="650.0" spacing="20.0">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <padding>
+                        <Insets top="30.0" />
+                     </padding>
+                  </HBox>
+                  <HBox fx:id="botSeedBar" prefHeight="85.0" prefWidth="650.0" spacing="20.0">
+                     <padding>
+                        <Insets top="30.0" />
+                     </padding>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+         <padding>
+            <Insets left="20.0" />
+         </padding>
+      </HBox>
+      <HBox prefHeight="50.0" prefWidth="830.0" styleClass="mainRectangle">
+         <children>
+            <Button fx:id="btnEndTurn" mnemonicParsing="false" onAction="#endTurn" prefHeight="50.0" prefWidth="200.0" text="End Turn">
+               <HBox.margin>
+                  <Insets left="315.0" />
+               </HBox.margin>
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+      </HBox>
+   </children>
+   <padding>
+      <Insets left="10.0" />
+   </padding>
+</VBox>

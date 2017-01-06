@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="571.0" prefWidth="150.0" spacing="50.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.LeftMenuController">
+   <children>
+      <Button fx:id="btnMain" mnemonicParsing="false" onAction="#switchView" prefHeight="60.0" prefWidth="150.0" text="Main View" textAlignment="CENTER" textFill="#000000d0">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnUpgrades" mnemonicParsing="false" onAction="#switchView" prefHeight="60.0" prefWidth="150.0" text="Upgrades" textAlignment="CENTER" textFill="#000000d0">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnUnits" mnemonicParsing="false" onAction="#switchView" prefHeight="60.0" prefWidth="150.0" text="Units" textAlignment="CENTER" textFill="#000000d0">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnJournal" mnemonicParsing="false" onAction="#switchView" prefHeight="60.0" prefWidth="150.0" text="Journal" textAlignment="CENTER" textFill="#000000d0">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnCombat" mnemonicParsing="false" onAction="#switchView" prefHeight="60.0" prefWidth="150.0" text="Combat" textAlignment="CENTER" textFill="#000000d0">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
+   </children>
+</VBox>

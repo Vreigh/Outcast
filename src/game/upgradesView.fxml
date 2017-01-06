@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="571.0" prefWidth="840.0" spacing="18.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.UpgradesController">
+   <padding>
+      <Insets left="10.0" />
+   </padding>
+   <children>
+      <HBox prefHeight="100.0" prefWidth="840.0" spacing="20.0" styleClass="upgradeBar">
+         <children>
+            <Label fx:id="leftMana" prefWidth="300.0" text="Label">
+               <HBox.margin>
+                  <Insets top="11.0" />
+               </HBox.margin>
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="rightMana" prefWidth="300.0" text="Label" wrapText="true">
+               <HBox.margin>
+                  <Insets top="11.0" />
+               </HBox.margin>
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Button fx:id="btnMana" mnemonicParsing="false" onAction="#fill" prefHeight="40.0" prefWidth="150.0" text="Add spirit (0 / 1)">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+         <padding>
+            <Insets left="5.0" top="30.0" />
+         </padding>
+      </HBox>
+      <HBox prefHeight="100.0" prefWidth="840.0" spacing="20.0" styleClass="upgradeBar">
+         <children>
+            <Label fx:id="leftSeed" prefWidth="300.0" text="Label">
+               <HBox.margin>
+                  <Insets top="11.0" />
+               </HBox.margin>
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="rightSeed" prefWidth="300.0" text="Label" wrapText="true">
+               <HBox.margin>
+                  <Insets top="11.0" />
+               </HBox.margin>
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Button fx:id="btnSeed" mnemonicParsing="false" onAction="#fill" prefHeight="40.0" prefWidth="150.0" text="Add spirit (0 / 1)">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+         <padding>
+            <Insets left="5.0" top="30.0" />
+         </padding>
+      </HBox>
+      <HBox prefHeight="100.0" prefWidth="840.0" spacing="20.0" styleClass="upgradeBar">
+         <children>
+            <Label fx:id="leftCry" prefWidth="300.0" text="Label">
+               <HBox.margin>
+                  <Insets top="11.0" />
+               </HBox.margin>
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="rightCry" prefWidth="300.0" text="Label" wrapText="true">
+               <HBox.margin>
+                  <Insets top="11.0" />
+               </HBox.margin>
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Button fx:id="btnCry" mnemonicParsing="false" onAction="#fill" prefHeight="40.0" prefWidth="150.0" text="Add spirit (0 / 1)">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+         <padding>
+            <Insets left="5.0" top="30.0" />
+         </padding>
+      </HBox>
+      <HBox prefHeight="100.0" prefWidth="840.0" spacing="20.0" styleClass="upgradeBar">
+         <children>
+            <Label fx:id="leftCap" prefWidth="300.0" text="Label">
+               <HBox.margin>
+                  <Insets top="11.0" />
+               </HBox.margin>
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="rightCap" prefWidth="300.0" text="Label" wrapText="true">
+               <HBox.margin>
+                  <Insets top="11.0" />
+               </HBox.margin>
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Button fx:id="btnCap" mnemonicParsing="false" onAction="#fill" prefHeight="40.0" prefWidth="150.0" text="Add spirit (0 / 1)">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+         <padding>
+            <Insets left="5.0" top="30.0" />
+         </padding>
+      </HBox>
+      <HBox prefHeight="100.0" prefWidth="840.0" spacing="20.0" styleClass="upgradeBar">
+         <children>
+            <Label fx:id="leftAp" prefWidth="300.0" text="Label">
+               <HBox.margin>
+                  <Insets top="11.0" />
+               </HBox.margin>
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="rightAp" prefWidth="300.0" text="Label" wrapText="true">
+               <HBox.margin>
+                  <Insets top="11.0" />
+               </HBox.margin>
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Button fx:id="btnAp" mnemonicParsing="false" onAction="#fill" prefHeight="40.0" prefWidth="150.0" text="Add spirit (0 / 1)">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+         <padding>
+            <Insets left="5.0" top="30.0" />
+         </padding>
+      </HBox>
+   </children>
+</VBox>
