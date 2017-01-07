@@ -1,6 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.UnitsController"/>
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="571.0" prefWidth="840.0" spacing="10.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.UnitsController">
+   <padding>
+      <Insets left="10.0" />
+   </padding>
+   <children>
+      <HBox prefHeight="51.0" prefWidth="830.0" spacing="15.0" styleClass="infoBar">
+         <children>
+            <Button mnemonicParsing="false" onAction="#infoGhoul" prefWidth="150.0" text="Ghoul info">
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin></Button>
+            <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#infoVampire" prefWidth="150.0" text="Vampire info" />
+            <Button layoutX="160.0" layoutY="10.0" mnemonicParsing="false" onAction="#infoPlagueman" prefWidth="150.0" text="Plagueman info" />
+            <Button layoutX="310.0" layoutY="10.0" mnemonicParsing="false" onAction="#infoPhantom" prefWidth="150.0" text="Phantom info" />
+            <Button layoutX="460.0" layoutY="10.0" mnemonicParsing="false" onAction="#infoButcher" prefWidth="150.0" text="Butcher info" />
+         </children>
+         <padding>
+            <Insets top="10.0" />
+         </padding>
+      </HBox>
+      <HBox fx:id="addingBox" prefHeight="62.0" prefWidth="830.0" spacing="15.0" styleClass="summonBar">
+         <children>
+            <Button mnemonicParsing="false" onAction="#summonGhoul" prefHeight="40.0" prefWidth="150.0" text="Summon Ghoul">
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin></Button>
+            <Button mnemonicParsing="false" onAction="#summonVampire" prefHeight="40.0" prefWidth="150.0" text="Summon Vampire" />
+            <Button mnemonicParsing="false" onAction="#summonPlagueman" prefHeight="40.0" prefWidth="150.0" text="Summon Plagueman" />
+            <Button mnemonicParsing="false" onAction="#summonPhantom" prefHeight="40.0" prefWidth="150.0" text="Summon Phantom" />
+            <Button mnemonicParsing="false" onAction="#summonButcher" prefHeight="40.0" prefWidth="150.0" text="Summon Butcher" />
+         </children>
+         <padding>
+            <Insets top="11.0" />
+         </padding>
+      </HBox>
+      <HBox fx:id="unitsContainer" prefHeight="428.0" prefWidth="830.0" spacing="15.0" styleClass="unitsContainer">
+         <padding>
+            <Insets left="10.0" />
+         </padding></HBox>
+   </children>
+</VBox>

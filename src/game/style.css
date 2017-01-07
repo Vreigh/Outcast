@@ -4,3 +4,12 @@
 .upgradeBar{
     -fx-background-color: bisque;
 }
+.unitContainer{
+    -fx-background-color: #ffd891;
+}
+.infoBar{
+    -fx-background-color: aquamarine;
+}
+.summonBar{
+    -fx-background-color: bisque;
+}

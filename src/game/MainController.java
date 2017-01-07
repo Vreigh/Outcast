@@ -37,6 +37,7 @@ public class MainController implements Initializable {
     @FXML private Button btnSummon;
     @FXML private Button btnCemAdd;
     @FXML private Button btnMakeSeed;
+    
     @FXML private Label shrinesDisplay;
     @FXML private Label cemDisplay;
     
