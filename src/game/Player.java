@@ -44,6 +44,10 @@ public class Player {
         cementary = new Cementary();
         
         units = new ArrayList<Unit>();
+        for(int i=0; i<5; i++){
+            units.add(new Dummy());
+        }
+        
         seeds = new ArrayList<Seed>();
         
         upgrades = new ArrayList<Upgrade>();
@@ -184,6 +188,26 @@ public class Player {
         Upgrade up = upgrades.get(i);
         return Bindings.concat("Level: ", up.getLvlProperty(), ", progress: ", up.getProgressStringBind(), "/",
                 up.getRequiredStringBind(), ", spirits working: ", up.getFillProperty());
+    }
+    public Unit getUnit(int i){
+        return units.get(i);
+    }
+    ArrayList<Unit> getUnits(){
+        return units;
+    }
+    private int getUnitsRealSize(){
+        return units.stream().mapToInt(Unit::isReal).sum();
+    }
+    private int getFirstEmpty(){
+        int x = 0;
+        for(Unit unit : units){
+            if(unit.getName() == "flag"){
+                break;
+            }else{
+                x++;
+            }
+        }
+        return x;
     }
     
     ////////////////////////////////////////////////////////////////////////
@@ -341,5 +365,38 @@ public class Player {
             logs.add(new Log(round, info));
             AlertWindow.showInfo("you lived another day!", info);
         }else AlertWindow.showInfo("u dead", "You died");
+    }
+    public int summonUnit(int i){
+        if(ap.get() < Game.summonUnitApCost){
+            AlertWindow.showInfo("not enough Action Points", "You need at least " + Game.summonUnitApCost + " Action Point to do that");
+            return 5;
+        }else if(crystals.get() < Game.summonUnitCryCost){
+            AlertWindow.showInfo("not enough Crystals", "You need at least " + Game.summonUnitCryCost + " Crystals to do that");
+            return 5;
+        }else if(getUnitsRealSize() >= 5){
+            AlertWindow.showInfo("limit reached", "You already have 5 units!");
+            return 5;
+        }else{
+            int x = getFirstEmpty();
+            switch(i){
+                case 0:
+                    units.set(x, new Ghoul());
+                    break;
+                case 1:
+                    //units.set(x, new Vampire());
+                    break;
+                case 2:
+                    //units.set(x, new Plagueman());
+                    break;
+                case 3:
+                   // units.set(x, new Phantom());
+                    break;
+                case 4:
+                    //units.set(x, new Butcher());
+                    break;
+            }
+            return x;
+            
+        }
     }
 }

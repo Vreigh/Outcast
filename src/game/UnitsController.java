@@ -69,7 +69,7 @@ public class UnitsController implements Initializable {
         for(int i = 0; i<5; i++){
             Integer x = new Integer(i);
             
-            unitName.add(new Label("dummy"));
+            unitName.add(new Label("BRAK!"));
             unitName.get(i).setPrefWidth(130);
             unitName.get(i).setAlignment(Pos.CENTER);
             
@@ -83,6 +83,7 @@ public class UnitsController implements Initializable {
             powerBox.get(i).setSpacing(10);
             powerLabel.add(new Label("power"));
             powerLabel.get(i).setPrefWidth(90);
+            powerLabel.get(i).setWrapText(true);
             btnPower.add(new Button("+"));
             btnPower.get(i).setPrefWidth(30);
             btnPower.get(i).setOnAction(e -> upPower(x));
@@ -92,6 +93,7 @@ public class UnitsController implements Initializable {
             shieldBox.get(i).setSpacing(10);
             shieldLabel.add(new Label("shield"));
             shieldLabel.get(i).setPrefWidth(90);
+            shieldLabel.get(i).setWrapText(true);
             btnShield.add(new Button("+"));
             btnShield.get(i).setPrefWidth(30);
             btnShield.get(i).setOnAction(e -> upShield(x));
@@ -101,6 +103,7 @@ public class UnitsController implements Initializable {
             healthBox.get(i).setSpacing(10);
             healthLabel.add(new Label("health"));
             healthLabel.get(i).setPrefWidth(90);
+            healthLabel.get(i).setWrapText(true);
             btnHealth.add(new Button("+"));
             btnHealth.get(i).setPrefWidth(30);
             btnHealth.get(i).setOnAction(e -> upHealth(x));
@@ -131,17 +134,20 @@ public class UnitsController implements Initializable {
             
             swapBox.get(i).getChildren().addAll(swapLeft.get(i), swapRight.get(i));
             
-            unitContainer.get(i).getChildren().addAll(unitName.get(i),
-                    powerBox.get(i),
+            addAll(i);
+            
+            unitsContainer.getChildren().add(unitContainer.get(i));
+        }
+    }
+    private void addAll(int i){
+        unitContainer.get(i).getChildren().addAll(unitName.get(i),
                     healthBox.get(i),
+                    powerBox.get(i),
                     shieldBox.get(i),
                     btnFirstAbility.get(i),
                     btnSecondAbility.get(i),
                     btnUltAbility.get(i),
                     swapBox.get(i));
-            
-            unitsContainer.getChildren().add(unitContainer.get(i));
-        }
     }
     public void setGame(Game game){
         this.game = game;
@@ -152,7 +158,23 @@ public class UnitsController implements Initializable {
         }
     }
     private void bindUnit(int i){
+        Unit unit = game.getPlayer().getUnit(i);
         
+        if(unit.getName() != "flag"){
+            addAll(i);
+            
+            unitName.get(i).setText(unit.getName());
+            powerLabel.get(i).textProperty().bind(Bindings.concat("Power: ", unit.getPowerStringBind()));
+            shieldLabel.get(i).textProperty().bind(Bindings.concat("Shield: ", unit.getShieldStringBind()));
+            healthLabel.get(i).textProperty().bind(Bindings.concat("Health: ", unit.getHealthStringBind()));
+
+            btnFirstAbility.get(i).setText(unit.getMainAbilityName());
+            btnSecondAbility.get(i).setText(unit.getSecondAbilityName());
+            btnUltAbility.get(i).setText(unit.getUltAbilityName());
+        }else{
+            //unitContainer.get(i).getStyleClass().add("empty");
+            unitContainer.get(i).getChildren().clear();
+        }
     }
     
     public void upPower(int i){
@@ -199,7 +221,10 @@ public class UnitsController implements Initializable {
     }
     
     public void summonGhoul(){
-        
+        int i = game.getPlayer().summonUnit(0);
+        if(i != 5){
+            bindUnit(i);
+        }
     }
     public void summonPhantom(){
         

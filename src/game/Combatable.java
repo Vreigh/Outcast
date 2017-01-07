@@ -15,10 +15,10 @@ public abstract class Combatable {
     private IntegerProperty speed = new SimpleIntegerProperty(0);
     private int priority = 0;
     
-    private IntegerProperty power = new SimpleIntegerProperty(0);
-    private IntegerProperty health = new SimpleIntegerProperty(0);
-    private IntegerProperty tmpHealth = new SimpleIntegerProperty(0);
-    private IntegerProperty shield = new SimpleIntegerProperty(0);
+    IntegerProperty power = new SimpleIntegerProperty(0);
+    IntegerProperty health = new SimpleIntegerProperty(0);
+    IntegerProperty tmpHealth = new SimpleIntegerProperty(0);
+    IntegerProperty shield = new SimpleIntegerProperty(0);
 
     private ArrayList<Buff> buffs;
     private ArrayList<Dot> dots;
@@ -39,7 +39,35 @@ public abstract class Combatable {
         return power.asString();
     }
     public int getTmpPower(){
-        
+        return power.get() + buffs.stream().mapToInt(Buff::getPower).sum();
+    }
+    
+    public StringBinding getShieldStringBind(){
+        return shield.asString();
+    }
+    public int getTmpShield(){
+        return shield.get() + buffs.stream().mapToInt(Buff::getShield).sum();
+    }
+    
+    public StringBinding getHealthStringBind(){
+        return health.asString();
+    }
+    public int getHealth(){
+        return health.get();
+    }
+    
+    public StringBinding getTmpHealthStringBind(){
+        return tmpHealth.asString();
+    }
+    public int getTmpHealth(){
+        return tmpHealth.get();
+    }
+    
+    public void addBuff(Buff buff){
+        buffs.add(buff);
+    }
+    public void addDot(Dot dot){
+        dots.add(dot);
     }
     
 

@@ -39,6 +39,10 @@ public class Game extends Application {
     public static final int summonCryCost = 50;
     public static final int summonApCost = 5;
     
+    public static final int summonUnitCryCost = 200;
+    public static final int summonUnitApCost = 10;
+    public static final int upgradeUnitApCost = 5;
+    
     public static final int shrinesCap = 5;
     
     private Player player;
