@@ -1,51 +1,46 @@
 package game;
 import java.util.ArrayList;
+import java.util.ArrayList;
+import java.util.Random;
+import javafx.beans.property.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.TableView;
+import javafx.beans.binding.StringExpression;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.StringBinding;
 
 public abstract class Combatable {
-    protected int ordinal; // identyfikator 
-    protected int speed; // bazowa szybkosc
-    protected int priority; // aktualny priorytet
     
+    private IntegerProperty speed = new SimpleIntegerProperty(0);
+    private int priority = 0;
     
-    protected int power;
-    protected int shield;
+    private IntegerProperty power = new SimpleIntegerProperty(0);
+    private IntegerProperty health = new SimpleIntegerProperty(0);
+    private IntegerProperty tmpHealth = new SimpleIntegerProperty(0);
+    private IntegerProperty shield = new SimpleIntegerProperty(0);
+
+    private ArrayList<Buff> buffs;
+    private ArrayList<Dot> dots;
     
-    protected int maxHealth;
-    protected int health;
-    protected int energy;
-    
-    protected ArrayList<Buff> buffs;
-    protected ArrayList<Dot> dots;
-    
+    public StringBinding getSpeedStringBind(){
+        return speed.asString();
+    }
+    public int getSpeed(){
+        return speed.get();
+    }
+    void setPriority(){
+        Random generator = new Random();
+        int rand = generator.nextInt(15);
+        priority = rand + speed.get();
+    }
+    //////////////////////
+    public StringBinding getPowerStringBind(){
+        return power.asString();
+    }
     public int getTmpPower(){
-        //buffs.stream().map(Buff::getShield).sum().orElse(shield);
         
-        
-        
-        if(buffs.isEmpty()){
-            return power;
-        }
-        else{
-            int tmpPower = 0;
-            for(Buff buff : buffs){
-                tmpPower += buff.getPower();
-            }
-            return tmpPower;
-        }
     }
-    public int getTmpShield(){
-        if(buffs.isEmpty()){
-            return shield;
-        }
-        else{
-            int tmpShield = 0;
-            for(Buff buff : buffs){
-                tmpShield += buff.getShield();
-            }
-            return tmpShield;
-        }
-    }
-    public int getHealth(){
-        return health;
-    }
+    
+
 }

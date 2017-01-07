@@ -22,6 +22,10 @@ import javafx.beans.property.*;
 import javafx.beans.binding.Bindings;
 import java.util.ArrayList;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.ContentDisplay;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 
 /**
  *
@@ -35,6 +39,8 @@ public class UnitsController implements Initializable {
     @FXML private HBox unitsContainer;
     
     private ArrayList<VBox> unitContainer = new ArrayList<VBox>();
+    
+    private ArrayList<Label> unitName = new ArrayList<Label>();
     
     private ArrayList<HBox> powerBox = new ArrayList<HBox>();
     private ArrayList<Label> powerLabel = new ArrayList<Label>();
@@ -62,6 +68,10 @@ public class UnitsController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         for(int i = 0; i<5; i++){
             Integer x = new Integer(i);
+            
+            unitName.add(new Label("dummy"));
+            unitName.get(i).setPrefWidth(130);
+            unitName.get(i).setAlignment(Pos.CENTER);
             
             unitContainer.add(new VBox());
             unitContainer.get(i).setPrefWidth(150);
@@ -121,7 +131,8 @@ public class UnitsController implements Initializable {
             
             swapBox.get(i).getChildren().addAll(swapLeft.get(i), swapRight.get(i));
             
-            unitContainer.get(i).getChildren().addAll(powerBox.get(i),
+            unitContainer.get(i).getChildren().addAll(unitName.get(i),
+                    powerBox.get(i),
                     healthBox.get(i),
                     shieldBox.get(i),
                     btnFirstAbility.get(i),

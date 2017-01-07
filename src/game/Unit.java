@@ -2,9 +2,7 @@ package game;
 import java.util.ArrayList;
 
 public abstract class Unit extends Combatable{
-    
-    public abstract ArrayList<Combatable> mainAbility(ArrayList<Combatable> combatants);
-    public abstract ArrayList<Combatable> secondAbility(ArrayList<Combatable> combatants);
-    public abstract ArrayList<Combatable> ultAbility(ArrayList<Combatable> combatants);
-    
+    public abstract void mainAbility(ArrayList<Unit> units, Monster monster);
+    public abstract void secondAbility(ArrayList<Unit> units, Monster monster);
+    public abstract void ultAbility(ArrayList<Unit> units, Monster monster);
 }
