@@ -2,7 +2,6 @@ package game;
 
 public class Buff {
     private int time;
-    
     private int power;
     private int shield;
     
@@ -11,10 +10,16 @@ public class Buff {
         this.shield = shield;
         this.time = time;
     }
+    public int getTime(){
+        return time;
+    }
     public int getPower(){
         return power;
     }
     public int getShield(){
         return shield;
+    }
+    int reduceTime(){
+        return --time;
     }
 }

@@ -53,11 +53,34 @@ public abstract class Unit extends Combatable{
     public StringBinding getPowerCostStringBind(){
         return powerCost.asString();
     }
+    public int getPowerCost(){
+        return powerCost.get();
+    }
+    
     public StringBinding getShieldCostStringBind(){
         return shieldCost.asString();
     }
+    public int getShieldCost(){
+        return shieldCost.get();
+    }
+    
     public StringBinding getHealthCostStringBind(){
         return healthCost.asString();
+    }
+    public int getHealthCost(){
+        return healthCost.get();
+    }
+    
+    
+    void incPower(){
+        powerUp.set(powerUp.get() + 1);
+    }
+    void incShield(){
+        shieldUp.set(shieldUp.get() + 1);
+    }
+    void incHealth(){
+        healthUp.set(healthUp.get() + 1);
+        super.tmpHealth.set(health.get());
     }
     
     public int isReal(){

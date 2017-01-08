@@ -10,13 +10,13 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.binding.StringBinding;
 
 public class Player {
-    public static final int initialAp = 20;
+    public static final int initialAp = 200;
     
     private IntegerProperty sanity = new SimpleIntegerProperty(40);
     private IntegerProperty spirits = new SimpleIntegerProperty(5);
-    private IntegerProperty ap = new SimpleIntegerProperty(20);
+    private IntegerProperty ap = new SimpleIntegerProperty(initialAp);
     private IntegerProperty mana = new SimpleIntegerProperty(10);
-    private IntegerProperty crystals = new SimpleIntegerProperty(100);
+    private IntegerProperty crystals = new SimpleIntegerProperty(5000);
     private IntegerProperty busySpirits = new SimpleIntegerProperty();
     private IntegerProperty freeSpirits = new SimpleIntegerProperty();
     private IntegerProperty shrines = new SimpleIntegerProperty(1);
@@ -28,7 +28,6 @@ public class Player {
     private IntegerProperty manaIncome = new SimpleIntegerProperty(5);
     
     private int spiritRage = 0;
-    private boolean inCombat = false;
     
     private IntegerProperty spiritsCap = new SimpleIntegerProperty();
     private IntegerProperty maxAp = new SimpleIntegerProperty();
@@ -192,7 +191,7 @@ public class Player {
     public Unit getUnit(int i){
         return units.get(i);
     }
-    ArrayList<Unit> getUnits(){
+    ArrayList<Unit> getUnits(){ // potrzebuje tego w obrębie packega zeby dawac do Combatu
         return units;
     }
     private int getUnitsRealSize(){
@@ -208,6 +207,9 @@ public class Player {
             }
         }
         return x;
+    }
+    public int getProgress(){
+        return progress;
     }
     
     ////////////////////////////////////////////////////////////////////////
@@ -383,20 +385,68 @@ public class Player {
                     units.set(x, new Ghoul());
                     break;
                 case 1:
-                    //units.set(x, new Vampire());
+                    units.set(x, new Vampire());
                     break;
                 case 2:
-                    //units.set(x, new Plagueman());
+                    units.set(x, new Plagueman());
                     break;
                 case 3:
-                   // units.set(x, new Phantom());
+                    units.set(x, new Phantom());
                     break;
                 case 4:
-                    //units.set(x, new Butcher());
+                    units.set(x, new Butcher());
                     break;
             }
+            addCrystals(-Game.summonUnitCryCost);
+            addAp(-Game.summonUnitApCost);
             return x;
-            
         }
+    }
+    public void upPower(int i){
+        Unit unit = units.get(i);
+        int cost = unit.getPowerCost();
+        
+        if(ap.get() < Game.upgradeUnitApCost){
+            AlertWindow.showInfo("not enough Action Points", "You need at least " + Game.upgradeUnitApCost + " Action Point to do that");
+        }else if(crystals.get() < cost){
+            AlertWindow.showInfo("not enough Crystals", "You need at least " + cost + " Crystals to do that");
+        }else{
+            addAp(-Game.upgradeUnitApCost);
+            addCrystals(-cost);
+            unit.incPower();
+        }
+    }
+    public void upShield(int i){
+        Unit unit = units.get(i);
+        int cost = unit.getShieldCost();
+        
+        if(ap.get() < Game.upgradeUnitApCost){
+            AlertWindow.showInfo("not enough Action Points", "You need at least " + Game.upgradeUnitApCost + " Action Point to do that");
+        }else if(crystals.get() < cost){
+            AlertWindow.showInfo("not enough Crystals", "You need at least " + cost + " Crystals to do that");
+        }else{
+            addAp(-Game.upgradeUnitApCost);
+            addCrystals(-cost);
+            unit.incShield();
+        }
+    }
+    public void upHealth(int i){
+        Unit unit = units.get(i);
+        int cost = unit.getHealthCost();
+        
+        if(ap.get() < Game.upgradeUnitApCost){
+            AlertWindow.showInfo("not enough Action Points", "You need at least " + Game.upgradeUnitApCost + " Action Point to do that");
+        }else if(crystals.get() < cost){
+            AlertWindow.showInfo("not enough Crystals", "You need at least " + cost + " Crystals to do that");
+        }else{
+            addAp(-Game.upgradeUnitApCost);
+            addCrystals(-cost);
+            unit.incHealth();
+        }
+    }
+    public void swapUnits(int i, int j){
+        Unit unit = units.get(i);
+        units.set(i, units.get(j));
+        units.set(j, unit);
     }
 }

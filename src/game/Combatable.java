@@ -29,11 +29,6 @@ public abstract class Combatable {
     public int getSpeed(){
         return speed.get();
     }
-    void setPriority(){
-        Random generator = new Random();
-        int rand = generator.nextInt(15);
-        priority = rand + speed.get();
-    }
     //////////////////////
     public StringBinding getPowerStringBind(){
         return power.asString();
@@ -62,12 +57,54 @@ public abstract class Combatable {
     public int getTmpHealth(){
         return tmpHealth.get();
     }
-    
-    public void addBuff(Buff buff){
+    void setSpeed(int x){
+        speed.set(x);
+    }
+    /// METODY WALKI
+    void setPriority(){
+        Random generator = new Random();
+        int rand = generator.nextInt(15);
+        priority = rand + speed.get();
+    }
+    void addBuff(Buff buff){
         buffs.add(buff);
     }
-    public void addDot(Dot dot){
+    void addDot(Dot dot){
         dots.add(dot);
+    }
+    int takeDamage(int x){
+        int dmg = x - getTmpShield();
+        if(dmg < 0){
+            dmg = 1;
+        }
+        return takeRealDamage(dmg);
+    }
+    int heal(int x){
+        return takeRealDamage(-x);
+    }
+    private int takeRealDamage(int dmg){
+        tmpHealth.set(tmpHealth.get() - dmg);
+        
+        if(tmpHealth.get() > health.get()){
+            tmpHealth.set(health.get());
+        }else if(tmpHealth.get() < 0){
+            dmg += tmpHealth.get();
+            tmpHealth.set(0);
+        }
+        return dmg;
+    }
+    void afterTurn(){
+        for(Buff buff : buffs){
+            if(buff.reduceTime() == 0){
+                buffs.remove(buff);
+            }
+        }
+        for(Dot dot : dots){
+            takeRealDamage(dot.getDamage());
+            if(dot.reduceTime() == 0){
+                dots.remove(dot);
+            }
+        }
     }
     
 

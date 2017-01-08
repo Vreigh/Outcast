@@ -1,14 +1,14 @@
 package game;
 import java.util.ArrayList;
 
-public final class Ghoul extends Unit {
+public final class Vampire extends Unit {
     
-    public Ghoul(){
+    public Vampire(){
         super();
-        super.setSpeed(60);
+        super.setSpeed(45);
         
-        super.power.bind(super.powerUp.multiply(10).add(40));
-        super.health.bind(super.healthUp.multiply(25).add(100));
+        super.power.bind(super.powerUp.multiply(8).add(30));
+        super.health.bind(super.healthUp.multiply(40).add(150));
         super.shield.bind(super.shieldUp.multiply(10).add(10));
         
         super.tmpHealth.set(health.get());
@@ -18,21 +18,21 @@ public final class Ghoul extends Unit {
         
     }
     public String getMainAbilityName(){
-        return "Attack";
+        return "Blood Flow";
     }
     public void secondAbility(ArrayList<Unit> units, Monster monster){
         
     }
     public String getSecondAbilityName(){
-        return "Frenzy";
+        return "Drain";
     }
     public void ultAbility(ArrayList<Unit> units, Monster monster){
         
     }
     public String getUltAbilityName(){
-        return "Devour";
+        return "Night Hunt";
     }
     public String getName(){
-        return "Ghoul";
+        return "Vampire";
     }
 }

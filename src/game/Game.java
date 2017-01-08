@@ -46,6 +46,7 @@ public class Game extends Application {
     public static final int shrinesCap = 5;
     
     private Player player;
+    private Combat combat;
     private IntegerProperty round = new SimpleIntegerProperty(0);
     
     private BorderPane layout;
@@ -65,7 +66,15 @@ public class Game extends Application {
     private VBox unitsView;
     private UnitsController unitsController;
     
+    private VBox nonCombatView;
+    private NonCombatController nonCombatController;
+    
+    private VBox combatView;
+    private CombatController combatController;
+    
     private TableView<Log> table = new TableView<Log>();
+    
+    private boolean isCombat = false;
     
     @Override
     public void start(Stage stage) throws Exception {
@@ -100,6 +109,18 @@ public class Game extends Application {
         unitsController.setGame(this);
         unitsController.bind();
         
+        FXMLLoader nonCombatLoader = new FXMLLoader(getClass().getResource("nonCombatView.fxml"));
+        nonCombatView = (VBox) nonCombatLoader.load();
+        nonCombatController = nonCombatLoader.<NonCombatController>getController();
+        nonCombatController.setGame(this);
+        nonCombatController.bind();
+        
+        FXMLLoader combatLoader = new FXMLLoader(getClass().getResource("combatView.fxml"));
+        combatView = (VBox) combatLoader.load();
+        combatController = combatLoader.<CombatController>getController();
+        combatController.setGame(this);
+        combatController.bind();
+        
         TableColumn<Log, Integer> roundColumn = new TableColumn<Log, Integer>("Round");
         roundColumn.setMinWidth(100);
         roundColumn.setCellValueFactory(new PropertyValueFactory<Log, Integer>("round"));
@@ -124,21 +145,39 @@ public class Game extends Application {
     public void switchView(int i){
         switch(i){
             case 0:
-                layout.setCenter(mainView);
+                if(!isCombat){
+                    layout.setCenter(mainView);
+                }else{
+                    AlertWindow.showInfo("You are in combat!", "You have to finish your combat first!");
+                }
                 break;
             case 1:
-                layout.setCenter(upgradesView);
+                if(!isCombat){
+                    layout.setCenter(upgradesView);
+                }else{
+                    AlertWindow.showInfo("You are in combat!", "You have to finish your combat first!");
+                }
                 break;
             case 2:
-                layout.setCenter(unitsView);
+                if(!isCombat){
+                    layout.setCenter(unitsView);
+                }else{
+                    AlertWindow.showInfo("You are in combat!", "You have to finish your combat first!");
+                }
                 break;
             case 3:
-                // game.getLogs().add(new Log(0, "im new here, hello!")); to dziala! ta tabela jest obserwowalna, nigdy nie musze jej odswiezać!
-                layout.setCenter(table);
+                if(!isCombat){
+                    layout.setCenter(table);
+                }else{
+                    AlertWindow.showInfo("You are in combat!", "You have to finish your combat first!");
+                }
                 break;
             case 4:
-                //layout.setCenter();
-                break;
+                if(!isCombat){
+                    layout.setCenter(nonCombatView);
+                }else{
+                    AlertWindow.showInfo("You are in combat!", "You have to finish your combat first!");
+                }
         }
     }
     public static void main(String[] args) {
@@ -159,5 +198,10 @@ public class Game extends Application {
     public void endTurn(){
         round.set(round.get() + 1);
         player.endTurn(round.get() - 1);
+    }
+    public void startCombat(){
+        combat = new Combat(player);
+        isCombat = true;
+        layout.setCenter(combatView);
     }
 }

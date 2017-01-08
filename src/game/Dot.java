@@ -1,13 +1,21 @@
 package game;
 
 public class Dot {
-    protected int time;
-    protected int damage;
+    private int time;
+    private int damage;
     
     public Dot(int time, int damage){
         this.time = time;
         this.damage = damage;
     }
-    //fgfdgfdgfdgfd
+    public int getTime(){
+        return time;
+    }
+    public int getDamage(){
+        return damage;
+    }
+    int reduceTime(){
+        return --time;
+    }
     
 }

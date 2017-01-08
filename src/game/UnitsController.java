@@ -134,8 +134,6 @@ public class UnitsController implements Initializable {
             
             swapBox.get(i).getChildren().addAll(swapLeft.get(i), swapRight.get(i));
             
-            addAll(i);
-            
             unitsContainer.getChildren().add(unitContainer.get(i));
         }
     }
@@ -158,66 +156,81 @@ public class UnitsController implements Initializable {
         }
     }
     private void bindUnit(int i){
+        unitContainer.get(i).getChildren().clear();
         Unit unit = game.getPlayer().getUnit(i);
         
         if(unit.getName() != "flag"){
             addAll(i);
-            
             unitName.get(i).setText(unit.getName());
-            powerLabel.get(i).textProperty().bind(Bindings.concat("Power: ", unit.getPowerStringBind()));
-            shieldLabel.get(i).textProperty().bind(Bindings.concat("Shield: ", unit.getShieldStringBind()));
-            healthLabel.get(i).textProperty().bind(Bindings.concat("Health: ", unit.getHealthStringBind()));
+            powerLabel.get(i).textProperty().bind(Bindings.concat("Power(", unit.getPowerUpStringBind(),"): " , unit.getPowerStringBind()));
+            shieldLabel.get(i).textProperty().bind(Bindings.concat("Shield(", unit.getShieldUpStringBind(),"): " , unit.getShieldStringBind()));
+            healthLabel.get(i).textProperty().bind(Bindings.concat("Health(", unit.getHealthUpStringBind(),"): " , unit.getHealthStringBind()));
 
             btnFirstAbility.get(i).setText(unit.getMainAbilityName());
             btnSecondAbility.get(i).setText(unit.getSecondAbilityName());
             btnUltAbility.get(i).setText(unit.getUltAbilityName());
         }else{
-            //unitContainer.get(i).getStyleClass().add("empty");
-            unitContainer.get(i).getChildren().clear();
+            unitContainer.get(i).getChildren().clear(); //drugi clear nikomu nie zaszkodzi,a jesli wczesniej cos bylo to tzreba skasować
         }
     }
     
     public void upPower(int i){
-        
+        game.getPlayer().upPower(i);
     }
     public void upShield(int i){
-        
+        game.getPlayer().upShield(i);
     }
     public void upHealth(int i){
-        
+        game.getPlayer().upHealth(i);
     }
     
     public void swapLeft(int i){
-        System.out.println("left" + i);
+        int j;
+        if(i != 0){
+            j = i -1;
+        }else{
+            j = 4;
+        }
+        game.getPlayer().swapUnits(i, j);
+        bindUnit(i);
+        bindUnit(j);
     }
     public void swapRight(int i){
-        System.out.println("right" + i);
+        int j;
+        if(i != 4){
+            j = i + 1;
+        }else{
+            j = 0;
+        }
+        game.getPlayer().swapUnits(i, j);
+        bindUnit(i);
+        bindUnit(j);
     }
     
     public void showFirstAbility(int i){
-        
+        //
     }
     public void showSecondAbility(int i){
-        
+        //
     }
     public void showUltAbility(int i){
-        
+        //
     }
     
     public void infoGhoul(){
-        
+        //
     }
     public void infoPhantom(){
-        
+        //
     }
     public void infoVampire(){
-        
+        //
     }
     public void infoButcher(){
-        
+        //
     }
     public void infoPlagueman(){
-        
+        //
     }
     
     public void summonGhoul(){
@@ -227,16 +240,28 @@ public class UnitsController implements Initializable {
         }
     }
     public void summonPhantom(){
-        
+        int i = game.getPlayer().summonUnit(3);
+        if(i != 5){
+            bindUnit(i);
+        }
     }
     public void summonVampire(){
-        
+        int i = game.getPlayer().summonUnit(1);
+        if(i != 5){
+            bindUnit(i);
+        }
     }
     public void summonButcher(){
-        
+        int i = game.getPlayer().summonUnit(4);
+        if(i != 5){
+            bindUnit(i);
+        }
     }
     public void summonPlagueman(){
-        
+        int i = game.getPlayer().summonUnit(2);
+        if(i != 5){
+            bindUnit(i);
+        }
     }
     
 }
