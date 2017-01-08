@@ -76,6 +76,10 @@ public class Game extends Application {
     
     private boolean isCombat = false;
     
+    public static final String firstMonsterText = "first";
+    public static final String secondMonsterText = "second";
+    public static final String thirdMonsterText = "third";
+    
     @Override
     public void start(Stage stage) throws Exception {
         player = new Player();
@@ -119,7 +123,6 @@ public class Game extends Application {
         combatView = (VBox) combatLoader.load();
         combatController = combatLoader.<CombatController>getController();
         combatController.setGame(this);
-        combatController.bind();
         
         TableColumn<Log, Integer> roundColumn = new TableColumn<Log, Integer>("Round");
         roundColumn.setMinWidth(100);
@@ -176,8 +179,9 @@ public class Game extends Application {
                 if(!isCombat){
                     layout.setCenter(nonCombatView);
                 }else{
-                    AlertWindow.showInfo("You are in combat!", "You have to finish your combat first!");
+                    //
                 }
+                break;
         }
     }
     public static void main(String[] args) {
@@ -185,6 +189,9 @@ public class Game extends Application {
     }
     public Player getPlayer(){
         return player;
+    }
+    public Combat getCombat(){
+        return combat;
     }
     public IntegerProperty getRoundProperty(){
         return round;
@@ -203,5 +210,6 @@ public class Game extends Application {
         combat = new Combat(player);
         isCombat = true;
         layout.setCenter(combatView);
+        combatController.bind();
     }
 }

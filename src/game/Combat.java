@@ -7,8 +7,12 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
 
 public class Combat {
+    
     private ArrayList<Unit> units;
     private Monster monster;
+    
+    private ObservableList<BattleLog> battleLogs = FXCollections.observableArrayList();
+    
     
     public Combat(Player player){
         this.units = player.getUnits();
@@ -24,5 +28,8 @@ public class Combat {
                 break;
                 
         }
+    }
+    public void setTable(TableView<BattleLog> table){
+        table.setItems(battleLogs);
     }
 }
