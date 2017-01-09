@@ -4,19 +4,19 @@ import java.util.ArrayList;
 
 public class Dummy extends Unit {
     
-    public void mainAbility(ArrayList<Unit> units, Monster monster){
+    public BattleLog mainAbility(ArrayList<Unit> units, Monster monster){
         
     }
     public String getMainAbilityName(){
         return "";
     }
-    public void secondAbility(ArrayList<Unit> units, Monster monster){
+    public BattleLog secondAbility(ArrayList<Unit> units, Monster monster){
         
     }
     public String getSecondAbilityName(){
         return "";
     }
-    public void ultAbility(ArrayList<Unit> units, Monster monster){
+    public BattleLog ultAbility(ArrayList<Unit> units, Monster monster){
         
     }
     public String getUltAbilityName(){

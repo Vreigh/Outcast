@@ -14,19 +14,19 @@ public final class Plagueman extends Unit {
         super.tmpHealth.set(health.get());
     }
     
-    public void mainAbility(ArrayList<Unit> units, Monster monster){
+    public BattleLog mainAbility(ArrayList<Unit> units, Monster monster){
         
     }
     public String getMainAbilityName(){
         return "Poison";
     }
-    public void secondAbility(ArrayList<Unit> units, Monster monster){
+    public BattleLog secondAbility(ArrayList<Unit> units, Monster monster){
         
     }
     public String getSecondAbilityName(){
         return "Blight";
     }
-    public void ultAbility(ArrayList<Unit> units, Monster monster){
+    public BattleLog ultAbility(ArrayList<Unit> units, Monster monster){
         
     }
     public String getUltAbilityName(){

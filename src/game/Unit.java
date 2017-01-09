@@ -29,13 +29,13 @@ public abstract class Unit extends Combatable{
         healthCost.bind(healthUp.multiply(UPGRADE_STACK).add(UPGRADE_COST));
     }
     
-    public abstract void mainAbility(ArrayList<Unit> units, Monster monster);
+    public abstract BattleLog mainAbility(ArrayList<Unit> units, Monster monster);
     public abstract String getMainAbilityName();
     
-    public abstract void secondAbility(ArrayList<Unit> units, Monster monster);
+    public abstract BattleLog secondAbility(ArrayList<Unit> units, Monster monster);
     public abstract String getSecondAbilityName();
     
-    public abstract void ultAbility(ArrayList<Unit> units, Monster monster);
+    public abstract BattleLog ultAbility(ArrayList<Unit> units, Monster monster);
     public abstract String getUltAbilityName();
     
     public abstract String getName();

@@ -22,6 +22,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 public class CombatController implements Initializable {
     
     private Game game;
+    private Combat combat;
     
     @FXML private VBox mainBox;
     private HBox unitsContainer = new HBox();
@@ -188,19 +189,18 @@ public class CombatController implements Initializable {
     }
     public void setGame(Game game){
         this.game = game;
+        this.combat = game.getCombat();
     }
     public void bind(){
-        Combat combat = game.getCombat();
         Monster monster = combat.getMonster();
         
-        game.getCombat().setTable(battleLogs);
+        combat.setTable(battleLogs);
         
         monsterName.setText(monster.getName());
         monsterHealth.textProperty().bind(Bindings.concat("Hp: ", monster.getTmpHealthStringBind(), " / ", monster.getHealthStringBind()));
         monsterEnergy.textProperty().bind(Bindings.concat("En: ", monster.getEnergyStringBind()));
         monster.setBuffTable(monsterBuffTable);
         monster.setDotTable(monsterDotTable);
-        resetMonsterStats(monster);
         
         for(int i=0; i<5; i++){
             Unit unit = game.getPlayer().getUnit(i);
@@ -218,9 +218,10 @@ public class CombatController implements Initializable {
                 unitContainer.get(i).getChildren().clear();
             }
         }
-        resetUnitsStats();
     }
-    private void resetMonsterStats(Monster monster){
+    private void resetMonsterStats(){
+        Monster monster = combat.getMonster();
+        
         monsterPower.setText("P: " + monster.getTmpPower() + " / " + monster.getPower());
         monsterShield.setText("Sh: " + monster.getTmpShield() + " / " + monster.getShield());
     }
@@ -242,7 +243,7 @@ public class CombatController implements Initializable {
             );
         }
     }
-    private void showAbilites(int i){
+    private void showAbilities(int i){
         unitContainer.get(i).getChildren().addAll(
                 btnFirstAbility.get(i),
                 btnSecondAbility.get(i),
@@ -301,11 +302,16 @@ public class CombatController implements Initializable {
         AlertWindow.showTable(unitDotTable.get(i), true);
     }
     ////////////////////////////////////////////////////
-    public void start(){
+    public void nextTurn(){
+        int i = combat.getNextActor();
         
+        hideAbilities();
+        resetMonsterStats();
+        resetUnitsStats();
+        showAbilities(i);
     }
-    public void useAbility(int i, int ab){
-        
+    public void useAbility(int i, int choice){
+        combat.unitAbility(i, choice);
     }
     
 }

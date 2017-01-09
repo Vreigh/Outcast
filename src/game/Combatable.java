@@ -77,6 +77,9 @@ public abstract class Combatable {
     void setSpeed(int x){
         speed.set(x);
     }
+    public int getPriority(){
+        return priority;
+    }
     public void setBuffTable(TableView<Buff> table){
         table.setItems(buffs);
     }
