@@ -207,9 +207,15 @@ public class Game extends Application {
         player.endTurn(round.get() - 1);
     }
     public void startCombat(){
-        combat = new Combat(player);
-        isCombat = true;
-        layout.setCenter(combatView);
-        combatController.bind();
+        if(player.getUnitsRealSize() > 0){
+            combat = new Combat(player);
+            isCombat = true;
+            layout.setCenter(combatView);
+            combatController.bind();
+            combatController.start();
+        }else{
+            AlertWindow.showInfo("You have no units!", "You need at least one unit to fight!");
+        }
+        
     }
 }

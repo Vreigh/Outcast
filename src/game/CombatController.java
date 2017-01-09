@@ -4,6 +4,7 @@ import game.Game;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -25,16 +26,12 @@ public class CombatController implements Initializable {
     @FXML private VBox mainBox;
     private HBox unitsContainer = new HBox();
     
-    private VBox monsterContainer = new VBox();
-    private Label monsterEnergy = new Label("energy");
-    private Label monsterPower = new Label("power");
-    private Label monsterShield = new Label("shield");
-    private Label monsterHealth = new Label("health");
-    
-    private HBox monsterShow = new HBox();
-    private Button monsterBuffs = new Button("buffs");
-    private Button monsterDots = new Button("dots");
-    
+    @FXML private Label monsterName;
+    @FXML private Label monsterEnergy;
+    @FXML private Label monsterPower;
+    @FXML private Label monsterShield;
+    @FXML private Label monsterHealth;
+
     private TableView<BattleLog> battleLogs = new TableView<BattleLog>();
     
     private ArrayList<VBox> unitContainer = new ArrayList<VBox>();
@@ -43,6 +40,7 @@ public class CombatController implements Initializable {
     private ArrayList<Label> powerLabel = new ArrayList<Label>();
     private ArrayList<Label> shieldLabel = new ArrayList<Label>();
     private ArrayList<Label> healthLabel = new ArrayList<Label>();
+    private ArrayList<Label> energyLabel = new ArrayList<Label>();
     
     private ArrayList<Button> btnFirstAbility = new ArrayList<Button>();
     private ArrayList<Button> btnSecondAbility = new ArrayList<Button>();
@@ -52,10 +50,17 @@ public class CombatController implements Initializable {
     private ArrayList<Button> btnShowBuffs = new ArrayList<Button>();
     private ArrayList<Button> btnShowDots = new ArrayList<Button>();
     
+    private TableView<Buff> monsterBuffTable = new TableView<Buff>();
+    private TableView<Dot> monsterDotTable = new TableView<Dot>();
+    private ArrayList<TableView<Buff>> unitBuffTable = new ArrayList<TableView<Buff>>();
+    private ArrayList<TableView<Dot>> unitDotTable = new ArrayList<TableView<Dot>>();
+    
+    
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        TableColumn<BattleLog, String> contentColumn = new TableColumn<BattleLog, String>("Battle Log");
+        
+        TableColumn<BattleLog, String> contentColumn = new TableColumn<BattleLog, String>("Battle Logs");
         contentColumn.setCellValueFactory(new PropertyValueFactory<BattleLog, String>("content"));
         contentColumn.setPrefWidth(840);
         
@@ -65,15 +70,17 @@ public class CombatController implements Initializable {
         battleLogs.setPlaceholder(new Label("The battle has begun!"));
         
         unitsContainer.setSpacing(10);
+        mainBox.getChildren().addAll(battleLogs, unitsContainer);
         
-        mainBox.getChildren().addAll(monsterContainer, battleLogs, unitsContainer);
-        
-        
-        
+        prepareMonsterTable();
+
         for(int i=0; i<5; i++){
             Integer x = new Integer(i);
             unitContainer.add(new VBox());
-            unitContainer.get(i).setSpacing(5);
+            unitContainer.get(i).setSpacing(3);
+            unitContainer.get(i).setPrefWidth(160);
+            unitContainer.get(i).setPrefHeight(230);
+            unitContainer.get(i).getStyleClass().add("unitContainer");
             
             unitName.add(new Label("nazwa"));
             unitName.get(i).setPrefHeight(20);
@@ -95,15 +102,23 @@ public class CombatController implements Initializable {
             healthLabel.get(i).setPrefWidth(160);
             healthLabel.get(i).setAlignment(Pos.CENTER);
             
+            energyLabel.add(new Label("100 / 100"));
+            energyLabel.get(i).setPrefHeight(20);
+            energyLabel.get(i).setPrefWidth(160);
+            energyLabel.get(i).setAlignment(Pos.CENTER);
+            
             btnFirstAbility.add(new Button("ability1"));
+            btnFirstAbility.get(i).setOnAction(e -> useAbility(x, 0));
             btnFirstAbility.get(i).setPrefHeight(25);
             btnFirstAbility.get(i).setPrefWidth(160);
             
             btnSecondAbility.add(new Button("ability2"));
+            btnSecondAbility.get(i).setOnAction(e -> useAbility(x, 1));
             btnSecondAbility.get(i).setPrefHeight(25);
             btnSecondAbility.get(i).setPrefWidth(160);
             
             btnUltAbility.add(new Button("ability3"));
+            btnUltAbility.get(i).setOnAction(e -> useAbility(x, 2));
             btnUltAbility.get(i).setPrefHeight(25);
             btnUltAbility.get(i).setPrefWidth(160);
             
@@ -111,10 +126,12 @@ public class CombatController implements Initializable {
             showBox.get(i).setSpacing(20);
             
             btnShowBuffs.add(new Button("buffs"));
+            btnShowBuffs.get(i).setOnAction(e -> showBuffs(x));
             btnShowBuffs.get(i).setPrefWidth(70);
             btnShowBuffs.get(i).setPrefHeight(25);
             
             btnShowDots.add(new Button("dots"));
+            btnShowDots.get(i).setOnAction(e -> showDots(x));
             btnShowDots.get(i).setPrefWidth(70);
             btnShowDots.get(i).setPrefHeight(25);
             
@@ -125,20 +142,96 @@ public class CombatController implements Initializable {
                     powerLabel.get(i),
                     shieldLabel.get(i),
                     healthLabel.get(i),
-                    btnFirstAbility.get(i),
-                    btnSecondAbility.get(i),
-                    btnUltAbility.get(i),
+                    energyLabel.get(i),
                     showBox.get(i)
             );
             
             unitsContainer.getChildren().add(unitContainer.get(i));
+            
+            TableColumn<Buff, Integer> powerColumn = new TableColumn<Buff, Integer>("Power");
+            powerColumn.setMinWidth(100);
+            powerColumn.setCellValueFactory(new PropertyValueFactory<Buff, Integer>("power"));
+
+            TableColumn<Buff, Integer> shieldColumn = new TableColumn<Buff, Integer>("Shield");
+            shieldColumn.setMinWidth(100);
+            shieldColumn.setCellValueFactory(new PropertyValueFactory<Buff, Integer>("shield"));
+            
+            TableColumn<Buff, String> nameColumn = new TableColumn<Buff, String>("Name");
+            nameColumn.setMinWidth(150);
+            nameColumn.setCellValueFactory(new PropertyValueFactory<Buff, String>("name"));
+            
+            TableColumn<Buff, Integer> timeColumn = new TableColumn<Buff, Integer>("Time");
+            timeColumn.setMinWidth(100);
+            timeColumn.setCellValueFactory(new PropertyValueFactory<Buff, Integer>("time"));
+            
+            unitBuffTable.add(new TableView<Buff>());
+            unitBuffTable.get(i).getColumns().addAll(powerColumn, shieldColumn, nameColumn, timeColumn);
+            unitBuffTable.get(i).setPlaceholder(new Label("No buffs!"));
+            
+            
+            TableColumn<Dot, Integer> damageColumn = new TableColumn<Dot, Integer>("Damage");
+            damageColumn.setMinWidth(100);
+            damageColumn.setCellValueFactory(new PropertyValueFactory<Dot, Integer>("damage"));
+            
+            TableColumn<Dot, String> dotNameColumn = new TableColumn<Dot, String>("Name");
+            dotNameColumn.setMinWidth(150);
+            dotNameColumn.setCellValueFactory(new PropertyValueFactory<Dot, String>("name"));
+            
+            TableColumn<Dot, Integer> dotTimeColumn = new TableColumn<Dot, Integer>("Time");
+            dotTimeColumn.setMinWidth(100);
+            dotTimeColumn.setCellValueFactory(new PropertyValueFactory<Dot, Integer>("time"));
+            
+            unitDotTable.add(new TableView<Dot>());
+            unitDotTable.get(i).getColumns().addAll(damageColumn, dotNameColumn, dotTimeColumn);
+            unitDotTable.get(i).setPlaceholder(new Label("No dots!"));
         }
     }
     public void setGame(Game game){
         this.game = game;
     }
     public void bind(){
+        Combat combat = game.getCombat();
+        Monster monster = combat.getMonster();
+        
         game.getCombat().setTable(battleLogs);
+        
+        monsterName.setText(monster.getName());
+        monsterHealth.textProperty().bind(Bindings.concat("Hp: ", monster.getTmpHealthStringBind(), " / ", monster.getHealthStringBind()));
+        monsterEnergy.textProperty().bind(Bindings.concat("En: ", monster.getEnergyStringBind()));
+        monster.setBuffTable(monsterBuffTable);
+        monster.setDotTable(monsterDotTable);
+        resetMonsterStats(monster);
+        
+        for(int i=0; i<5; i++){
+            Unit unit = game.getPlayer().getUnit(i);
+            if(unit.getName() != "flag"){
+                unitName.get(i).setText(unit.getName());
+                healthLabel.get(i).textProperty().bind(Bindings.concat("Hp: ", unit.getTmpHealthStringBind(), " / ", unit.getHealthStringBind()));
+                energyLabel.get(i).textProperty().bind(Bindings.concat("En: ", unit.getEnergyStringBind()));
+                btnFirstAbility.get(i).setText(unit.getMainAbilityName());
+                btnSecondAbility.get(i).setText(unit.getSecondAbilityName());
+                btnUltAbility.get(i).setText(unit.getUltAbilityName());
+                
+                unit.setBuffTable(unitBuffTable.get(i));
+                unit.setDotTable(unitDotTable.get(i));
+            }else{
+                unitContainer.get(i).getChildren().clear();
+            }
+        }
+        resetUnitsStats();
+    }
+    private void resetMonsterStats(Monster monster){
+        monsterPower.setText("P: " + monster.getTmpPower() + " / " + monster.getPower());
+        monsterShield.setText("Sh: " + monster.getTmpShield() + " / " + monster.getShield());
+    }
+    private void resetUnitsStats(){
+        for(int i = 0; i<5; i++){
+            Unit unit = game.getPlayer().getUnit(i);
+            if(unit.getName() != "flag"){
+                powerLabel.get(i).setText("P: " + unit.getTmpPower() + " / " + unit.getPower());
+                shieldLabel.get(i).setText("Sh: " + unit.getTmpShield() + " / " + unit.getShield());
+            }
+        }
     }
     private void hideAbilities(){
         for(int i =0; i<5; i++){
@@ -155,6 +248,64 @@ public class CombatController implements Initializable {
                 btnSecondAbility.get(i),
                 btnUltAbility.get(i)
             );
+    }
+    private void prepareMonsterTable(){
+            TableColumn<Buff, Integer> powerColumn = new TableColumn<Buff, Integer>("Power");
+            powerColumn.setMinWidth(100);
+            powerColumn.setCellValueFactory(new PropertyValueFactory<Buff, Integer>("power"));
+
+            TableColumn<Buff, Integer> shieldColumn = new TableColumn<Buff, Integer>("Shield");
+            shieldColumn.setMinWidth(100);
+            shieldColumn.setCellValueFactory(new PropertyValueFactory<Buff, Integer>("shield"));
+            
+            TableColumn<Buff, String> nameColumn = new TableColumn<Buff, String>("Name");
+            nameColumn.setMinWidth(150);
+            nameColumn.setCellValueFactory(new PropertyValueFactory<Buff, String>("name"));
+            
+            TableColumn<Buff, Integer> timeColumn = new TableColumn<Buff, Integer>("Time");
+            timeColumn.setMinWidth(100);
+            timeColumn.setCellValueFactory(new PropertyValueFactory<Buff, Integer>("time"));
+            
+            monsterBuffTable.getColumns().addAll(powerColumn, shieldColumn, nameColumn, timeColumn);
+            monsterBuffTable.setPlaceholder(new Label("No buffs!"));
+            
+            
+            TableColumn<Dot, Integer> damageColumn = new TableColumn<Dot, Integer>("Damage");
+            damageColumn.setMinWidth(100);
+            damageColumn.setCellValueFactory(new PropertyValueFactory<Dot, Integer>("damage"));
+            
+            TableColumn<Dot, String> dotNameColumn = new TableColumn<Dot, String>("Name");
+            dotNameColumn.setMinWidth(150);
+            dotNameColumn.setCellValueFactory(new PropertyValueFactory<Dot, String>("name"));
+            
+            TableColumn<Dot, Integer> dotTimeColumn = new TableColumn<Dot, Integer>("Time");
+            dotTimeColumn.setMinWidth(100);
+            dotTimeColumn.setCellValueFactory(new PropertyValueFactory<Dot, Integer>("time"));
+            
+            monsterDotTable.getColumns().addAll(damageColumn, dotNameColumn, dotTimeColumn);
+            monsterDotTable.setPlaceholder(new Label("No dots!"));
+    }
+    
+    
+    //////////////////////////////////////////////
+    public void showMonsterBuffs(){
+        AlertWindow.showTable(monsterBuffTable);
+    }
+    public void showMonsterDots(){
+        AlertWindow.showTable(monsterDotTable, true);
+    }
+    public void showBuffs(int i){
+        AlertWindow.showTable(unitBuffTable.get(i));
+    }
+    public void showDots(int i){
+        AlertWindow.showTable(unitDotTable.get(i), true);
+    }
+    ////////////////////////////////////////////////////
+    public void start(){
+        
+    }
+    public void useAbility(int i, int ab){
+        
     }
     
 }

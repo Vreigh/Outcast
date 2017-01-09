@@ -18,7 +18,7 @@ public class Combat {
         this.units = player.getUnits();
         switch(player.getProgress()){
             case 0:
-                //monster = new Warrior();
+                monster = new Warrior();
                 break;
             case 1:
                 //monster = new Shadow();
@@ -31,5 +31,8 @@ public class Combat {
     }
     public void setTable(TableView<BattleLog> table){
         table.setItems(battleLogs);
+    }
+    public Monster getMonster(){
+        return monster;
     }
 }

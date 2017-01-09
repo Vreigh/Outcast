@@ -194,7 +194,7 @@ public class Player {
     ArrayList<Unit> getUnits(){ // potrzebuje tego w obrębie packega zeby dawac do Combatu
         return units;
     }
-    private int getUnitsRealSize(){
+    public int getUnitsRealSize(){
         return units.stream().mapToInt(Unit::isReal).sum();
     }
     private int getFirstEmpty(){

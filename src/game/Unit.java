@@ -90,4 +90,7 @@ public abstract class Unit extends Combatable{
             return 0;
         }
     }
+    void setPriority(){
+        super.priority = getSpeed();
+    }
 }

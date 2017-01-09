@@ -9,19 +9,23 @@ import javafx.scene.control.TableView;
 import javafx.beans.binding.StringExpression;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.StringBinding;
+import javafx.scene.control.TableView;
 
 public abstract class Combatable {
     
     private IntegerProperty speed = new SimpleIntegerProperty(0);
-    private int priority = 0;
+    int priority = 0;
     
     IntegerProperty power = new SimpleIntegerProperty(0);
     IntegerProperty health = new SimpleIntegerProperty(0);
     IntegerProperty tmpHealth = new SimpleIntegerProperty(0);
     IntegerProperty shield = new SimpleIntegerProperty(0);
-
-    private ArrayList<Buff> buffs;
-    private ArrayList<Dot> dots;
+    IntegerProperty energy = new SimpleIntegerProperty(0);
+    
+    private ObservableList<Buff> buffs = FXCollections.observableArrayList();
+    private ObservableList<Dot> dots = FXCollections.observableArrayList();
+    
+    abstract void setPriority();
     
     public StringBinding getSpeedStringBind(){
         return speed.asString();
@@ -36,6 +40,9 @@ public abstract class Combatable {
     public int getTmpPower(){
         return power.get() + buffs.stream().mapToInt(Buff::getPower).sum();
     }
+    public int getPower(){
+       return power.get();
+    }
     
     public StringBinding getShieldStringBind(){
         return shield.asString();
@@ -43,12 +50,22 @@ public abstract class Combatable {
     public int getTmpShield(){
         return shield.get() + buffs.stream().mapToInt(Buff::getShield).sum();
     }
+    public int getShield(){
+        return shield.get();
+    }
     
     public StringBinding getHealthStringBind(){
         return health.asString();
     }
     public int getHealth(){
         return health.get();
+    }
+    
+    public StringBinding getEnergyStringBind(){
+        return energy.asString();
+    }
+    public int getEnergy(){
+        return energy.get();
     }
     
     public StringBinding getTmpHealthStringBind(){
@@ -60,12 +77,13 @@ public abstract class Combatable {
     void setSpeed(int x){
         speed.set(x);
     }
-    /// METODY WALKI
-    void setPriority(){
-        Random generator = new Random();
-        int rand = generator.nextInt(15);
-        priority = rand + speed.get();
+    public void setBuffTable(TableView<Buff> table){
+        table.setItems(buffs);
     }
+    public void setDotTable(TableView<Dot> table){
+        table.setItems(dots);
+    }
+    /// METODY WALKI
     void addBuff(Buff buff){
         buffs.add(buff);
     }

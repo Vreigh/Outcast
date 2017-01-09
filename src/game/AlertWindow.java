@@ -16,6 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.geometry.*;
+import javafx.scene.control.TableView;
 
 
 
@@ -43,5 +44,34 @@ public class AlertWindow {
         window.setScene(scene);
         window.showAndWait();
     }
-    
+    public static void showTable(TableView<Buff> table){
+        Stage window = new Stage();
+        
+        window.initModality(Modality.APPLICATION_MODAL);
+        window.setTitle(".");
+        window.setMinWidth(450);
+        window.setMinHeight(200);
+        
+        BorderPane layout = new BorderPane();
+        layout.setCenter(table);
+        
+        Scene scene = new Scene(layout);
+        window.setScene(scene);
+        window.show();
+    }
+    public static void showTable(TableView<Dot> table, boolean flag){ // dlaczego wgle musiałem przeciążać?? Przecież argumenty są różnych typów(troche)
+        Stage window = new Stage();
+        
+        window.initModality(Modality.APPLICATION_MODAL);
+        window.setTitle(".");
+        window.setMinWidth(350);
+        window.setMinHeight(200);
+        
+        BorderPane layout = new BorderPane();
+        layout.setCenter(table);
+        
+        Scene scene = new Scene(layout);
+        window.setScene(scene);
+        window.show();
+    }
 }
