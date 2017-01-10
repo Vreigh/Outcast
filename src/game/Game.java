@@ -80,6 +80,8 @@ public class Game extends Application {
     public static final String secondMonsterText = "second";
     public static final String thirdMonsterText = "third";
     
+    public static final double RAND = 0.2; // podstawowe wahanie obrażeń
+    
     @Override
     public void start(Stage stage) throws Exception {
         player = new Player();
@@ -219,10 +221,12 @@ public class Game extends Application {
         
     }
     public void combatWon(){
-        
+        isCombat = false;
+        player.combatWon();
+        layout.setCenter(nonCombatView);
     }
-    public void combatLost(){
-        
+    public void combatLost(){ // TO DO
+        AlertWindow.showInfo("You lost", "You lost biatch");
     }
     public CombatController getCombatController(){
         return combatController;

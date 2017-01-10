@@ -26,6 +26,7 @@ public abstract class Combatable {
     private ObservableList<Dot> dots = FXCollections.observableArrayList();
     
     abstract void setPriority();
+    public abstract String getName();
     
     public StringBinding getSpeedStringBind(){
         return speed.asString();
@@ -67,6 +68,12 @@ public abstract class Combatable {
     public int getEnergy(){
         return energy.get();
     }
+    void addEnergy(int x){
+        energy.set(energy.get() + x);
+        if(energy.get() < 0){
+            energy.set(0);
+        }
+    }
     
     public StringBinding getTmpHealthStringBind(){
         return tmpHealth.asString();
@@ -78,7 +85,12 @@ public abstract class Combatable {
         speed.set(x);
     }
     public int getPriority(){
-        return priority;
+        if(getTmpHealth() > 0){
+            return priority;
+        }else return 0;
+    }
+    void addPriority(int x){
+        priority += x;
     }
     public void setBuffTable(TableView<Buff> table){
         table.setItems(buffs);
@@ -114,18 +126,32 @@ public abstract class Combatable {
         }
         return dmg;
     }
-    void afterTurn(){
+    void afterTurn(ObservableList<BattleLog> battleLogs, int i){
+        String number = "";
+        if(i < 5) number = "(" + i + ")";
+        
+        ArrayList<Buff> buffsToRemove = new ArrayList<Buff>();
         for(Buff buff : buffs){
             if(buff.reduceTime() == 0){
-                buffs.remove(buff);
+                battleLogs.add(new BattleLog(buff.getName() + " wears off from " + getName() + number));
+                buffsToRemove.add(buff);
             }
         }
+        buffs.removeAll(buffsToRemove);
+        
+        ArrayList<Dot> dotsToRemove = new ArrayList<Dot>();
         for(Dot dot : dots){
-            takeRealDamage(dot.getDamage());
+            int dmg = RNG.randomize(dot.getDamage(), Game.RAND);
+            battleLogs.add(new BattleLog(dot.getName() + " deals " + dmg + " damage to " + getName() + number)); // TO DO: obsłużyć HOTY
+            takeRealDamage(dmg);
             if(dot.reduceTime() == 0){
-                dots.remove(dot);
+                battleLogs.add(new BattleLog(dot.getName() + " wears off from " + getName() + number));
+                dotsToRemove.add(dot);
             }
         }
+        dots.removeAll(dotsToRemove);
+        
+        priority = 0;
     }
     
 

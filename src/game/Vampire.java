@@ -14,20 +14,20 @@ public final class Vampire extends Unit {
         super.tmpHealth.set(health.get());
     }
     
-    public BattleLog mainAbility(ArrayList<Unit> units, Monster monster){
-        
+    public BattleLog mainAbility(ArrayList<Unit> units, Monster monster, int i){
+        return new BattleLog("oirsgjoigjoiregre");
     }
     public String getMainAbilityName(){
         return "Blood Flow";
     }
-    public BattleLog secondAbility(ArrayList<Unit> units, Monster monster){
-        
+    public BattleLog secondAbility(ArrayList<Unit> units, Monster monster, int i){
+        return new BattleLog("oirsgjoigjoiregre");
     }
     public String getSecondAbilityName(){
         return "Drain";
     }
-    public BattleLog ultAbility(ArrayList<Unit> units, Monster monster){
-        
+    public BattleLog ultAbility(ArrayList<Unit> units, Monster monster, int i){
+        return new BattleLog("oirsgjoigjoiregre");
     }
     public String getUltAbilityName(){
         return "Night Hunt";

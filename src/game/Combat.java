@@ -22,12 +22,13 @@ public class Combat {
                 monster = new Warrior();
                 break;
             case 1:
-                //monster = new Shadow();
+                monster = new Warrior();
                 break;
             case 2:
-                //monster = new Boss();
+                monster = new Warrior();
                 break;
-                
+            default:
+                monster = new Warrior(); 
         }
         this.game = game;
     }
@@ -52,7 +53,7 @@ public class Combat {
             int ret = -1;
             for(int i = 0; i<5; i++){
                 Unit unit = units.get(i);
-                if(unit.getName() == "flag" || unit.getTmpHealth() == 0) continue;
+                if(!unit.isTargetable()) continue;
                 
                 if(unit.getPriority() > max){
                     max = unit.getPriority();
@@ -70,25 +71,31 @@ public class Combat {
         
         switch(choice){
             case 0:
-                log = unit.mainAbility(units, monster);
+                log = unit.mainAbility(units, monster, i);
                 break;
             case 1:
-                log = unit.secondAbility(units, monster);
+                log = unit.secondAbility(units, monster, i);
                 break;
             case 2:
-                log = unit.ultAbility(units, monster);
+                log = unit.ultAbility(units, monster, i);
                 break;
             default:
-                log = new BattleLog("cos sie zjebalo");
+                log = null;
+                break;
+        }
+        if(log == null){
+            return;
         }
         battleLogs.add(log);
-        unit.afterTurn();
+        unit.afterTurn(battleLogs, i);
         
         game.getCombatController().nextTurn();
     }
     private int monsterAbility(){
-        battleLogs.add(new BattleLog("Potwor jebnal"));
-        monster.afterTurn();
+        BattleLog log = monster.makeMove(units);
+        battleLogs.add(log);
+        monster.afterTurn(battleLogs, 5);
+        
         return getNextActor();
     }
     private boolean checkIfLost(){

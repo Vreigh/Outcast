@@ -29,13 +29,13 @@ public abstract class Unit extends Combatable{
         healthCost.bind(healthUp.multiply(UPGRADE_STACK).add(UPGRADE_COST));
     }
     
-    public abstract BattleLog mainAbility(ArrayList<Unit> units, Monster monster);
+    public abstract BattleLog mainAbility(ArrayList<Unit> units, Monster monster, int i);
     public abstract String getMainAbilityName();
     
-    public abstract BattleLog secondAbility(ArrayList<Unit> units, Monster monster);
+    public abstract BattleLog secondAbility(ArrayList<Unit> units, Monster monster, int i);
     public abstract String getSecondAbilityName();
     
-    public abstract BattleLog ultAbility(ArrayList<Unit> units, Monster monster);
+    public abstract BattleLog ultAbility(ArrayList<Unit> units, Monster monster, int i);
     public abstract String getUltAbilityName();
     
     public abstract String getName();
@@ -90,7 +90,17 @@ public abstract class Unit extends Combatable{
             return 0;
         }
     }
+    public boolean isTargetable(){
+        return ((getName() != "flag") && (getTmpHealth() > 0));
+    }
     void setPriority(){
         super.priority = getSpeed();
+    }
+    
+    boolean checkEnergy(int val){
+        if(energy.get() < val){
+            AlertWindow.showInfo("Not enough energy!", "You need at least " + val + " energy to use that ability ");
+            return false;
+        }else return true;
     }
 }

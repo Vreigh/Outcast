@@ -211,6 +211,9 @@ public class Player {
     public int getProgress(){
         return progress;
     }
+    void incProgress(){
+        progress++;
+    }
     
     ////////////////////////////////////////////////////////////////////////
    public void buildShrine(){
@@ -448,5 +451,13 @@ public class Player {
         Unit unit = units.get(i);
         units.set(i, units.get(j));
         units.set(j, unit);
+    }
+    void combatWon(){
+        progress++;
+        for(Unit unit : units){
+            if((unit.getName() != "flag") && (unit.getTmpHealth() == 0)){
+                unit = new Dummy();
+            }
+        }
     }
 }

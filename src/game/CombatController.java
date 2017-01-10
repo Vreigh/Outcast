@@ -189,9 +189,9 @@ public class CombatController implements Initializable {
     }
     public void setGame(Game game){
         this.game = game;
-        this.combat = game.getCombat();
     }
     public void bind(){
+        combat = game.getCombat();
         Monster monster = combat.getMonster();
         
         combat.setTable(battleLogs);
@@ -304,6 +304,10 @@ public class CombatController implements Initializable {
     ////////////////////////////////////////////////////
     public void nextTurn(){
         int i = combat.getNextActor();
+        
+        if(i == -1){
+            return;
+        }
         
         hideAbilities();
         resetMonsterStats();
