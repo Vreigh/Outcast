@@ -204,7 +204,7 @@ public class CombatController implements Initializable {
         
         for(int i=0; i<5; i++){
             Unit unit = game.getPlayer().getUnit(i);
-            if(unit.getName() != "flag"){
+            if(!unit.getName().equals("flag") ){
                 unitName.get(i).setText(unit.getName());
                 healthLabel.get(i).textProperty().bind(Bindings.concat("Hp: ", unit.getTmpHealthStringBind(), " / ", unit.getHealthStringBind()));
                 energyLabel.get(i).textProperty().bind(Bindings.concat("En: ", unit.getEnergyStringBind()));
@@ -228,7 +228,7 @@ public class CombatController implements Initializable {
     private void resetUnitsStats(){
         for(int i = 0; i<5; i++){
             Unit unit = game.getPlayer().getUnit(i);
-            if(unit.getName() != "flag"){
+            if(!unit.getName().equals("flag")){
                 powerLabel.get(i).setText("P: " + unit.getTmpPower() + " / " + unit.getPower());
                 shieldLabel.get(i).setText("Sh: " + unit.getTmpShield() + " / " + unit.getShield());
             }

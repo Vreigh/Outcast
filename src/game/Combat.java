@@ -40,10 +40,10 @@ public class Combat {
     }
     public int getNextActor(){
         if(checkIfLost()){
-            game.combatLost();
+            game.endCombat(false);
             return -1;
         }else if(checkIfWon()){
-            game.combatWon();
+            game.endCombat(true);
             return -1;
         }else{
             if(allUsed() == 0){
@@ -53,7 +53,7 @@ public class Combat {
             int ret = -1;
             for(int i = 0; i<5; i++){
                 Unit unit = units.get(i);
-                if(!unit.isTargetable()) continue;
+                if(unit.isTargetable() != 1) continue;
                 
                 if(unit.getPriority() > max){
                     max = unit.getPriority();
@@ -100,7 +100,7 @@ public class Combat {
     }
     private boolean checkIfLost(){
         for(Unit unit : units){
-            if(unit.getName() == "flag") continue;
+            if(unit.getName().equals("flag")) continue;
             if(unit.getTmpHealth() > 0){
                 return false;
             }

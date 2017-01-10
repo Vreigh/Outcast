@@ -3,9 +3,10 @@ import java.util.ArrayList;
 
 public final class Plagueman extends Unit {
     
-    public Plagueman(){
+    public Plagueman(Player player){
         super();
         super.setSpeed(75);
+        super.player = player;
         
         super.power.bind(super.powerUp.multiply(10).add(40));
         super.health.bind(super.healthUp.multiply(20).add(80));

@@ -23,10 +23,10 @@ public abstract class Monster extends Combatable {
     
     public int targetNearest(ArrayList<Unit> units){
         for(int i=0; i<5; i++){
-            if(units.get(i).isTargetable()){
+            if(units.get(i).isTargetable() == 1){
                 if(i == 4){
                     return i;
-                }else if(units.get(i + 1).isTargetable()){
+                }else if(units.get(i + 1).isTargetable() == 1){
                     if(RNG.roll(40)){
                         return i + 1;
                     }
@@ -41,7 +41,7 @@ public abstract class Monster extends Combatable {
         int ret = -1;
         for(int i=0; i<5; i++){
             Unit unit = units.get(i);
-            if(unit.isTargetable()){
+            if(unit.isTargetable() == 1){
                 if(unit.getTmpHealth() + unit.getTmpShield() < min){
                    min = unit.getTmpHealth() + unit.getTmpShield();
                    ret = i;
@@ -55,13 +55,14 @@ public abstract class Monster extends Combatable {
         int ret = -2;
         do{
            ret = r.nextInt(5);
-        }while(!units.get(ret).isTargetable());
+        }while(units.get(ret).isTargetable() != 1);
         
         return ret;
     }
     
     void setPriority(){
-        super.priority = RNG.randomize(getSpeed(), 0.25);
+        Random r = new Random();
+        priority = getSpeed() + r.nextInt(6);
     }
     
 }

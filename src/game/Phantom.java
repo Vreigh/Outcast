@@ -3,9 +3,10 @@ import java.util.ArrayList;
 
 public final class Phantom extends Unit {
     
-    public Phantom(){
+    public Phantom(Player player){
         super();
-        super.setSpeed(80);
+        super.setSpeed(75);
+        super.player = player;
         
         super.power.bind(super.powerUp.multiply(10).add(25));
         super.health.bind(super.healthUp.multiply(30).add(120));

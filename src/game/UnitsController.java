@@ -159,7 +159,7 @@ public class UnitsController implements Initializable {
         unitContainer.get(i).getChildren().clear();
         Unit unit = game.getPlayer().getUnit(i);
         
-        if(unit.getName() != "flag"){
+        if(!unit.getName().equals("flag")){
             addAll(i);
             unitName.get(i).setText(unit.getName());
             powerLabel.get(i).textProperty().bind(Bindings.concat("Power(", unit.getPowerUpStringBind(),"): " , unit.getPowerStringBind()));

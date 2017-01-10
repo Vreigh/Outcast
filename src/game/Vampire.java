@@ -3,9 +3,10 @@ import java.util.ArrayList;
 
 public final class Vampire extends Unit {
     
-    public Vampire(){
+    public Vampire(Player player){
         super();
         super.setSpeed(45);
+        super.player = player;
         
         super.power.bind(super.powerUp.multiply(8).add(30));
         super.health.bind(super.healthUp.multiply(40).add(150));

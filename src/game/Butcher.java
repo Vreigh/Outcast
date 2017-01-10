@@ -3,9 +3,11 @@ import java.util.ArrayList;
 
 public final class Butcher extends Unit {
     
-    public Butcher(){
+    public Butcher(Player player){
         super();
         super.setSpeed(30);
+        super.player = player;
+        range = 2;
         
         super.power.bind(super.powerUp.multiply(10).add(25));
         super.health.bind(super.healthUp.multiply(50).add(200));

@@ -197,6 +197,9 @@ public class Player {
     public int getUnitsRealSize(){
         return units.stream().mapToInt(Unit::isReal).sum();
     }
+    public int getAliveUnits(){
+        return units.stream().mapToInt(Unit::isTargetable).sum();
+    }
     private int getFirstEmpty(){
         int x = 0;
         for(Unit unit : units){
@@ -385,19 +388,19 @@ public class Player {
             int x = getFirstEmpty();
             switch(i){
                 case 0:
-                    units.set(x, new Ghoul());
+                    units.set(x, new Ghoul(this));
                     break;
                 case 1:
-                    units.set(x, new Vampire());
+                    units.set(x, new Vampire(this));
                     break;
                 case 2:
-                    units.set(x, new Plagueman());
+                    units.set(x, new Plagueman(this));
                     break;
                 case 3:
-                    units.set(x, new Phantom());
+                    units.set(x, new Phantom(this));
                     break;
                 case 4:
-                    units.set(x, new Butcher());
+                    units.set(x, new Butcher(this));
                     break;
             }
             addCrystals(-Game.summonUnitCryCost);

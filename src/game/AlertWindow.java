@@ -17,6 +17,12 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.geometry.*;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Alert;
+import java.util.Optional;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonBar.*;
+import java.util.ArrayList;
 
 
 
@@ -73,5 +79,74 @@ public class AlertWindow {
         Scene scene = new Scene(layout);
         window.setScene(scene);
         window.show();
+    }
+    public static boolean confirmBox(String header, String cont, String conf){
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("");
+        alert.setHeaderText(header);
+        alert.setContentText(cont);
+
+        ButtonType buttonTypeOne = new ButtonType(conf);
+        ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+
+        alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeCancel);
+        Optional<ButtonType> result = alert.showAndWait();
+        if(result.isPresent() && result.get().getText().equals(conf)){
+            return true;
+        }else return false;
+    }
+    public static int getTarget(ArrayList<Unit> units, Monster monster){
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("");
+        alert.setHeaderText("Choose a target");
+        alert.setContentText("targets");
+        
+        ArrayList<ButtonType> btnTargets = new ArrayList<>();
+        btnTargets.add(new ButtonType(monster.getName()));
+        
+        for(int i=0; i<5; i++){
+            btnTargets.add(new ButtonType(units.get(i).getFullName(i)));
+        }
+        
+        ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().setAll(btnTargets);
+        
+        Optional<ButtonType> result = alert.showAndWait();
+        
+        if(!result.isPresent()) return -1;
+        if(result.get().getText().equals(monster.getName())) return 5;
+        
+        for(int i=0; i<5; i++){
+            if(result.get().getText().equals(units.get(i).getFullName(i))){
+                return i;
+            }
+        }
+        return -1;
+    }
+    public static int getTarget(ArrayList<Unit> units){
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("");
+        alert.setHeaderText("Choose a target");
+        alert.setContentText("targets");
+        
+        ArrayList<ButtonType> btnTargets = new ArrayList<>();
+        
+        for(int i=0; i<5; i++){
+            btnTargets.add(new ButtonType(units.get(i).getFullName(i)));
+        }
+        
+        ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().setAll(btnTargets);
+        
+        Optional<ButtonType> result = alert.showAndWait();
+        
+        if(!result.isPresent()) return -1;
+        
+        for(int i=0; i<5; i++){
+            if(result.get().getText().equals(units.get(i).getFullName(i))){
+                return i;
+            }
+        }
+        return -1;
     }
 }

@@ -1,6 +1,5 @@
 package game;
 import java.util.ArrayList;
-import java.util.ArrayList;
 import java.util.Random;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
@@ -152,6 +151,10 @@ public abstract class Combatable {
         dots.removeAll(dotsToRemove);
         
         priority = 0;
+    }
+    public Buff findBuff(String name){
+        for(Buff buff : buffs) if(buff.getName().equals(name)) return buff;
+        return null;
     }
     
 

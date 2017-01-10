@@ -17,6 +17,12 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.Alert;
+import java.util.Optional;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonBar.*;
+import javafx.scene.control.Button;
 
 /**
  *
@@ -220,12 +226,21 @@ public class Game extends Application {
         }
         
     }
-    public void combatWon(){
+    public void endCombat(boolean won){
+        if(won){
+            boolean dummy = AlertWindow.confirmBox("Victory!", "You have won your battle!", "Confirm!");
+            combatWon();
+        }else{
+            boolean dummy = AlertWindow.confirmBox("Defeat!", "You have lost your battle!", "Confirm...");
+            combatLost();
+        }
+    }
+    private void combatWon(){
         isCombat = false;
         player.combatWon();
         layout.setCenter(nonCombatView);
     }
-    public void combatLost(){ // TO DO
+    private void combatLost(){ // TO DO
         AlertWindow.showInfo("You lost", "You lost biatch");
     }
     public CombatController getCombatController(){

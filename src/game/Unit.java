@@ -23,6 +23,9 @@ public abstract class Unit extends Combatable{
     IntegerProperty shieldCost = new SimpleIntegerProperty(0);
     IntegerProperty healthCost = new SimpleIntegerProperty(0);
     
+    int range = 4;
+    Player player;
+    
     public Unit(){
         powerCost.bind(powerUp.multiply(UPGRADE_STACK).add(UPGRADE_COST));
         shieldCost.bind(shieldUp.multiply(UPGRADE_STACK).add(UPGRADE_COST));
@@ -70,6 +73,16 @@ public abstract class Unit extends Combatable{
     public int getHealthCost(){
         return healthCost.get();
     }
+    public String getFullName(int i){
+        return getName() + "(" + ++i  + ")";
+    }
+    public boolean hit(int i){
+        if(player.getAliveUnits() == 1) return true;
+        return RNG.roll(100 -25*(i - range));
+    }
+    public String miss(int i){
+        return getFullName(i) + "was too far away and missed!";
+    }
     
     
     void incPower(){
@@ -84,17 +97,25 @@ public abstract class Unit extends Combatable{
     }
     
     public int isReal(){
-        if(getName() != "flag"){
+        if(!getName().equals("flag") ){
             return 1;
         }else{
             return 0;
         }
     }
-    public boolean isTargetable(){
-        return ((getName() != "flag") && (getTmpHealth() > 0));
+    public int isAlive(){
+        if(getTmpHealth() > 0){
+            return 1;
+        }else return 0;
+    }
+    public int isTargetable(){
+        if((isReal() == 1) && (isAlive() == 1)){
+            return 1;
+        }else return 0;
     }
     void setPriority(){
-        super.priority = getSpeed();
+        Random r = new Random();
+        priority = getSpeed() + r.nextInt(6);
     }
     
     boolean checkEnergy(int val){
