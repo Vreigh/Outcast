@@ -45,7 +45,7 @@ public class Game extends Application {
     public static final int summonCryCost = 50;
     public static final int summonApCost = 5;
     
-    public static final int summonUnitCryCost = 200;
+    public static final int summonUnitCryCost = 500;
     public static final int summonUnitApCost = 10;
     public static final int upgradeUnitApCost = 5;
     
@@ -215,7 +215,7 @@ public class Game extends Application {
         player.endTurn(round.get() - 1);
     }
     public void startCombat(){
-        if(player.getUnitsRealSize() > 0){
+        if(player.getUnitsSize() > 0){
             combat = new Combat(this);
             isCombat = true;
             layout.setCenter(combatView);

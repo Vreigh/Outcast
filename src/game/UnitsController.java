@@ -159,7 +159,7 @@ public class UnitsController implements Initializable {
         unitContainer.get(i).getChildren().clear();
         Unit unit = game.getPlayer().getUnit(i);
         
-        if(!unit.getName().equals("flag")){
+        if(unit != null){
             addAll(i);
             unitName.get(i).setText(unit.getName());
             powerLabel.get(i).textProperty().bind(Bindings.concat("Power(", unit.getPowerUpStringBind(),"): " , unit.getPowerStringBind()));
@@ -220,48 +220,51 @@ public class UnitsController implements Initializable {
     public void infoGhoul(){
         //
     }
-    public void infoPhantom(){
-        //
-    }
     public void infoVampire(){
-        //
-    }
-    public void infoButcher(){
         //
     }
     public void infoPlagueman(){
         //
     }
+    public void infoPhantom(){
+        //
+    }
+    
+    public void infoButcher(){
+        //
+    }
     
     public void summonGhoul(){
-        int i = game.getPlayer().summonUnit(0);
-        if(i != 5){
-            bindUnit(i);
-        }
-    }
-    public void summonPhantom(){
-        int i = game.getPlayer().summonUnit(3);
-        if(i != 5){
-            bindUnit(i);
+        Unit i = game.getPlayer().summonUnit(0);
+        if(i != null){
+            bindUnit(i.getPosition());
         }
     }
     public void summonVampire(){
-        int i = game.getPlayer().summonUnit(1);
-        if(i != 5){
-            bindUnit(i);
-        }
-    }
-    public void summonButcher(){
-        int i = game.getPlayer().summonUnit(4);
-        if(i != 5){
-            bindUnit(i);
+        Unit i = game.getPlayer().summonUnit(1);
+        if(i != null){
+            bindUnit(i.getPosition());
         }
     }
     public void summonPlagueman(){
-        int i = game.getPlayer().summonUnit(2);
-        if(i != 5){
-            bindUnit(i);
+        Unit i = game.getPlayer().summonUnit(2);
+        if(i != null){
+            bindUnit(i.getPosition());
         }
     }
+    public void summonPhantom(){
+        Unit i = game.getPlayer().summonUnit(3);
+        if(i != null){
+            bindUnit(i.getPosition());
+        }
+    }
+    
+    public void summonButcher(){
+        Unit i = game.getPlayer().summonUnit(4);
+        if(i != null){
+            bindUnit(i.getPosition());
+        }
+    }
+    
     
 }

@@ -3,31 +3,30 @@ import java.util.ArrayList;
 
 public final class Phantom extends Unit {
     
-    public Phantom(Player player){
-        super();
+    public Phantom(Armory armory, int i){
+        super(armory, i);
         super.setSpeed(75);
-        super.player = player;
         
-        super.power.bind(super.powerUp.multiply(10).add(25));
-        super.health.bind(super.healthUp.multiply(30).add(120));
-        super.shield.bind(super.shieldUp.multiply(15).add(10));
+        super.power.bind(super.powerUp.multiply(7).add(35));
+        super.health.bind(super.healthUp.multiply(25).add(100));
+        super.shield.bind(super.shieldUp.multiply(10).add(10));
         
         super.tmpHealth.set(health.get());
     }
     
-    public BattleLog mainAbility(ArrayList<Unit> units, Monster monster, int i){
+    public BattleLog mainAbility(Combat combat, Armory armory, Monster monster){
         return new BattleLog("oirsgjoigjoiregre");
     }
     public String getMainAbilityName(){
         return "Power Shift";
     }
-    public BattleLog secondAbility(ArrayList<Unit> units, Monster monster, int i){
+    public BattleLog secondAbility(Combat combat, Armory armory, Monster monster){
         return new BattleLog("oirsgjoigjoiregre");
     }
     public String getSecondAbilityName(){
         return "Freeze";
     }
-    public BattleLog ultAbility(ArrayList<Unit> units, Monster monster, int i){
+    public BattleLog ultAbility(Combat combat, Armory armory, Monster monster){
         return new BattleLog("oirsgjoigjoiregre");
     }
     public String getUltAbilityName(){

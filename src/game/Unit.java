@@ -14,6 +14,7 @@ public abstract class Unit extends Combatable{
     
     public static final int UPGRADE_COST = 100;
     public static final int UPGRADE_STACK = 20;
+    public static final int UPGRADE_SHIELD_STACK = 50;
     
     IntegerProperty powerUp = new SimpleIntegerProperty(0); // te pola nie beda private bo az prosza sie o nie bycie private
     IntegerProperty shieldUp = new SimpleIntegerProperty(0);
@@ -23,22 +24,25 @@ public abstract class Unit extends Combatable{
     IntegerProperty shieldCost = new SimpleIntegerProperty(0);
     IntegerProperty healthCost = new SimpleIntegerProperty(0);
     
-    int range = 4;
-    Player player;
+    int position;
     
-    public Unit(){
+    Armory armory;
+    
+    public Unit(Armory armory, int i){
+        this.armory = armory;
+        position = i;
         powerCost.bind(powerUp.multiply(UPGRADE_STACK).add(UPGRADE_COST));
-        shieldCost.bind(shieldUp.multiply(UPGRADE_STACK).add(UPGRADE_COST));
+        shieldCost.bind(shieldUp.multiply(UPGRADE_SHIELD_STACK).add(UPGRADE_COST));
         healthCost.bind(healthUp.multiply(UPGRADE_STACK).add(UPGRADE_COST));
     }
     
-    public abstract BattleLog mainAbility(ArrayList<Unit> units, Monster monster, int i);
+    public abstract BattleLog mainAbility(Combat combat, Armory armory, Monster monster);
     public abstract String getMainAbilityName();
     
-    public abstract BattleLog secondAbility(ArrayList<Unit> units, Monster monster, int i);
+    public abstract BattleLog secondAbility(Combat combat, Armory armory, Monster monster);
     public abstract String getSecondAbilityName();
     
-    public abstract BattleLog ultAbility(ArrayList<Unit> units, Monster monster, int i);
+    public abstract BattleLog ultAbility(Combat combat, Armory armory, Monster monster);
     public abstract String getUltAbilityName();
     
     public abstract String getName();
@@ -73,15 +77,19 @@ public abstract class Unit extends Combatable{
     public int getHealthCost(){
         return healthCost.get();
     }
-    public String getFullName(int i){
-        return getName() + "(" + ++i  + ")";
+    public String getFullName(){
+        return getName() + "(" + (getPosition() + 1)  + ")";
     }
-    public boolean hit(int i){
-        if(player.getAliveUnits() == 1) return true;
-        return RNG.roll(100 -25*(i - range));
+    
+    public int getPosition(){
+        return position;
     }
-    public String miss(int i){
-        return getFullName(i) + "was too far away and missed!";
+    
+    public boolean hit(int range){
+        return RNG.roll(100 -25*(position - armory.getOffset() - range));
+    }
+    public String miss(){
+        return getFullName() + "was too far away and missed!";
     }
     
     
@@ -96,20 +104,8 @@ public abstract class Unit extends Combatable{
         super.tmpHealth.set(health.get());
     }
     
-    public int isReal(){
-        if(!getName().equals("flag") ){
-            return 1;
-        }else{
-            return 0;
-        }
-    }
     public int isAlive(){
         if(getTmpHealth() > 0){
-            return 1;
-        }else return 0;
-    }
-    public int isTargetable(){
-        if((isReal() == 1) && (isAlive() == 1)){
             return 1;
         }else return 0;
     }

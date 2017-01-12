@@ -10,10 +10,10 @@ public class BattleLog {
         return content;
     }
     
-    public static final String getMonsterDmgLog(String monster, String ability, Unit unit, int dmgDone, int i){
+    public static final String getMonsterDmgLog(String monster, String ability, Unit unit, int dmgDone){
         String killed = "";
         if(unit.getTmpHealth() == 0) killed = " killing it";
-        return monster + " used " + ability + " dealing " + dmgDone + " damage to unit " + unit.getFullName(i) + killed;
+        return monster + " used " + ability + " dealing " + dmgDone + " damage to unit " + unit.getFullName() + killed;
     }
     public static final String getSelfBuffLog(String user, String ability, String name){
         return user + " used " + ability + " putting " + name + " on itself!";
@@ -22,7 +22,7 @@ public class BattleLog {
         return monster + " used " + ability + " dealing " + dmgDone + " damage to your units!";
     }
     
-    public static final String getUnitDmgLog(String unit, String ability, int i, int dmgDone){
+    public static final String getUnitDmgLog(String unit, String ability, int dmgDone){
         return unit + " used " + ability + " dealing " + dmgDone + " damage";
         
     }

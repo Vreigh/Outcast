@@ -32,7 +32,7 @@ public class Player {
     private IntegerProperty spiritsCap = new SimpleIntegerProperty();
     private IntegerProperty maxAp = new SimpleIntegerProperty();
     
-    private ArrayList<Unit> units;
+    private Armory armory;
     private ArrayList<Seed> seeds;
     private ArrayList<Upgrade> upgrades;
     private Cementary cementary;
@@ -42,10 +42,7 @@ public class Player {
     public Player(){
         cementary = new Cementary();
         
-        units = new ArrayList<Unit>();
-        for(int i=0; i<5; i++){
-            units.add(new Dummy());
-        }
+        armory = new Armory();
         
         seeds = new ArrayList<Seed>();
         
@@ -173,7 +170,7 @@ public class Player {
     public Cementary getCementary(){
         return cementary;
     }
-    public ArrayList<Seed> getSeeds(){ //TO MI SIĘ W CHUJ NIE PODOBA
+    public ArrayList<Seed> getSeeds(){ // luka
         return seeds;
     }
     public void setTable(TableView<Log> table){
@@ -189,33 +186,21 @@ public class Player {
                 up.getRequiredStringBind(), ", spirits working: ", up.getFillProperty());
     }
     public Unit getUnit(int i){
-        return units.get(i);
+        return armory.get(i);
     }
-    ArrayList<Unit> getUnits(){ // potrzebuje tego w obrębie packega zeby dawac do Combatu
-        return units;
+    Armory getArmory(){ // potrzebuje tego w obrębie packega zeby dawac do Combatu
+        return armory;
     }
-    public int getUnitsRealSize(){
-        return units.stream().mapToInt(Unit::isReal).sum();
-    }
-    public int getAliveUnits(){
-        return units.stream().mapToInt(Unit::isTargetable).sum();
-    }
-    private int getFirstEmpty(){
-        int x = 0;
-        for(Unit unit : units){
-            if(unit.getName() == "flag"){
-                break;
-            }else{
-                x++;
-            }
-        }
-        return x;
-    }
+    
     public int getProgress(){
         return progress;
     }
     void incProgress(){
         progress++;
+    }
+    
+    public int getUnitsSize(){
+        return armory.size();
     }
     
     ////////////////////////////////////////////////////////////////////////
@@ -374,42 +359,24 @@ public class Player {
             AlertWindow.showInfo("you lived another day!", info);
         }else AlertWindow.showInfo("u dead", "You died");
     }
-    public int summonUnit(int i){
+    public Unit summonUnit(int i){
         if(ap.get() < Game.summonUnitApCost){
             AlertWindow.showInfo("not enough Action Points", "You need at least " + Game.summonUnitApCost + " Action Point to do that");
-            return 5;
+            return null;
         }else if(crystals.get() < Game.summonUnitCryCost){
             AlertWindow.showInfo("not enough Crystals", "You need at least " + Game.summonUnitCryCost + " Crystals to do that");
-            return 5;
-        }else if(getUnitsRealSize() >= 5){
+            return null;
+        }else if(armory.size() >= 5){
             AlertWindow.showInfo("limit reached", "You already have 5 units!");
-            return 5;
+            return null;
         }else{
-            int x = getFirstEmpty();
-            switch(i){
-                case 0:
-                    units.set(x, new Ghoul(this));
-                    break;
-                case 1:
-                    units.set(x, new Vampire(this));
-                    break;
-                case 2:
-                    units.set(x, new Plagueman(this));
-                    break;
-                case 3:
-                    units.set(x, new Phantom(this));
-                    break;
-                case 4:
-                    units.set(x, new Butcher(this));
-                    break;
-            }
             addCrystals(-Game.summonUnitCryCost);
             addAp(-Game.summonUnitApCost);
-            return x;
+            return armory.addUnit(i);
         }
     }
     public void upPower(int i){
-        Unit unit = units.get(i);
+        Unit unit = armory.get(i);
         int cost = unit.getPowerCost();
         
         if(ap.get() < Game.upgradeUnitApCost){
@@ -423,7 +390,7 @@ public class Player {
         }
     }
     public void upShield(int i){
-        Unit unit = units.get(i);
+        Unit unit = armory.get(i);
         int cost = unit.getShieldCost();
         
         if(ap.get() < Game.upgradeUnitApCost){
@@ -437,7 +404,7 @@ public class Player {
         }
     }
     public void upHealth(int i){
-        Unit unit = units.get(i);
+        Unit unit = armory.get(i);
         int cost = unit.getHealthCost();
         
         if(ap.get() < Game.upgradeUnitApCost){
@@ -451,16 +418,10 @@ public class Player {
         }
     }
     public void swapUnits(int i, int j){
-        Unit unit = units.get(i);
-        units.set(i, units.get(j));
-        units.set(j, unit);
+        armory.swap(i, j);
     }
     void combatWon(){
         progress++;
-        for(Unit unit : units){
-            if((unit.getName() != "flag") && (unit.getTmpHealth() == 0)){
-                unit = new Dummy();
-            }
-        }
+        armory.reset();
     }
 }

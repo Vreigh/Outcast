@@ -7,62 +7,59 @@ public abstract class Monster extends Combatable {
     
     public abstract String getName();
     
-    public abstract BattleLog firstAbility(ArrayList<Unit> units);
+    public abstract BattleLog firstAbility(Combat combat, Armory armory);
     public abstract String getFirstAbilityName();
     
-    public abstract BattleLog secondAbility(ArrayList<Unit> units);
+    public abstract BattleLog secondAbility(Combat combat, Armory armory);
     public abstract String getSecondAbilityName();
     
-    public abstract BattleLog thirdAbility(ArrayList<Unit> units);
+    public abstract BattleLog thirdAbility(Combat combat, Armory armory);
     public abstract String getThirdAbilityName();
     
-    public abstract BattleLog ultAbility(ArrayList<Unit> units);
+    public abstract BattleLog ultAbility(Combat combat, Armory armory);
     public abstract String getUltAbilityName();
     
-    public abstract BattleLog makeMove(ArrayList<Unit> units);
+    public abstract BattleLog makeMove(Combat combat, Armory armory);
     
-    public int targetNearest(ArrayList<Unit> units){
-        for(int i=0; i<5; i++){
-            if(units.get(i).isTargetable() == 1){
-                if(i == 4){
-                    return i;
-                }else if(units.get(i + 1).isTargetable() == 1){
-                    if(RNG.roll(40)){
-                        return i + 1;
-                    }
-                }
-                return i;
-            }
+    public Unit targetNearest(Armory armory){
+        int of = armory.getOffset();
+        Unit unit = armory.get(of + 1);
+        if((unit != null) && (unit.isAlive() == 1) && (RNG.roll(40))){
+            return unit;
+        }else{
+            return armory.get(of);
         }
-        return -1;
     }
-    public int targetWeakest(ArrayList<Unit> units){
+    public Unit targetWeakest(Armory armory){
         int min = 1000;
-        int ret = -1;
-        for(int i=0; i<5; i++){
-            Unit unit = units.get(i);
-            if(unit.isTargetable() == 1){
-                if(unit.getTmpHealth() + unit.getTmpShield() < min){
-                   min = unit.getTmpHealth() + unit.getTmpShield();
-                   ret = i;
+        Unit ret = null;
+        for(Unit unit : armory.getUnits()){
+            if(unit.isAlive() == 1){
+                if(unit.getSurvability() < min){
+                    ret = unit;
+                    min = unit.getSurvability();
                 }
             }
         }
-        return ret;
-    }
-    public int targetRandom(ArrayList<Unit> units){
-        Random r = new Random();
-        int ret = -2;
-        do{
-           ret = r.nextInt(5);
-        }while(units.get(ret).isTargetable() != 1);
         
         return ret;
+    }
+    public Unit targetRandom(Armory armory){
+        Random r = new Random();
+        Unit unit = null;
+        do{
+           unit = armory.get(r.nextInt(5));
+        } while((unit == null) || (unit.isAlive() == 0));
+        
+        return unit;
     }
     
     void setPriority(){
         Random r = new Random();
         priority = getSpeed() + r.nextInt(6);
+    }
+    public String getFullName(){
+        return getName();
     }
     
 }

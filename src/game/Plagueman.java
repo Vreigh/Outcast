@@ -3,31 +3,30 @@ import java.util.ArrayList;
 
 public final class Plagueman extends Unit {
     
-    public Plagueman(Player player){
-        super();
-        super.setSpeed(75);
-        super.player = player;
+    public Plagueman(Armory armory, int i){
+        super(armory, i);
+        super.setSpeed(60);
         
-        super.power.bind(super.powerUp.multiply(10).add(40));
+        super.power.bind(super.powerUp.multiply(9).add(45));
         super.health.bind(super.healthUp.multiply(20).add(80));
         super.shield.bind(super.shieldUp.multiply(10).add(10));
         
         super.tmpHealth.set(health.get());
     }
     
-    public BattleLog mainAbility(ArrayList<Unit> units, Monster monster, int i){
+    public BattleLog mainAbility(Combat combat, Armory armory, Monster monster){
         return new BattleLog("oirsgjoigjoiregre");
     }
     public String getMainAbilityName(){
-        return "Poison";
+        return "Plague Touch";
     }
-    public BattleLog secondAbility(ArrayList<Unit> units, Monster monster, int i){
+    public BattleLog secondAbility(Combat combat, Armory armory, Monster monster){
         return new BattleLog("oirsgjoigjoiregre");
     }
     public String getSecondAbilityName(){
         return "Blight";
     }
-    public BattleLog ultAbility(ArrayList<Unit> units, Monster monster, int i){
+    public BattleLog ultAbility(Combat combat, Armory armory, Monster monster){
         return new BattleLog("oirsgjoigjoiregre");
     }
     public String getUltAbilityName(){

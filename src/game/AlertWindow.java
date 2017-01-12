@@ -104,11 +104,10 @@ public class AlertWindow {
         ArrayList<ButtonType> btnTargets = new ArrayList<>();
         btnTargets.add(new ButtonType(monster.getName()));
         
-        for(int i=0; i<5; i++){
-            btnTargets.add(new ButtonType(units.get(i).getFullName(i)));
+        for(Unit unit : units){
+            btnTargets.add(new ButtonType(unit.getFullName()));
         }
-        
-        ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+        btnTargets.add(new ButtonType("Cancel", ButtonData.CANCEL_CLOSE));
         alert.getButtonTypes().setAll(btnTargets);
         
         Optional<ButtonType> result = alert.showAndWait();
@@ -117,7 +116,7 @@ public class AlertWindow {
         if(result.get().getText().equals(monster.getName())) return 5;
         
         for(int i=0; i<5; i++){
-            if(result.get().getText().equals(units.get(i).getFullName(i))){
+            if(result.get().getText().equals(units.get(i).getFullName())){
                 return i;
             }
         }
@@ -131,22 +130,23 @@ public class AlertWindow {
         
         ArrayList<ButtonType> btnTargets = new ArrayList<>();
         
-        for(int i=0; i<5; i++){
-            btnTargets.add(new ButtonType(units.get(i).getFullName(i)));
+        for(Unit unit : units){
+            btnTargets.add(new ButtonType(unit.getFullName()));
         }
         
-        ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+        btnTargets.add(new ButtonType("Cancel", ButtonData.CANCEL_CLOSE));
         alert.getButtonTypes().setAll(btnTargets);
         
         Optional<ButtonType> result = alert.showAndWait();
         
         if(!result.isPresent()) return -1;
         
-        for(int i=0; i<5; i++){
-            if(result.get().getText().equals(units.get(i).getFullName(i))){
-                return i;
+        for(Unit unit : units){
+            if(result.get().getText().equals(unit.getFullName())){
+                return unit.getPosition();
             }
         }
+        
         return -1;
     }
 }

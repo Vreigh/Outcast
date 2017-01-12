@@ -26,6 +26,7 @@ public abstract class Combatable {
     
     abstract void setPriority();
     public abstract String getName();
+    public abstract String getFullName();
     
     public StringBinding getSpeedStringBind(){
         return speed.asString();
@@ -73,13 +74,20 @@ public abstract class Combatable {
             energy.set(0);
         }
     }
-    
     public StringBinding getTmpHealthStringBind(){
         return tmpHealth.asString();
     }
     public int getTmpHealth(){
         return tmpHealth.get();
     }
+    
+    public int getHealthProc(){
+        return 100*tmpHealth.get() / health.get();
+    }
+    public int getSurvability(){
+        return getTmpHealth() + getTmpShield();
+    }
+    
     void setSpeed(int x){
         speed.set(x);
     }
@@ -125,14 +133,11 @@ public abstract class Combatable {
         }
         return dmg;
     }
-    void afterTurn(ObservableList<BattleLog> battleLogs, int i){
-        String number = "";
-        if(i < 5) number = "(" + i + ")";
-        
+    void afterTurn(ObservableList<BattleLog> battleLogs){
         ArrayList<Buff> buffsToRemove = new ArrayList<Buff>();
         for(Buff buff : buffs){
             if(buff.reduceTime() == 0){
-                battleLogs.add(new BattleLog(buff.getName() + " wears off from " + getName() + number));
+                battleLogs.add(new BattleLog(buff.getName() + " wears off from " + getFullName()));
                 buffsToRemove.add(buff);
             }
         }
@@ -141,10 +146,10 @@ public abstract class Combatable {
         ArrayList<Dot> dotsToRemove = new ArrayList<Dot>();
         for(Dot dot : dots){
             int dmg = RNG.randomize(dot.getDamage(), Game.RAND);
-            battleLogs.add(new BattleLog(dot.getName() + " deals " + dmg + " damage to " + getName() + number)); // TO DO: obsłużyć HOTY
+            battleLogs.add(new BattleLog(dot.getName() + " deals " + dmg + " damage to " + getFullName())); // TO DO: obsłużyć HOTY
             takeRealDamage(dmg);
             if(dot.reduceTime() == 0){
-                battleLogs.add(new BattleLog(dot.getName() + " wears off from " + getName() + number));
+                battleLogs.add(new BattleLog(dot.getName() + " wears off from " + getFullName()));
                 dotsToRemove.add(dot);
             }
         }
@@ -155,6 +160,10 @@ public abstract class Combatable {
     public Buff findBuff(String name){
         for(Buff buff : buffs) if(buff.getName().equals(name)) return buff;
         return null;
+    }
+    void reset(){
+        tmpHealth.set(health.get());
+        buffs.clear();
     }
     
 
