@@ -8,8 +8,8 @@ public final class Warrior extends Monster {
         setSpeed(60);
         
         super.power.set(80);
-        super.health.set(450);
-        super.shield.set(-25);
+        super.health.set(750);
+        super.shield.set(-20);
         
         super.tmpHealth.set(health.get());
     }
@@ -74,7 +74,7 @@ public final class Warrior extends Monster {
     }
     
     public BattleLog makeMove(Combat combat, Armory armory){
-        if((energy.get() > 25) &&(armory.getAlive() != 1)){ // ulti gdy wiecej niz 25 energii, im mniej hp tym lepiej, ale musi byc przynajmniej 75 proc szans
+        if((energy.get() >= 25) &&(armory.getAlive() != 1)){ // ulti gdy wiecej niz 25 energii, im mniej hp tym lepiej, ale musi byc przynajmniej 75 proc szans
             int roll = energy.get();
             int rage = 0;
             int proc = getHealthProc();
@@ -93,18 +93,20 @@ public final class Warrior extends Monster {
             }
         }
         
+        Unit unit = targetWeakest(armory);
         
-        if(energy.get() > 25){ // execute na jednostce ktora ma malo hp - SŁABOŚĆ : rzuca się tępo na ranne jednostki, niewazne ile mają shielda
+        if(energy.get() >= 25){ // execute na jednostce ktora ma malo hp - SŁABOŚĆ : rzuca się tępo na ranne jednostki, niewazne ile mają shielda
             int tmp = 0;
-            Unit unit = targetWeakest(armory);
-            
             if(getTmpPower() > unit.getTmpHealth()){
                 tmp += 30 + 2*(getTmpPower() - unit.getTmpHealth());
             }
-            
             if(RNG.roll(energy.get() + tmp)){
                 return thirdAbility(combat, armory);
             }
+        }
+        
+        if((getTmpPower() > unit.getSurvability()) && (armory.getAlive() == 1)){ // jesli nie bylo execute a została jedna umierajaca jednostka
+            return firstAbility(combat, armory);
         }
         
         Buff buff = findBuff(getSecondAbilityName()); // rzuci na siebie shielda

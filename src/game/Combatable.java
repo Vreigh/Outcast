@@ -164,6 +164,8 @@ public abstract class Combatable {
     void reset(){
         tmpHealth.set(health.get());
         buffs.clear();
+        priority = 0;
+        energy.set(0);
     }
     
 

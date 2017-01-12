@@ -92,7 +92,6 @@ public abstract class Unit extends Combatable{
         return getFullName() + "was too far away and missed!";
     }
     
-    
     void incPower(){
         powerUp.set(powerUp.get() + 1);
     }

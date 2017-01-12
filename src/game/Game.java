@@ -82,10 +82,6 @@ public class Game extends Application {
     
     private boolean isCombat = false;
     
-    public static final String firstMonsterText = "first";
-    public static final String secondMonsterText = "second";
-    public static final String thirdMonsterText = "third";
-    
     public static final double RAND = 0.2; // podstawowe wahanie obrażeń
     
     @Override
@@ -237,8 +233,8 @@ public class Game extends Application {
     }
     private void combatWon(){
         isCombat = false;
-        player.combatWon();
         layout.setCenter(nonCombatView);
+        player.combatWon(this);
     }
     private void combatLost(){ // TO DO
         AlertWindow.showInfo("You lost", "You lost biatch");

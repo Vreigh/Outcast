@@ -18,6 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.shape.Rectangle;
 
 public class CombatController implements Initializable {
     
@@ -32,6 +33,8 @@ public class CombatController implements Initializable {
     @FXML private Label monsterPower;
     @FXML private Label monsterShield;
     @FXML private Label monsterHealth;
+    @FXML private Pane monsterHealthPane;
+    @FXML private Rectangle monsterHealthRec;
 
     private TableView<BattleLog> battleLogs = new TableView<BattleLog>();
     
@@ -40,6 +43,9 @@ public class CombatController implements Initializable {
     
     private ArrayList<Label> powerLabel = new ArrayList<Label>();
     private ArrayList<Label> shieldLabel = new ArrayList<Label>();
+    private ArrayList<Pane> healthPane = new ArrayList<Pane>();
+    
+    private ArrayList<Rectangle> healthRec = new ArrayList<Rectangle>();
     private ArrayList<Label> healthLabel = new ArrayList<Label>();
     private ArrayList<Label> energyLabel = new ArrayList<Label>();
     
@@ -103,6 +109,15 @@ public class CombatController implements Initializable {
             healthLabel.get(i).setPrefWidth(160);
             healthLabel.get(i).setAlignment(Pos.CENTER);
             
+            healthRec.add(new Rectangle(160, 20));
+            healthRec.get(i).getStyleClass().add("green");
+            
+            healthPane.add(new Pane());
+            healthPane.get(i).setPrefHeight(20);
+            healthPane.get(i).setPrefWidth(160);
+            
+            healthPane.get(i).getChildren().addAll(healthRec.get(i), healthLabel.get(i));
+            
             energyLabel.add(new Label("100 / 100"));
             energyLabel.get(i).setPrefHeight(20);
             energyLabel.get(i).setPrefWidth(160);
@@ -142,7 +157,7 @@ public class CombatController implements Initializable {
                     unitName.get(i),
                     powerLabel.get(i),
                     shieldLabel.get(i),
-                    healthLabel.get(i),
+                    healthPane.get(i),
                     energyLabel.get(i),
                     showBox.get(i)
             );
@@ -224,6 +239,20 @@ public class CombatController implements Initializable {
         
         monsterPower.setText("P: " + monster.getTmpPower() + " / " + monster.getPower());
         monsterShield.setText("Sh: " + monster.getTmpShield() + " / " + monster.getShield());
+        
+        int proc = monster.getHealthProc();
+        int width = proc * 4;
+        monsterHealthRec.setWidth(width);
+        monsterHealthRec.getStyleClass().clear();
+        String name = "green";
+        if(proc < 25){
+            name = "red";
+        }else if(proc < 33){
+            name = "orange";
+        }else if(proc < 50){
+            name = "yellow";
+        }
+        monsterHealthRec.getStyleClass().add(name);
     }
     private void resetUnitsStats(){
         for(int i = 0; i<5; i++){
@@ -231,6 +260,20 @@ public class CombatController implements Initializable {
             if( unit != null){
                 powerLabel.get(i).setText("P: " + unit.getTmpPower() + " / " + unit.getPower());
                 shieldLabel.get(i).setText("Sh: " + unit.getTmpShield() + " / " + unit.getShield());
+                
+                int proc = unit.getHealthProc();
+                int width = (int)(proc * 1.6);
+                healthRec.get(i).setWidth(width);
+                healthRec.get(i).getStyleClass().clear();
+                String name = "green";
+                if(proc < 25){
+                    name = "red";
+                }else if(proc < 33){
+                    name = "orange";
+                }else if(proc < 50){
+                    name = "yellow";
+                }
+                healthRec.get(i).getStyleClass().add(name);
             }
         }
     }

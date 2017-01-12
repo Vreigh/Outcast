@@ -1,7 +1,8 @@
 package game;
+import javafx.beans.property.*;
 
 public class Buff {
-    private int time;
+    private IntegerProperty time;
     private int power;
     private int shield;
     private String name;
@@ -9,11 +10,14 @@ public class Buff {
     public Buff(int time, int power, int shield, String name){
         this.power = power;
         this.shield = shield;
-        this.time = time;
+        this.time = new SimpleIntegerProperty(time);
         this.name = name;
     }
-    public int getTime(){
+    public IntegerProperty timeProperty(){
         return time;
+    }
+    public int getTime(){
+        return time.get();
     }
     public int getPower(){
         return power;
@@ -25,6 +29,7 @@ public class Buff {
         return name;
     }
     int reduceTime(){
-        return --time;
+        time.set(time.get() - 1);
+        return time.get();
     }
 }

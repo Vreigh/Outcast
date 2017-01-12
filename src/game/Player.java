@@ -420,8 +420,9 @@ public class Player {
     public void swapUnits(int i, int j){
         armory.swap(i, j);
     }
-    void combatWon(){
-        progress++;
+    void combatWon(Game game){
+        logs.add(new Log(game.getRound(), Lore.getCombatWonLore(progress++)));
         armory.reset();
+        game.endTurn();
     }
 }

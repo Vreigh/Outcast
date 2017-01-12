@@ -13,3 +13,15 @@
 .summonBar{
     -fx-background-color: bisque;
 }
+.green{
+    -fx-fill: green;
+}
+.yellow{
+    -fx-fill: yellow;
+}
+.orange{
+    -fx-fill: orange;
+}
+.red{
+    -fx-fill: red;
+}

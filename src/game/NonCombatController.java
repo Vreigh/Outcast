@@ -37,17 +37,7 @@ public class NonCombatController implements Initializable {
         this.game = game;
     }
     public void bind(){
-        switch(game.getPlayer().getProgress()){
-            case 0:
-                textDisplay.setText(Game.firstMonsterText);
-                break;
-            case 1:
-                textDisplay.setText(Game.secondMonsterText);
-                break;
-            case 2:
-                textDisplay.setText(Game.thirdMonsterText);
-                break;
-        }
+        textDisplay.setText(Lore.getPreCombatLore(game.getPlayer().getProgress()));
     }
     public void startCombat(){
         game.startCombat();

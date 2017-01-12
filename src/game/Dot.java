@@ -1,17 +1,22 @@
 package game;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 
 public class Dot {
-    private int time;
+    private IntegerProperty time;
     private int damage;
     private String name;
     
     public Dot(int time, int damage, String name){
-        this.time = time;
+        this.time = new SimpleIntegerProperty(time);
         this.damage = damage;
         this.name = name;
     }
-    public int getTime(){
+    public IntegerProperty timeProperty(){
         return time;
+    }
+    public int getTime(){
+        return time.get();
     }
     public int getDamage(){
         return damage;
@@ -20,7 +25,8 @@ public class Dot {
         return name;
     }
     int reduceTime(){
-        return --time;
+        time.set(time.get() - 1);
+        return time.get();
     }
     
 }
