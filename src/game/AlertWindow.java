@@ -95,58 +95,37 @@ public class AlertWindow {
             return true;
         }else return false;
     }
-    public static int getTarget(ArrayList<Unit> units, Monster monster){
+    public static int getTarget(Armory armory, ArrayList<Unit> units, Monster monster){
         Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.setTitle("");
         alert.setHeaderText("Choose a target");
         alert.setContentText("targets");
         
         ArrayList<ButtonType> btnTargets = new ArrayList<>();
-        btnTargets.add(new ButtonType(monster.getName()));
         
-        for(Unit unit : units){
-            btnTargets.add(new ButtonType(unit.getFullName()));
+        if(monster != null){
+            btnTargets.add(new ButtonType(monster.getFullName()));
         }
-        btnTargets.add(new ButtonType("Cancel", ButtonData.CANCEL_CLOSE));
-        alert.getButtonTypes().setAll(btnTargets);
-        
-        Optional<ButtonType> result = alert.showAndWait();
-        
-        if(!result.isPresent()) return -1;
-        if(result.get().getText().equals(monster.getName())) return 5;
-        
-        for(int i=0; i<5; i++){
-            if(result.get().getText().equals(units.get(i).getFullName())){
-                return i;
+        for(int i = 0; i<5; i++){ // zwykła pętla żeby kolejność się zgadzała
+            Unit unit = armory.get(i);
+            if((unit != null) && (unit.isAlive() == 1)){
+                btnTargets.add(new ButtonType(unit.getFullName()));
             }
         }
-        return -1;
-    }
-    public static int getTarget(ArrayList<Unit> units){
-        Alert alert = new Alert(AlertType.CONFIRMATION);
-        alert.setTitle("");
-        alert.setHeaderText("Choose a target");
-        alert.setContentText("targets");
-        
-        ArrayList<ButtonType> btnTargets = new ArrayList<>();
-        
-        for(Unit unit : units){
-            btnTargets.add(new ButtonType(unit.getFullName()));
-        }
-        
         btnTargets.add(new ButtonType("Cancel", ButtonData.CANCEL_CLOSE));
         alert.getButtonTypes().setAll(btnTargets);
         
         Optional<ButtonType> result = alert.showAndWait();
         
         if(!result.isPresent()) return -1;
-        
+        if(monster != null){
+            if(result.get().getText().equals(monster.getFullName())) return 5;
+        }
         for(Unit unit : units){
             if(result.get().getText().equals(unit.getFullName())){
                 return unit.getPosition();
             }
         }
-        
         return -1;
     }
 }

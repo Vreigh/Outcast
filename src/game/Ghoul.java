@@ -19,7 +19,7 @@ public final class Ghoul extends Unit {
             int dmg = RNG.randomize(getTmpPower(), Game.RAND);
             int dmgDone = monster.takeDamage(dmg);
         
-            addEnergy(40);
+            addEnergy(50);
         
             return new BattleLog(BattleLog.getUnitDmgLog(getFullName(), getMainAbilityName(), dmgDone));
         }else{
@@ -33,8 +33,9 @@ public final class Ghoul extends Unit {
     public BattleLog secondAbility(Combat combat, Armory armory, Monster monster){
         if(!checkEnergy(25)) return null;
         if(hit(2)){
-            int buf = (getTmpPower() / 4);
-            addBuff(new Buff(2, buf, -buf, "Frenzy"));
+            int buf = (getTmpPower() / 5);
+            int debuf = (getTmpPower() / 4);
+            addBuff(new Buff(2, buf, -debuf, "Frenzy"));
 
             int dmg1 = RNG.randomize((int)(getTmpPower() * 0.75), Game.RAND);
             int dmgDone1 = monster.takeDamage(dmg1);
@@ -55,13 +56,13 @@ public final class Ghoul extends Unit {
     public BattleLog ultAbility(Combat combat, Armory armory, Monster monster){
         if(!checkEnergy(100)) return null;
         if(hit(2)){
-            double scale = 1.2;
+            double scale = 1.0;
             int proc = monster.getHealthProc();
             if(proc < 50){
-                scale += 0.3;
+                scale += 0.2;
             }
             if(proc < 33){
-                scale += 0.3;
+                scale += 0.2;
             }
             if(proc < 25){
                 scale += 0.2;

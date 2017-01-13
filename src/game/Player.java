@@ -170,8 +170,8 @@ public class Player {
     public Cementary getCementary(){
         return cementary;
     }
-    public ArrayList<Seed> getSeeds(){ // luka
-        return seeds;
+    public ArrayList<Seed> getSeeds(){ // zwracam kopię, nie chcę żeby kontroller coś zepsuł
+        return new ArrayList<Seed>(this.seeds);
     }
     public void setTable(TableView<Log> table){
         table.setItems(logs);

@@ -106,12 +106,6 @@ public abstract class Combatable {
         table.setItems(dots);
     }
     /// METODY WALKI
-    void addBuff(Buff buff){
-        buffs.add(buff);
-    }
-    void addDot(Dot dot){
-        dots.add(dot);
-    }
     int takeDamage(int x){
         int dmg = x - getTmpShield();
         if(dmg < 0){
@@ -122,10 +116,11 @@ public abstract class Combatable {
     int heal(int x){
         return takeRealDamage(-x);
     }
-    private int takeRealDamage(int dmg){
+    int takeRealDamage(int dmg){
         tmpHealth.set(tmpHealth.get() - dmg);
         
         if(tmpHealth.get() > health.get()){
+            dmg += health.get() - tmpHealth.get();
             tmpHealth.set(health.get());
         }else if(tmpHealth.get() < 0){
             dmg += tmpHealth.get();
@@ -146,7 +141,11 @@ public abstract class Combatable {
         ArrayList<Dot> dotsToRemove = new ArrayList<Dot>();
         for(Dot dot : dots){
             int dmg = RNG.randomize(dot.getDamage(), Game.RAND);
-            battleLogs.add(new BattleLog(dot.getName() + " deals " + dmg + " damage to " + getFullName())); // TO DO: obsłużyć HOTY
+            if(dmg >= 0){
+                battleLogs.add(new BattleLog(dot.getName() + " deals " + dmg + " damage to " + getFullName()));
+            }else{
+                battleLogs.add(new BattleLog(dot.getName() + " heals " + getFullName() + " for " + (-dmg)));
+            }
             takeRealDamage(dmg);
             if(dot.reduceTime() == 0){
                 battleLogs.add(new BattleLog(dot.getName() + " wears off from " + getFullName()));
@@ -157,10 +156,42 @@ public abstract class Combatable {
         
         priority = 0;
     }
+    // metody zarządzania buffami i dotami
+    void addBuff(Buff buff){
+        buffs.add(buff);
+    }
+    void addDot(Dot dot){
+        dots.add(dot);
+    }
+    void removeBuff(String name){
+        Buff buff = findBuff(name);
+        buffs.remove(buff);
+    }
+    void removeDot(String name){
+        Dot dot = findDot(name);
+        dots.remove(dot);
+    }
+    void addOrRefreshBuff(Buff buff, boolean positive){
+        Buff current = findBuff(buff.getName());
+        if(current == null){
+            addBuff(buff);
+        }else current.refresh(buff, positive);
+    }
+    void addOrRefreshDot(Dot dot, boolean positive){
+        Dot current = findDot(dot.getName());
+        if(current == null){
+            addDot(dot);
+        }else current.refresh(dot, positive);
+    }
     public Buff findBuff(String name){
         for(Buff buff : buffs) if(buff.getName().equals(name)) return buff;
         return null;
     }
+    public Dot findDot(String name){
+       for(Dot dot : dots) if(dot.getName().equals(name)) return dot;
+       return null; 
+    }
+    
     void reset(){
         tmpHealth.set(health.get());
         buffs.clear();

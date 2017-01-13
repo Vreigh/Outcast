@@ -24,7 +24,6 @@ public class BattleLog {
     
     public static final String getUnitDmgLog(String unit, String ability, int dmgDone){
         return unit + " used " + ability + " dealing " + dmgDone + " damage";
-        
     }
     
 }

@@ -33,7 +33,6 @@ public class CombatController implements Initializable {
     @FXML private Label monsterPower;
     @FXML private Label monsterShield;
     @FXML private Label monsterHealth;
-    @FXML private Pane monsterHealthPane;
     @FXML private Rectangle monsterHealthRec;
 
     private TableView<BattleLog> battleLogs = new TableView<BattleLog>();
@@ -347,14 +346,13 @@ public class CombatController implements Initializable {
     ////////////////////////////////////////////////////
     public void nextTurn(){
         int i = combat.getNextActor();
-        
-        if(i == -1){
-            return;
-        }
-        
+
         hideAbilities();
         resetMonsterStats();
         resetUnitsStats();
+        if(i == -1){
+            return;
+        }
         showAbilities(i);
     }
     public void useAbility(int i, int choice){

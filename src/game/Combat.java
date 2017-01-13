@@ -82,7 +82,7 @@ public class Combat {
                 log = null;
                 break;
         }
-        if(log == null){
+        if(log == null){ //jeśli umiejętność nie zwróciła loga, nic się nie dzieje.
             return;
         }
         battleLogs.add(log);

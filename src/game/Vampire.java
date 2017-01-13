@@ -15,19 +15,50 @@ public final class Vampire extends Unit {
     }
     
     public BattleLog mainAbility(Combat combat, Armory armory, Monster monster){
-        return new BattleLog("oirsgjoigjoiregre");
+        int i = AlertWindow.getTarget(armory, armory.getUnits(), null);
+        if(i == -1) return null;
+        int j = AlertWindow.getTarget(armory, armory.getUnits(), null);
+        if(j == -1) return null;
+        
+        Unit target1 = armory.get(i);
+        Unit target2 = armory.get(j);
+        
+        int dmgDone = monster.takeDamage(RNG.randomize((int)(getTmpPower() * 1.2), Game.RAND));
+        addEnergy(40);
+        
+        int dif = 0;
+        int selfDmg = target1.takeRealDamage(getTmpPower());
+        if(target1.getTmpHealth() < 0){
+            dif = target1.getTmpHealth();
+        }
+        int heal = -target2.heal((int)(dmgDone * 0.75 - dif));
+        
+        return new BattleLog(getFullName() + "used " + getMainAbilityName() + " dealing " + selfDmg + " damage to "
+        + target1.getFullName() + ", dealing " + dmgDone + " damage to " + monster.getFullName() + " and healing " + target2.getFullName() + " for " + heal );
     }
     public String getMainAbilityName(){
-        return "Blood Flow";
+        return "Vital Flow";
     }
     public BattleLog secondAbility(Combat combat, Armory armory, Monster monster){
-        return new BattleLog("oirsgjoigjoiregre");
+        if(!checkEnergy(20)) return null;
+        
+        int dmgDone = monster.takeDamage(RNG.randomize((int)(getTmpPower() * 0.9), Game.RAND));
+        int healed = -heal(dmgDone);
+        addEnergy(-20);
+        
+        return new BattleLog(getFullName() + " used " + getSecondAbilityName() + " dealing " + dmgDone + " damage, and healing itself for " + healed );
+
     }
     public String getSecondAbilityName(){
         return "Drain";
     }
     public BattleLog ultAbility(Combat combat, Armory armory, Monster monster){
-        return new BattleLog("oirsgjoigjoiregre");
+        if(!checkEnergy(100)) return null;
+        for(Unit unit : armory.getUnits()){
+            if(unit.isAlive() == 1) unit.addOrRefreshDot(new Dot(3, -(int)(getTmpPower() * 0.5), getUltAbilityName()), false);
+        }
+        addEnergy(-100);
+        return new BattleLog(getFullName() + " used " + getUltAbilityName() + " , putting" + getUltAbilityName() + " on your units!");
     }
     public String getUltAbilityName(){
         return "Night Hunt";

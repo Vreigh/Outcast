@@ -28,5 +28,12 @@ public class Dot {
         time.set(time.get() - 1);
         return time.get();
     }
-    
+    void refresh(Dot other, boolean positive){
+        if(other.time.get() > time.get()) time.set(other.time.get());
+        if(positive){
+           if(other.damage > damage) damage = other.damage;
+        }else{
+            if(other.damage < damage) damage = other.damage;
+        }
+    }
 }

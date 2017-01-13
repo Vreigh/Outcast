@@ -32,4 +32,14 @@ public class Buff {
         time.set(time.get() - 1);
         return time.get();
     }
+    void refresh(Buff other, boolean positive){
+        if(other.time.get() > time.get()) time.set(other.time.get());
+        if(positive){
+           if(other.power > power) power = other.power;
+           if(other.shield > shield) shield = other.shield;
+        }else{
+            if(other.power < power) power = other.power;
+            if(other.shield < shield) shield = other.shield;
+        }
+    }
 }

@@ -61,5 +61,12 @@ public abstract class Monster extends Combatable {
     public String getFullName(){
         return getName();
     }
+    @Override // zeby nie mozna było nakładać debuffow na bossa w nieskonczonosc i ostatecznie healował, bo to by było... słabe
+    public int getTmpPower(){
+        int tmp = super.getTmpPower();
+        if(tmp < power.get() / 2){
+            return power.get() / 2;
+        }else return tmp;
+    }
     
 }

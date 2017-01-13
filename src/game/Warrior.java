@@ -8,8 +8,8 @@ public final class Warrior extends Monster {
         setSpeed(60);
         
         super.power.set(80);
-        super.health.set(750);
-        super.shield.set(-20);
+        super.health.set(850);
+        super.shield.set(-30);
         
         super.tmpHealth.set(health.get());
     }
@@ -25,11 +25,11 @@ public final class Warrior extends Monster {
         return new BattleLog(BattleLog.getMonsterDmgLog(getName(), getFirstAbilityName(), unit, dmgDone));
     }
     public String getFirstAbilityName(){
-        return "Rightous Slash";
+        return "Merciful Blade";
     }
     
     public BattleLog secondAbility(Combat combat, Armory armory){
-        addBuff(new Buff(4, 0, 50, getSecondAbilityName()));
+        addBuff(new Buff(4, 0, 45, getSecondAbilityName()));
         addEnergy(25);
         return new BattleLog(BattleLog.getSelfBuffLog(getName(), getSecondAbilityName(), getSecondAbilityName()));
     }
@@ -74,7 +74,7 @@ public final class Warrior extends Monster {
     }
     
     public BattleLog makeMove(Combat combat, Armory armory){
-        if((energy.get() >= 25) &&(armory.getAlive() != 1)){ // ulti gdy wiecej niz 25 energii, im mniej hp tym lepiej, ale musi byc przynajmniej 75 proc szans
+        if((energy.get() > 25) &&(armory.getAlive() != 1)){ // ulti gdy wiecej niz 25 energii, im mniej hp tym lepiej, ale musi byc przynajmniej 75 proc szans
             int roll = energy.get();
             int rage = 0;
             int proc = getHealthProc();
