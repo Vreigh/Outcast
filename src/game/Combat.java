@@ -19,16 +19,16 @@ public class Combat {
         armory = game.getPlayer().getArmory();
         switch(game.getPlayer().getProgress()){
             case 0:
-                monster = new Warrior();
+                monster = new Warrior(0);
                 break;
             case 1:
-                monster = new Warrior();
+                monster = new Warrior(1);
                 break;
             case 2:
-                monster = new Warrior();
+                monster = new Warrior(2);
                 break;
             default:
-                monster = new Warrior(); 
+                monster = new Warrior(0); 
         }
         this.game = game;
     }

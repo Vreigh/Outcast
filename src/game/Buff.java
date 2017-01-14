@@ -32,6 +32,9 @@ public class Buff {
         time.set(time.get() - 1);
         return time.get();
     }
+    void increaseTime(){
+        time.set(time.get() + 1);
+    }
     void refresh(Buff other, boolean positive){
         if(other.time.get() > time.get()) time.set(other.time.get());
         if(positive){

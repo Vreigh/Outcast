@@ -23,6 +23,11 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar.*;
 import javafx.scene.control.Button;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import java.io.File;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 /**
  *
@@ -84,9 +89,18 @@ public class Game extends Application {
     
     public static final double RAND = 0.2; // podstawowe wahanie obrażeń
     
+    private Media media;
+    private MediaPlayer mediaP;
+    
     @Override
     public void start(Stage stage) throws Exception {
         player = new Player();
+        
+        String path = new File("media/ost.mp3").getAbsolutePath();
+        media = new Media(new File(path).toURI().toString());
+        mediaP = new MediaPlayer(media);
+        mediaP.setVolume(0.15);
+        mediaP.setCycleCount(MediaPlayer.INDEFINITE);
         
         FXMLLoader leftLoader = new FXMLLoader(getClass().getResource("leftMenu.fxml"));
         leftMenu = (VBox) leftLoader.load();
@@ -214,6 +228,9 @@ public class Game extends Application {
         if(player.getUnitsSize() > 0){
             combat = new Combat(this);
             isCombat = true;
+            
+            mediaP.play();
+            
             layout.setCenter(combatView);
             combatController.bind();
             combatController.nextTurn();
@@ -223,6 +240,7 @@ public class Game extends Application {
         
     }
     public void endCombat(boolean won){
+        mediaP.stop();
         if(won){
             boolean dummy = AlertWindow.confirmBox("Victory!", "You have won your battle!", "Confirm!");
             combatWon();

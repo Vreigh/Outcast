@@ -70,9 +70,9 @@ public abstract class Combatable {
     }
     void addEnergy(int x){
         energy.set(energy.get() + x);
-        if(energy.get() < 0){
+        /*if(energy.get() < 0){
             energy.set(0);
-        }
+        }*/
     }
     public StringBinding getTmpHealthStringBind(){
         return tmpHealth.asString();
@@ -120,13 +120,17 @@ public abstract class Combatable {
         tmpHealth.set(tmpHealth.get() - dmg);
         
         if(tmpHealth.get() > health.get()){
-            dmg += health.get() - tmpHealth.get();
+            dmg += tmpHealth.get() - health.get();
             tmpHealth.set(health.get());
         }else if(tmpHealth.get() < 0){
             dmg += tmpHealth.get();
             tmpHealth.set(0);
         }
         return dmg;
+    }
+    void reducePriority(int val){
+        priority -= val;
+        if(priority <= 0) priority = 1;
     }
     void afterTurn(ObservableList<BattleLog> battleLogs){
         ArrayList<Buff> buffsToRemove = new ArrayList<Buff>();
@@ -157,6 +161,12 @@ public abstract class Combatable {
         priority = 0;
     }
     // metody zarządzania buffami i dotami
+    public int buffNumber(){
+        return buffs.size();
+    }
+    public int dotNumber(){
+        return dots.size();
+    }
     void addBuff(Buff buff){
         buffs.add(buff);
     }
@@ -195,6 +205,7 @@ public abstract class Combatable {
     void reset(){
         tmpHealth.set(health.get());
         buffs.clear();
+        dots.clear();
         priority = 0;
         energy.set(0);
     }

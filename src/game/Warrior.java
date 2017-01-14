@@ -3,15 +3,19 @@ import java.util.ArrayList;
 
 public final class Warrior extends Monster {
     
-    public Warrior(){
+    public Warrior(int i){
         super();
         setSpeed(60);
         
-        super.power.set(80);
-        super.health.set(850);
-        super.shield.set(-30);
+        int power = 80 + 20*i;
+        int health = 1200 + 400*i;
+        int shield = -30 + 5*i;
         
-        super.tmpHealth.set(health.get());
+        super.power.set(power);
+        super.health.set(health);
+        super.shield.set(shield);
+        
+        super.tmpHealth.set(super.health.get());
     }
     
     public BattleLog firstAbility(Combat combat, Armory armory){
@@ -29,7 +33,7 @@ public final class Warrior extends Monster {
     }
     
     public BattleLog secondAbility(Combat combat, Armory armory){
-        addBuff(new Buff(4, 0, 45, getSecondAbilityName()));
+        addOrRefreshBuff(new Buff(5, 0, 45, getSecondAbilityName()), true);
         addEnergy(25);
         return new BattleLog(BattleLog.getSelfBuffLog(getName(), getSecondAbilityName(), getSecondAbilityName()));
     }

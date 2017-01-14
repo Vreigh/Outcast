@@ -9,7 +9,7 @@ public final class Ghoul extends Unit {
         
         super.power.bind(super.powerUp.multiply(10).add(50));
         super.health.bind(super.healthUp.multiply(25).add(100));
-        super.shield.bind(super.shieldUp.multiply(10).add(10));
+        super.shield.bind(super.shieldUp.multiply(5).add(10));
         
         super.tmpHealth.set(health.get());
     }

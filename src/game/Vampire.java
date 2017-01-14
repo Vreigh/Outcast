@@ -9,7 +9,7 @@ public final class Vampire extends Unit {
         
         super.power.bind(super.powerUp.multiply(8).add(40));
         super.health.bind(super.healthUp.multiply(30).add(120));
-        super.shield.bind(super.shieldUp.multiply(10).add(10));
+        super.shield.bind(super.shieldUp.multiply(5).add(10));
         
         super.tmpHealth.set(health.get());
     }
@@ -26,12 +26,13 @@ public final class Vampire extends Unit {
         int dmgDone = monster.takeDamage(RNG.randomize((int)(getTmpPower() * 1.2), Game.RAND));
         addEnergy(40);
         
-        int dif = 0;
+        int dif = getTmpPower() - target1.getTmpHealth();
+        if(dif < 0) dif = 0;
+        
         int selfDmg = target1.takeRealDamage(getTmpPower());
-        if(target1.getTmpHealth() < 0){
-            dif = target1.getTmpHealth();
-        }
-        int heal = -target2.heal((int)(dmgDone * 0.75 - dif));
+        selfDmg += dif;
+        target2.heal((int)(dmgDone * 0.75 - dif)); // ile healuje od 0
+        int heal = (int)(dmgDone * 0.75); // ile wyhealowałem od np -30 
         
         return new BattleLog(getFullName() + "used " + getMainAbilityName() + " dealing " + selfDmg + " damage to "
         + target1.getFullName() + ", dealing " + dmgDone + " damage to " + monster.getFullName() + " and healing " + target2.getFullName() + " for " + heal );
@@ -55,7 +56,7 @@ public final class Vampire extends Unit {
     public BattleLog ultAbility(Combat combat, Armory armory, Monster monster){
         if(!checkEnergy(100)) return null;
         for(Unit unit : armory.getUnits()){
-            if(unit.isAlive() == 1) unit.addOrRefreshDot(new Dot(3, -(int)(getTmpPower() * 0.5), getUltAbilityName()), false);
+            if(unit.isAlive() == 1) unit.addOrRefreshDot(new Dot(3, -(int)(getTmpPower() * 0.4), getUltAbilityName()), false);
         }
         addEnergy(-100);
         return new BattleLog(getFullName() + " used " + getUltAbilityName() + " , putting" + getUltAbilityName() + " on your units!");

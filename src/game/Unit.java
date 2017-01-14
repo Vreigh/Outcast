@@ -12,9 +12,10 @@ import javafx.beans.binding.StringBinding;
 
 public abstract class Unit extends Combatable{
     
-    public static final int UPGRADE_COST = 100;
-    public static final int UPGRADE_STACK = 20;
-    public static final int UPGRADE_SHIELD_STACK = 50;
+    public static final int UPGRADE_COST = 150;
+    public static final int UPGRADE_SHIELD_COST = 100;
+    public static final int UPGRADE_STACK = 30;
+    public static final int UPGRADE_SHIELD_STACK = 40;
     
     IntegerProperty powerUp = new SimpleIntegerProperty(0); // te pola nie beda private bo az prosza sie o nie bycie private
     IntegerProperty shieldUp = new SimpleIntegerProperty(0);
@@ -32,7 +33,7 @@ public abstract class Unit extends Combatable{
         this.armory = armory;
         position = i;
         powerCost.bind(powerUp.multiply(UPGRADE_STACK).add(UPGRADE_COST));
-        shieldCost.bind(shieldUp.multiply(UPGRADE_SHIELD_STACK).add(UPGRADE_COST));
+        shieldCost.bind(shieldUp.multiply(UPGRADE_SHIELD_STACK).add(UPGRADE_SHIELD_COST));
         healthCost.bind(healthUp.multiply(UPGRADE_STACK).add(UPGRADE_COST));
     }
     
@@ -118,5 +119,13 @@ public abstract class Unit extends Combatable{
             AlertWindow.showInfo("Not enough energy!", "You need at least " + val + " energy to use that ability ");
             return false;
         }else return true;
+    }
+    
+    @Override // zeby nie mozna było nakładać debuffow na bossa w nieskonczonosc i ostatecznie healował, bo to by było... słabe
+    public int getTmpPower(){
+        int tmp = super.getTmpPower();
+        if(tmp < 0){
+            return 0;
+        }else return tmp;
     }
 }

@@ -10,13 +10,13 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.binding.StringBinding;
 
 public class Player {
-    public static final int initialAp = 200;
+    public static final int initialAp = 20;
     
     private IntegerProperty sanity = new SimpleIntegerProperty(40);
     private IntegerProperty spirits = new SimpleIntegerProperty(5);
     private IntegerProperty ap = new SimpleIntegerProperty(initialAp);
     private IntegerProperty mana = new SimpleIntegerProperty(10);
-    private IntegerProperty crystals = new SimpleIntegerProperty(5000);
+    private IntegerProperty crystals = new SimpleIntegerProperty(100);
     private IntegerProperty busySpirits = new SimpleIntegerProperty();
     private IntegerProperty freeSpirits = new SimpleIntegerProperty();
     private IntegerProperty shrines = new SimpleIntegerProperty(1);
@@ -423,6 +423,11 @@ public class Player {
     void combatWon(Game game){
         logs.add(new Log(game.getRound(), Lore.getCombatWonLore(progress++)));
         armory.reset();
-        game.endTurn();
+        sanity.set((int)(sanity.get() * 1.5) + 1);
+        if(progress == 3){
+            AlertWindow.showInfo("Victory!", "You have defeated all the enemies! You won! Um... thats all for now, thanks :)");
+        }else{
+            game.endTurn();
+        }
     }
 }
