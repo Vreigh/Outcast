@@ -5,7 +5,7 @@
  */
 package game;
 
-import game.Game;
+import game.GameWindow;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -27,7 +27,7 @@ import javafx.beans.binding.Bindings;
  */
 public class UpgradesController implements Initializable {
     
-    private Game game;
+    private GameWindow game;
     
     @FXML private Label leftMana;
     @FXML private Label rightMana;
@@ -55,7 +55,7 @@ public class UpgradesController implements Initializable {
         btnCap.setUserData(3);
         btnAp.setUserData(4);
     }
-    public void setGame(Game game){
+    public void setGame(GameWindow game){
         this.game = game;
     }
     public void bind(){

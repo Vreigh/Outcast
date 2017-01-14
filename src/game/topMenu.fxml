@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
 <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="1000.0" spacing="30.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.TopMenuController">
    <children>
+      <Button maxWidth="90.0" mnemonicParsing="false" onAction="#toggleMusic" prefWidth="60.0" text="Music">
+         <HBox.margin>
+            <Insets left="60.0" right="30.0" />
+         </HBox.margin>
+      </Button>
       <Label fx:id="sanityDisplay" prefWidth="105.0" text="Label" wrapText="true">
          <HBox.margin>
             <Insets />
@@ -57,6 +63,6 @@
       </Label>
    </children>
    <padding>
-      <Insets left="180.0" top="12.0" />
+      <Insets top="12.0" />
    </padding>
 </HBox>

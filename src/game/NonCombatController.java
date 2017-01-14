@@ -5,7 +5,7 @@
  */
 package game;
 
-import game.Game;
+import game.GameWindow;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -25,7 +25,7 @@ import javafx.scene.Scene;
  */
 public class NonCombatController implements Initializable {
     
-    private Game game;
+    private GameWindow game;
     
     @FXML Label textDisplay;
     
@@ -33,7 +33,7 @@ public class NonCombatController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         textDisplay.setAlignment(Pos.CENTER); 
     }
-    public void setGame(Game game){
+    public void setGame(GameWindow game){
         this.game = game;
     }
     public void bind(){

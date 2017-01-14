@@ -12,7 +12,7 @@ import javafx.beans.binding.StringBinding;
 public class Player {
     public static final int initialAp = 20;
     
-    private IntegerProperty sanity = new SimpleIntegerProperty(40);
+    private IntegerProperty sanity = new SimpleIntegerProperty(30);
     private IntegerProperty spirits = new SimpleIntegerProperty(5);
     private IntegerProperty ap = new SimpleIntegerProperty(initialAp);
     private IntegerProperty mana = new SimpleIntegerProperty(10);
@@ -27,7 +27,7 @@ public class Player {
     private IntegerProperty maxSeeds = new SimpleIntegerProperty(3);
     private IntegerProperty manaIncome = new SimpleIntegerProperty(5);
     
-    private int spiritRage = 0;
+    private int spiritHunger = 0;
     
     private IntegerProperty spiritsCap = new SimpleIntegerProperty();
     private IntegerProperty maxAp = new SimpleIntegerProperty();
@@ -59,10 +59,10 @@ public class Player {
         .add(upgrades.get(4).getFillProperty()));
         
         freeSpirits.bind(spirits.subtract(busySpirits));
-        spiritsCap.bind(shrines.multiply(Game.shrinesCap));
+        spiritsCap.bind(shrines.multiply(GameWindow.shrinesCap));
         maxAp.bind(upgrades.get(4).getLvlProperty().multiply(Upgrade.ap).add(initialAp));
         
-        manaIncome.bind(upgrades.get(0).getLvlProperty().multiply(Upgrade.manaIncome).add(Game.manaIncome));
+        manaIncome.bind(upgrades.get(0).getLvlProperty().multiply(Upgrade.manaIncome).add(GameWindow.manaIncome));
         maxSeeds.bind(upgrades.get(1).getLvlProperty().add(3));
         
         cementary.getCapacityProperty().bind(upgrades.get(3).getLvlProperty().multiply(Upgrade.cemCap).add(Cementary.baseCapacity));
@@ -205,49 +205,48 @@ public class Player {
     
     ////////////////////////////////////////////////////////////////////////
    public void buildShrine(){
-        if(crystals.get() < Game.shrineCryCost){
-            AlertWindow.showInfo("not enough Crystals", "You need at least " + Game.shrineCryCost + " Crystals to build a Shrine");
-        }else if(ap.get() < Game.shrineApCost){
-            AlertWindow.showInfo("not enough Action Points", "You need at least " + Game.shrineApCost + " Action Points to build a Shrine");
+        if(crystals.get() < GameWindow.shrineCryCost){
+            AlertWindow.showInfo("not enough Crystals", "You need at least " + GameWindow.shrineCryCost + " Crystals to build a Shrine");
+        }else if(ap.get() < GameWindow.shrineApCost){
+            AlertWindow.showInfo("not enough Action Points", "You need at least " + GameWindow.shrineApCost + " Action Points to build a Shrine");
         }else{
             addShrines(1);
-            addCrystals(-Game.shrineCryCost);
-            addAp(-Game.shrineApCost);
+            addCrystals(-GameWindow.shrineCryCost);
+            addAp(-GameWindow.shrineApCost);
         }
     }
     public void litShrine(){
-        if(ap.get() < Game.litCost){
-            AlertWindow.showInfo("not enough Action Points", "You need at least " + Game.litCost + " Action Points to lit a Shrine");
+        if(ap.get() < GameWindow.litCost){
+            AlertWindow.showInfo("not enough Action Points", "You need at least " + GameWindow.litCost + " Action Points to lit a Shrine");
         }else if(shrinesLit.get() >= shrines.get()){
             AlertWindow.showInfo("not enough Shrines", "All of Your Shrines are already lit");
         }else{
             addLit(1);
-            addAp(-Game.litCost);
+            addAp(-GameWindow.litCost);
         }
     }
     public void extShrine(){
-        if(ap.get() < Game.extCost){
-            AlertWindow.showInfo("not enough Action Points", "You need at least " + Game.extCost + " Action Points to extinguish a Shrine");
+        if(ap.get() < GameWindow.extCost){
+            AlertWindow.showInfo("not enough Action Points", "You need at least " + GameWindow.extCost + " Action Points to extinguish a Shrine");
         }else if(shrinesLit.get() == 0){
             AlertWindow.showInfo("not enough Shrines", "All of Your Shrines are already extinguished");
         }else{
             addLit(-1);
-            addAp(-Game.extCost);
-            spiritRage += Game.extRage;
+            addAp(-GameWindow.extCost);
         }
     }
     public void summonSpirit(){
-        if(ap.get() < Game.summonApCost){
-            AlertWindow.showInfo("not enough Action Points", "You need at least " + Game.summonApCost + " Action Points to summon a Spirit");
-        }else if(crystals.get() < Game.summonCryCost){
-            AlertWindow.showInfo("not enough Crystals", "You need at least " + Game.summonCryCost + " Crystals to summon a Spirit");
+        if(ap.get() < GameWindow.summonApCost){
+            AlertWindow.showInfo("not enough Action Points", "You need at least " + GameWindow.summonApCost + " Action Points to summon a Spirit");
+        }else if(crystals.get() < GameWindow.summonCryCost){
+            AlertWindow.showInfo("not enough Crystals", "You need at least " + GameWindow.summonCryCost + " Crystals to summon a Spirit");
         }else if(spiritsCap.get() <= spirits.get()){
             AlertWindow.showInfo("too many spirits", "You need to build another Shrine to have more Spirits");
         }
         else{
             addSpirits(1);
-            addCrystals(-Game.summonCryCost);
-            addAp(-Game.summonApCost);
+            addCrystals(-GameWindow.summonCryCost);
+            addAp(-GameWindow.summonApCost);
         }
     }
     public void cemAdd(){
@@ -266,14 +265,14 @@ public class Player {
         if(seeds.size() >= maxSeeds.get()){
             AlertWindow.showInfo("limit reached", "You already have maximum number of seeds");
             return false;
-        }else if(ap.get() < Game.seedCost){
-            AlertWindow.showInfo("not enough Action Points", "You need to have at least " + Game.seedCost + " Action Points to create a Seed");
+        }else if(ap.get() < GameWindow.seedCost){
+            AlertWindow.showInfo("not enough Action Points", "You need to have at least " + GameWindow.seedCost + " Action Points to create a Seed");
             return false;
         }else if(getFreeSpirits() < 1){
             AlertWindow.showInfo("not enough Spirits", "You need to have at least " + "1" + " free Spirit to sacrifise");
             return false;
         }else{
-            addAp(-Game.seedCost);
+            addAp(-GameWindow.seedCost);
             addSpirits(-1);
             Seed seed = new Seed();
             seeds.add(seed);
@@ -281,17 +280,15 @@ public class Player {
         }
     }
     public int harvest(Integer i){
-        Random generator = new Random();
-        double rand = (generator.nextDouble() / 4) + 1;
         Seed seed = seeds.get(i);
         if(seed.getAge() == 0){
             AlertWindow.showInfo("Seed not ready", "Seeds can ba harvested after at least one turn!");
             return 0;
         }
         else{
-            int income = (int)(manaIncome.get()*(rand * (1 + 0.25*seed.getAge())));
+            int income = seed.getIncome(manaIncome.get());
             addMana(income);
-            addAp(Game.seedRest);
+            addAp(GameWindow.seedRest);
             seeds.remove(seed);
             return income;
         }
@@ -314,11 +311,19 @@ public class Player {
         int spiritsDisplay = 0;
         addSanity(-1); // obnizenie sanity
         
-        if(mana.get() >= spirits.get()){ //obnizanie many
-            addMana(-spirits.get());
-            manaDisplay -= spirits.get();
+        int manaDec = spirits.get();
+        boolean wasRage = false;
+        if((spiritHunger >= 50) && (RNG.roll(spiritHunger))){
+            manaDec *= 2;
+            spiritHunger -= RNG.randomize(100, 0.2);
+            wasRage = true;
+        }
+        
+        if(mana.get() >= manaDec){ //obnizanie many
+            addMana(-manaDec);
+            manaDisplay -= manaDec;
         }else{
-            int dif = (spirits.get() - mana.get()) / 2;
+            int dif = (manaDec - mana.get()) / 2;
             if(dif == 0) dif = 1;
             
             manaDisplay -= mana.get();
@@ -337,41 +342,51 @@ public class Player {
         int crystalsDisplay = cementary.getFullOutput();
         cementary.addFill(-cementary.getFill());
         
-        addSanity(-shrinesLit.get()); // obsługa zapalonych ołtarzy
-        sanityDisplay -= shrinesLit.get();
+        spiritHunger += RNG.randomize(shrinesLit.get() * GameWindow.rageIncome, 0.3);
+        
         for(int i=0; i<shrinesLit.get(); i++){
             if(spiritsCap.get() > spirits.get()){
                 spiritsDisplay++;
                 addSpirits(1);
             }
         }
-        spiritRage -= Game.rageDecay;
+        spiritHunger -= GameWindow.rageDecay;
         
         //UPGRADY
         for(Upgrade i : upgrades){
             i.develop(logs, round);
         }
         
+        if(wasRage) AlertWindow.showInfo(".", "Your spirits went mad!");
         if(sanity.get() > 0){
             String info = " You live another day! \n income: crystals: " + crystalsDisplay +", spirits: " + spiritsDisplay
             + "\n losses: mana: " + manaDisplay + ", sanity: " + sanityDisplay;
             logs.add(new Log(round, info));
             AlertWindow.showInfo("you lived another day!", info);
+            
+            if(spiritHunger >= 75){
+                AlertWindow.showInfo("Be careful!", "Your spirits are crazy out of hunger!");
+            }else if(spiritHunger >= 50){
+                AlertWindow.showInfo("Be careful!", "You are loosing control over your spirits!");
+            }else if(spiritHunger >= 30){
+                AlertWindow.showInfo("Be careful!", "Your spirits are getting hungry!");
+            }
+            
         }else AlertWindow.showInfo("u dead", "You died");
     }
     public Unit summonUnit(int i){
-        if(ap.get() < Game.summonUnitApCost){
-            AlertWindow.showInfo("not enough Action Points", "You need at least " + Game.summonUnitApCost + " Action Point to do that");
+        if(ap.get() < GameWindow.summonUnitApCost){
+            AlertWindow.showInfo("not enough Action Points", "You need at least " + GameWindow.summonUnitApCost + " Action Point to do that");
             return null;
-        }else if(crystals.get() < Game.summonUnitCryCost){
-            AlertWindow.showInfo("not enough Crystals", "You need at least " + Game.summonUnitCryCost + " Crystals to do that");
+        }else if(crystals.get() < GameWindow.summonUnitCryCost){
+            AlertWindow.showInfo("not enough Crystals", "You need at least " + GameWindow.summonUnitCryCost + " Crystals to do that");
             return null;
         }else if(armory.size() >= 5){
             AlertWindow.showInfo("limit reached", "You already have 5 units!");
             return null;
         }else{
-            addCrystals(-Game.summonUnitCryCost);
-            addAp(-Game.summonUnitApCost);
+            addCrystals(-GameWindow.summonUnitCryCost);
+            addAp(-GameWindow.summonUnitApCost);
             return armory.addUnit(i);
         }
     }
@@ -379,12 +394,12 @@ public class Player {
         Unit unit = armory.get(i);
         int cost = unit.getPowerCost();
         
-        if(ap.get() < Game.upgradeUnitApCost){
-            AlertWindow.showInfo("not enough Action Points", "You need at least " + Game.upgradeUnitApCost + " Action Point to do that");
+        if(ap.get() < GameWindow.upgradeUnitApCost){
+            AlertWindow.showInfo("not enough Action Points", "You need at least " + GameWindow.upgradeUnitApCost + " Action Point to do that");
         }else if(crystals.get() < cost){
             AlertWindow.showInfo("not enough Crystals", "You need at least " + cost + " Crystals to do that");
         }else{
-            addAp(-Game.upgradeUnitApCost);
+            addAp(-GameWindow.upgradeUnitApCost);
             addCrystals(-cost);
             unit.incPower();
         }
@@ -393,12 +408,12 @@ public class Player {
         Unit unit = armory.get(i);
         int cost = unit.getShieldCost();
         
-        if(ap.get() < Game.upgradeUnitApCost){
-            AlertWindow.showInfo("not enough Action Points", "You need at least " + Game.upgradeUnitApCost + " Action Point to do that");
+        if(ap.get() < GameWindow.upgradeUnitApCost){
+            AlertWindow.showInfo("not enough Action Points", "You need at least " + GameWindow.upgradeUnitApCost + " Action Point to do that");
         }else if(crystals.get() < cost){
             AlertWindow.showInfo("not enough Crystals", "You need at least " + cost + " Crystals to do that");
         }else{
-            addAp(-Game.upgradeUnitApCost);
+            addAp(-GameWindow.upgradeUnitApCost);
             addCrystals(-cost);
             unit.incShield();
         }
@@ -407,12 +422,12 @@ public class Player {
         Unit unit = armory.get(i);
         int cost = unit.getHealthCost();
         
-        if(ap.get() < Game.upgradeUnitApCost){
-            AlertWindow.showInfo("not enough Action Points", "You need at least " + Game.upgradeUnitApCost + " Action Point to do that");
+        if(ap.get() < GameWindow.upgradeUnitApCost){
+            AlertWindow.showInfo("not enough Action Points", "You need at least " + GameWindow.upgradeUnitApCost + " Action Point to do that");
         }else if(crystals.get() < cost){
             AlertWindow.showInfo("not enough Crystals", "You need at least " + cost + " Crystals to do that");
         }else{
-            addAp(-Game.upgradeUnitApCost);
+            addAp(-GameWindow.upgradeUnitApCost);
             addCrystals(-cost);
             unit.incHealth();
         }
@@ -420,7 +435,7 @@ public class Player {
     public void swapUnits(int i, int j){
         armory.swap(i, j);
     }
-    void combatWon(Game game){
+    void combatWon(GameWindow game){
         logs.add(new Log(game.getRound(), Lore.getCombatWonLore(progress++)));
         armory.reset();
         sanity.set((int)(sanity.get() * 1.5) + 1);

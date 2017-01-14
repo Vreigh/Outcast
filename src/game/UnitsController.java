@@ -5,7 +5,7 @@
  */
 package game;
 
-import game.Game;
+import game.GameWindow;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -33,7 +33,7 @@ import javafx.scene.text.TextAlignment;
  */
 public class UnitsController implements Initializable {
     
-    private Game game; // referencja do gry
+    private GameWindow game; // referencja do gry
     
     @FXML private HBox addingBox;
     @FXML private HBox unitsContainer;
@@ -147,7 +147,7 @@ public class UnitsController implements Initializable {
                     btnUltAbility.get(i),
                     swapBox.get(i));
     }
-    public void setGame(Game game){
+    public void setGame(GameWindow game){
         this.game = game;
     }
     public void bind(){

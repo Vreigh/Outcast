@@ -5,7 +5,7 @@
  */
 package game;
 
-import game.Game;
+import game.GameWindow;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -27,7 +27,7 @@ import javafx.beans.binding.Bindings;
  */
 public class TopMenuController implements Initializable {
     
-    private Game game; // referencja do gry
+    private GameWindow game; // referencja do gry
     
     @FXML private Label sanityDisplay;
     @FXML private Label spiritsDisplay;
@@ -40,7 +40,7 @@ public class TopMenuController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         
     }
-    public void setGame(Game game){
+    public void setGame(GameWindow game){
         this.game = game;
     }
     public void bind(){
@@ -50,6 +50,9 @@ public class TopMenuController implements Initializable {
         cryDisplay.textProperty().bind(Bindings.concat("Crystals: ", game.getPlayer().getCrystalsStringBind()));
         roundDisplay.textProperty().bind(Bindings.concat("Round: ", game.getRoundProperty().asString()));
         apDisplay.textProperty().bind(Bindings.concat("Ap: ", game.getPlayer().getApStringBind(), " / ", game.getPlayer().getMaxApStringBind()));
+    }
+    public void toggleMusic(){
+        game.toggleMusic();
     }
     
 }

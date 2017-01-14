@@ -15,7 +15,7 @@ public final class Butcher extends Unit {
     }
     
     public BattleLog mainAbility(Combat combat, Armory armory, Monster monster){
-        int dmgDone = monster.takeDamage(RNG.randomize((int)(getTmpPower() * 0.6), Game.RAND));
+        int dmgDone = monster.takeDamage(RNG.randomize((int)(getTmpPower() * 0.6), GameWindow.RAND));
         int dot = (int)(getTmpPower() * 0.2);
         monster.addDot(new Dot(2, dot, "Infectous Cloud"));
         addEnergy(50);
@@ -57,7 +57,7 @@ public final class Butcher extends Unit {
         addEnergy(-100);
         
         if(i == 5){
-            int dmgDone = monster.takeDamage(RNG.randomize((int)(getTmpPower() * 1.0), Game.RAND));
+            int dmgDone = monster.takeDamage(RNG.randomize((int)(getTmpPower() * 1.0), GameWindow.RAND));
             monster.addOrRefreshDot(new Dot(2, (int)(getTmpPower() * 1.0), getUltAbilityName()), true);
             monster.addOrRefreshBuff(new Buff(2, (int)(getTmpPower() * 1.0),0, getUltAbilityName()), false);
             return new BattleLog(BattleLog.getUnitDmgLog(getFullName(), getUltAbilityName(), dmgDone) + " and putting " + getUltAbilityName() + " on it!");
@@ -65,7 +65,7 @@ public final class Butcher extends Unit {
             int dur = 2;
             if(i == getPosition()) dur++;
             Unit target = armory.get(i);
-            int heal = -target.heal(RNG.randomize((int)(getTmpPower() * 1.0), Game.RAND));
+            int heal = -target.heal(RNG.randomize((int)(getTmpPower() * 1.0), GameWindow.RAND));
             target.addOrRefreshDot(new Dot(2, (int)(getTmpPower() * 1.0), getUltAbilityName()), false);
             target.addOrRefreshBuff(new Buff(dur, (int)(getTmpPower() * 1.0),0, getUltAbilityName()), true);
             return new BattleLog(getFullName() + " used " + getUltAbilityName() + " healing " + target.getFullName() + " for " + heal + " and putting " + getUltAbilityName() + " on it!");

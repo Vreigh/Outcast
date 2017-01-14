@@ -5,7 +5,7 @@
  */
 package game;
 
-import game.Game;
+import game.GameWindow;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -24,7 +24,7 @@ import javafx.scene.Scene;
  */
 public class LeftMenuController implements Initializable {
     
-    private Game game;
+    private GameWindow game;
     
     @FXML private Button btnMain;
     @FXML private Button btnUpgrades;
@@ -44,7 +44,7 @@ public class LeftMenuController implements Initializable {
         int header = (int)((Button)event.getSource()).getUserData();
         game.switchView(header);
     }
-    public void setGame(Game game){
+    public void setGame(GameWindow game){
         this.game = game;
         
         

@@ -18,7 +18,7 @@ public final class Phantom extends Unit {
         int i = AlertWindow.getTarget(armory, armory.getUnits(), monster);
         if(i == -1) return null;
         if(i == 5){
-            int dmgDone = monster.takeDamage(RNG.randomize((int)(getTmpPower() * 0.5), Game.RAND));
+            int dmgDone = monster.takeDamage(RNG.randomize((int)(getTmpPower() * 0.5), GameWindow.RAND));
             addBuff(new Buff(3, (int)(getTmpPower() * 0.25), 0, "Preparation"));
             
             addEnergy(20);
@@ -43,7 +43,7 @@ public final class Phantom extends Unit {
             }
             
             target1.addBuff(new Buff(debDur, -debVal, 0, "Soul Down"));
-            target2.addOrRefreshBuff(new Buff(bufDur, (int)(debVal * 1.5), 0, "Soul Up"), true);
+            target2.addOrRefreshBuff(new Buff(bufDur, (int)(debVal * 2), 0, "Soul Up"), true);
             
             addEnergy(50);
             
@@ -56,7 +56,7 @@ public final class Phantom extends Unit {
     public BattleLog secondAbility(Combat combat, Armory armory, Monster monster){
         if(!checkEnergy(40)) return null;
         
-        int dmgDone = monster.takeDamage(RNG.randomize((int)(getTmpPower() * 0.9), Game.RAND));
+        int dmgDone = monster.takeDamage(RNG.randomize((int)(getTmpPower() * 0.9), GameWindow.RAND));
         monster.reducePriority(20 + dmgDone / 2);
         
         addEnergy(-40);
@@ -68,7 +68,7 @@ public final class Phantom extends Unit {
     public BattleLog ultAbility(Combat combat, Armory armory, Monster monster){
         if(!checkEnergy(100)) return null;
         for(Unit unit : armory.getUnits()){
-            if(unit.isAlive() == 1) unit.takeRealDamage(RNG.randomize((int)(getTmpPower() * 0.25), Game.RAND));
+            if(unit.isAlive() == 1) unit.takeRealDamage(RNG.randomize((int)(getTmpPower() * 0.25), GameWindow.RAND));
         }
         for(Unit unit : armory.getUnits()){
             if(unit.isAlive() == 1) unit.addOrRefreshBuff(new Buff(3, (int)(getTmpPower() * 0.9), 0, getUltAbilityName()), true);

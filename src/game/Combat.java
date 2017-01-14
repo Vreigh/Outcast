@@ -10,12 +10,12 @@ public class Combat {
     
     private Armory armory;
     private Monster monster;
-    private Game game;
+    private GameWindow game;
     
     private ObservableList<BattleLog> battleLogs = FXCollections.observableArrayList();
     
     
-    public Combat(Game game){
+    public Combat(GameWindow game){
         armory = game.getPlayer().getArmory();
         switch(game.getPlayer().getProgress()){
             case 0:

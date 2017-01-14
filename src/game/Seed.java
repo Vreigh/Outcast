@@ -14,5 +14,9 @@ public class Seed {
     void addAge(int x){
         age.set(age.get() + x);
     }
+    public int getIncome(int base){
+        double ageMod = Math.pow((age.get() -1), 0.8) / 3;
+        return (int)((1 + ageMod) * base);
+    }
     
 }

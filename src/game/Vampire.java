@@ -23,7 +23,7 @@ public final class Vampire extends Unit {
         Unit target1 = armory.get(i);
         Unit target2 = armory.get(j);
         
-        int dmgDone = monster.takeDamage(RNG.randomize((int)(getTmpPower() * 1.2), Game.RAND));
+        int dmgDone = monster.takeDamage(RNG.randomize((int)(getTmpPower() * 1.2), GameWindow.RAND));
         addEnergy(40);
         
         int dif = getTmpPower() - target1.getTmpHealth();
@@ -43,7 +43,7 @@ public final class Vampire extends Unit {
     public BattleLog secondAbility(Combat combat, Armory armory, Monster monster){
         if(!checkEnergy(20)) return null;
         
-        int dmgDone = monster.takeDamage(RNG.randomize((int)(getTmpPower() * 0.9), Game.RAND));
+        int dmgDone = monster.takeDamage(RNG.randomize((int)(getTmpPower() * 0.9), GameWindow.RAND));
         int healed = -heal(dmgDone);
         addEnergy(-20);
         

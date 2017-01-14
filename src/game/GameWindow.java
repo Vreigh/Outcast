@@ -28,21 +28,23 @@ import javafx.scene.media.MediaPlayer;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.scene.media.MediaPlayer.Status;
 
 /**
  *
  * @author Admin
  */
-public class Game extends Application {
+public class GameWindow extends Application {
     
     public static final int shrineCryCost = 100;
     public static final int shrineApCost = 5;
     public static final int extRage = 40;
     public static final int manaIncome = 5;
     public static final int rageDecay = 10;
+    public static final int rageIncome = 20;
     
     public static final int extCost = 5;
-    public static final int litCost = 10;
+    public static final int litCost = 5;
     
     public static final int seedCost = 10;
     public static final int seedRest = 5;
@@ -89,18 +91,24 @@ public class Game extends Application {
     
     public static final double RAND = 0.2; // podstawowe wahanie obrażeń
     
-    private Media media;
-    private MediaPlayer mediaP;
+    private MediaPlayer nMediaP;
+    private MediaPlayer cMediaP;
     
     @Override
     public void start(Stage stage) throws Exception {
         player = new Player();
         
-        String path = new File("media/ost.mp3").getAbsolutePath();
-        media = new Media(new File(path).toURI().toString());
-        mediaP = new MediaPlayer(media);
-        mediaP.setVolume(0.15);
-        mediaP.setCycleCount(MediaPlayer.INDEFINITE);
+        String path = new File("media/normal.mp3").getAbsolutePath();
+        Media Nmedia = new Media(new File(path).toURI().toString());
+        nMediaP = new MediaPlayer(Nmedia);
+        nMediaP.setVolume(0.05);
+        nMediaP.setCycleCount(MediaPlayer.INDEFINITE);
+        
+        path = new File("media/battle.mp3").getAbsolutePath();
+        Media Cmedia = new Media(new File(path).toURI().toString());
+        cMediaP = new MediaPlayer(Cmedia);
+        cMediaP.setVolume(0.15);
+        cMediaP.setCycleCount(MediaPlayer.INDEFINITE);
         
         FXMLLoader leftLoader = new FXMLLoader(getClass().getResource("leftMenu.fxml"));
         leftMenu = (VBox) leftLoader.load();
@@ -153,6 +161,8 @@ public class Game extends Application {
         player.setTable(table);
         table.getColumns().addAll(roundColumn, contentColumn);
         
+        nMediaP.play();
+        
         layout = new BorderPane();
         layout.setLeft(leftMenu);
         layout.setTop(topMenu);
@@ -160,8 +170,16 @@ public class Game extends Application {
         Scene scene = new Scene(layout, 1000, 621);
         
         stage.setScene(scene);
-        scene.getStylesheets().add(Game.class.getResource("style.css").toExternalForm());
+        scene.getStylesheets().add(GameWindow.class.getResource("style.css").toExternalForm());
         stage.show();
+    }
+    public void toggleMusic(){
+        MediaPlayer player = nMediaP;
+        if(isCombat) player = cMediaP;
+        
+        boolean playing = player.getStatus().equals(Status.PLAYING);
+        if(playing) player.pause();
+        else player.play();
     }
     public void switchView(int i){
         switch(i){
@@ -229,7 +247,8 @@ public class Game extends Application {
             combat = new Combat(this);
             isCombat = true;
             
-            mediaP.play();
+            nMediaP.stop();
+            cMediaP.play();
             
             layout.setCenter(combatView);
             combatController.bind();
@@ -240,7 +259,7 @@ public class Game extends Application {
         
     }
     public void endCombat(boolean won){
-        mediaP.stop();
+        cMediaP.stop();
         if(won){
             boolean dummy = AlertWindow.confirmBox("Victory!", "You have won your battle!", "Confirm!");
             combatWon();
@@ -252,6 +271,8 @@ public class Game extends Application {
     private void combatWon(){
         isCombat = false;
         layout.setCenter(nonCombatView);
+        nonCombatController.bind();
+        nMediaP.play();
         player.combatWon(this);
     }
     private void combatLost(){ // TO DO

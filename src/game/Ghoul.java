@@ -16,7 +16,7 @@ public final class Ghoul extends Unit {
     
     public BattleLog mainAbility(Combat combat, Armory armory, Monster monster){
         if(hit(2)){
-            int dmg = RNG.randomize(getTmpPower(), Game.RAND);
+            int dmg = RNG.randomize(getTmpPower(), GameWindow.RAND);
             int dmgDone = monster.takeDamage(dmg);
         
             addEnergy(50);
@@ -37,10 +37,10 @@ public final class Ghoul extends Unit {
             int debuf = (getTmpPower() / 4);
             addBuff(new Buff(2, buf, -debuf, "Frenzy"));
 
-            int dmg1 = RNG.randomize((int)(getTmpPower() * 0.75), Game.RAND);
+            int dmg1 = RNG.randomize((int)(getTmpPower() * 0.75), GameWindow.RAND);
             int dmgDone1 = monster.takeDamage(dmg1);
 
-            int dmg2 = RNG.randomize((int)(getTmpPower() * 0.75), Game.RAND);
+            int dmg2 = RNG.randomize((int)(getTmpPower() * 0.75), GameWindow.RAND);
             int dmgDone2 = monster.takeDamage(dmg2);
 
             addEnergy(-25);
@@ -67,7 +67,7 @@ public final class Ghoul extends Unit {
             if(proc < 25){
                 scale += 0.2;
             }
-            int dmg = RNG.randomize((int)(getTmpPower() * scale), Game.RAND);
+            int dmg = RNG.randomize((int)(getTmpPower() * scale), GameWindow.RAND);
             int dmgDone = monster.takeDamage(dmg);
             heal(dmgDone);
         

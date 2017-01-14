@@ -1,6 +1,6 @@
 package game;
 
-import game.Game;
+import game.GameWindow;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -22,7 +22,7 @@ import javafx.scene.shape.Rectangle;
 
 public class CombatController implements Initializable {
     
-    private Game game;
+    private GameWindow game;
     private Combat combat;
     
     @FXML private VBox mainBox;
@@ -201,7 +201,7 @@ public class CombatController implements Initializable {
             unitDotTable.get(i).setPlaceholder(new Label("No dots!"));
         }
     }
-    public void setGame(Game game){
+    public void setGame(GameWindow game){
         this.game = game;
     }
     public void bind(){
@@ -286,6 +286,9 @@ public class CombatController implements Initializable {
         }
     }
     private void showAbilities(int i){
+        // TO DO: nie pokazywać wszystkich umiejętności
+        //Unit unit = game.getPlayer().getUnit(i);
+        // unit.getMainAbilityCost() > unit.getEnergy()
         unitContainer.get(i).getChildren().addAll(
                 btnFirstAbility.get(i),
                 btnSecondAbility.get(i),

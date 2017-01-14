@@ -5,7 +5,7 @@
  */
 package game;
 
-import game.Game;
+import game.GameWindow;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -28,7 +28,7 @@ import java.util.ArrayList;
  */
 public class MainController implements Initializable {
     
-    private Game game;
+    private GameWindow game;
     
     
     @FXML private Button btnBuildShrine;
@@ -69,18 +69,18 @@ public class MainController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
     }
-    public void setGame(Game game){
+    public void setGame(GameWindow game){
         this.game = game;
     }
     public void bind(){
         shrinesDisplay.textProperty().bind(Bindings.concat("Shrines: ").concat(game.getPlayer().getLitStringBind()).concat(" / ")
                .concat(game.getPlayer().getShrinesStringBind()).concat(", max spirits: ").concat(game.getPlayer().getSpiritsCapStringBind()));
-        btnBuildShrine.textProperty().bind(Bindings.concat("Build (").concat(Game.shrineCryCost).concat(" / ").concat(Game.shrineApCost).concat(")"));
-        btnLitShrine.textProperty().bind(Bindings.concat("Lit (").concat("0").concat(" / ").concat(Game.litCost).concat(")"));
-        btnExtShrine.textProperty().bind(Bindings.concat("Extinguish (").concat("0").concat(" / ").concat(Game.extCost).concat(")"));
-        btnSummon.textProperty().bind(Bindings.concat("Summon (").concat(Game.summonCryCost).concat(" / ").concat(Game.summonApCost).concat(")"));
+        btnBuildShrine.textProperty().bind(Bindings.concat("Build (").concat(GameWindow.shrineCryCost).concat(" / ").concat(GameWindow.shrineApCost).concat(")"));
+        btnLitShrine.textProperty().bind(Bindings.concat("Lit (").concat("0").concat(" / ").concat(GameWindow.litCost).concat(")"));
+        btnExtShrine.textProperty().bind(Bindings.concat("Extinguish (").concat("0").concat(" / ").concat(GameWindow.extCost).concat(")"));
+        btnSummon.textProperty().bind(Bindings.concat("Summon (").concat(GameWindow.summonCryCost).concat(" / ").concat(GameWindow.summonApCost).concat(")"));
         btnCemAdd.textProperty().bind(Bindings.concat("Send a spirit here (").concat("0").concat(" / ").concat("1").concat(")"));
-        btnMakeSeed.textProperty().bind(Bindings.concat("New seed (").concat("0").concat(" / ").concat(Game.seedCost).concat(")"));
+        btnMakeSeed.textProperty().bind(Bindings.concat("New seed (").concat("0").concat(" / ").concat(GameWindow.seedCost).concat(")"));
         
         cemDisplay.textProperty().bind(Bindings.concat("Spirits working: ").concat(game.getPlayer().getCementary().getFillStringBind()).concat(" / ")
                 .concat(game.getPlayer().getCementary().getCapacityStringBind())

@@ -53,21 +53,21 @@ public final class Plagueman extends Unit {
     public BattleLog ultAbility(Combat combat, Armory armory, Monster monster){
         if(!checkEnergy(100)) return null;
         addEnergy(-100);
-        
+        // więcej buffów - trucizna, więcej dotów - buff. Jesli tyle samo to buff
         if(monster.buffNumber() > monster.dotNumber()){
-            double scale = 0.2 + 0.1*monster.buffNumber();
-            if(scale > 0.6) scale = 0.6;
-            int power = -(int)(getTmpPower() * scale);
-            
-            monster.addOrRefreshBuff(new Buff(3, 0, power, buff3), false);
-            return new BattleLog(getFullName() + " used " + getUltAbilityName() + ", putting " + buff3 + " on the enemy!" );
-        }else{
-            double scale = 0.3 + 0.2*monster.dotNumber();
+            double scale = 0.3 + 0.2*monster.buffNumber();
             if(scale > 1.1) scale = 1.1;
-            int power = (int)(getTmpPower() * scale);
+            int power = -(int)(getTmpPower() * scale);
             
             monster.addOrRefreshDot(new Dot(3, power, poison3), true);
             return new BattleLog(getFullName() + " used " + getUltAbilityName() + ", putting " + poison3 + " on the enemy!" );
+        }else{
+            double scale = 0.2 + 0.1*monster.dotNumber();
+            if(scale > 0.6) scale = 0.6;
+            int power = (int)(getTmpPower() * scale);
+            
+            monster.addOrRefreshBuff(new Buff(3, 0, power, buff3), false);
+            return new BattleLog(getFullName() + " used " + getUltAbilityName() + ", putting " + buff3 + " on the enemy!" );
         }
         
     }

@@ -7,9 +7,9 @@ public final class Warrior extends Monster {
         super();
         setSpeed(60);
         
-        int power = 80 + 20*i;
-        int health = 1200 + 400*i;
-        int shield = -30 + 5*i;
+        int power = 85 + 25*i;
+        int health = 1300 + 600*i;
+        int shield = -25 + 8*i;
         
         super.power.set(power);
         super.health.set(health);
@@ -21,7 +21,7 @@ public final class Warrior extends Monster {
     public BattleLog firstAbility(Combat combat, Armory armory){
         Unit unit = targetNearest(armory);
         
-        int dmg = RNG.randomize(getTmpPower(), Game.RAND);
+        int dmg = RNG.randomize(getTmpPower(), GameWindow.RAND);
         int dmgDone = unit.takeDamage(dmg);
         
         addEnergy(20);
@@ -45,7 +45,7 @@ public final class Warrior extends Monster {
         Unit unit  = targetWeakest(armory);
         String healed = "";
         
-        int dmg = RNG.randomize(getTmpPower(), Game.RAND);
+        int dmg = RNG.randomize(getTmpPower(), GameWindow.RAND);
         int dmgDone = unit.takeDamage(dmg);
         
         if(unit.isAlive() == 0){
@@ -64,7 +64,7 @@ public final class Warrior extends Monster {
         String damageLog = "";
         for(Unit unit : armory.getUnits()){
             if(unit.isAlive() == 1){
-                int dmg = RNG.randomize(getTmpPower(), Game.RAND);
+                int dmg = RNG.randomize(getTmpPower(), GameWindow.RAND);
                 damageLog += unit.takeDamage(dmg) + ", ";
                 if(unit.isAlive() == 0) damageLog += "(fatal)";
             }

@@ -10,7 +10,7 @@ public class Lore {
             case 2:
                 return "You won against Lord Imperator!";
         }
-        return "Oops";
+        return "Game completed!";
     }
     public static String getPreCombatLore(int i){
         switch(i){
@@ -21,6 +21,6 @@ public class Lore {
             case 2:
                 return "You are about to fight Lord Imperator";
         }
-        return "Oops";
+        return "Game completed!";
     }
 }

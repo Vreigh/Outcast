@@ -144,7 +144,7 @@ public abstract class Combatable {
         
         ArrayList<Dot> dotsToRemove = new ArrayList<Dot>();
         for(Dot dot : dots){
-            int dmg = RNG.randomize(dot.getDamage(), Game.RAND);
+            int dmg = RNG.randomize(dot.getDamage(), GameWindow.RAND);
             if(dmg >= 0){
                 battleLogs.add(new BattleLog(dot.getName() + " deals " + dmg + " damage to " + getFullName()));
             }else{
