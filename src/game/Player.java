@@ -323,7 +323,7 @@ public class Player {
             addMana(-manaDec);
             manaDisplay -= manaDec;
         }else{
-            int dif = (manaDec - mana.get()) / 2;
+            int dif = (manaDec - mana.get()) / 4;
             if(dif == 0) dif = 1;
             
             manaDisplay -= mana.get();
@@ -370,6 +370,8 @@ public class Player {
                 AlertWindow.showInfo("Be careful!", "You are loosing control over your spirits!");
             }else if(spiritHunger >= 30){
                 AlertWindow.showInfo("Be careful!", "Your spirits are getting hungry!");
+            }else if((spiritHunger < 10) && (spiritHunger >= 0)){
+                AlertWindow.showInfo("", "Your spirits seem calm... for now");
             }
             
         }else AlertWindow.showInfo("u dead", "You died");

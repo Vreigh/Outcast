@@ -8,7 +8,7 @@
 
 <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="1000.0" spacing="30.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.TopMenuController">
    <children>
-      <Button maxWidth="90.0" mnemonicParsing="false" onAction="#toggleMusic" prefWidth="60.0" text="Music">
+      <Button fx:id="btnMusic" maxWidth="90.0" mnemonicParsing="false" onAction="#toggleMusic" prefWidth="60.0" text="Music">
          <HBox.margin>
             <Insets left="60.0" right="30.0" />
          </HBox.margin>

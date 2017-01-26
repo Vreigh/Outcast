@@ -35,15 +35,15 @@ public final class Plagueman extends Unit {
         return "Plague Touch";
     }
     public BattleLog secondAbility(Combat combat, Armory armory, Monster monster){
-        if(!checkEnergy(15)) return null;
-        addEnergy(-15);
+        if(!checkEnergy(25)) return null;
+        addEnergy(-25);
         
         if(monster.findBuff(buff1) != null){
             monster.removeBuff(buff1);
             monster.addDot(new Dot(3, (int)(getTmpPower() * 0.5), poison2));
             return new BattleLog(getFullName() + " used " + getSecondAbilityName() + ", removing " + buff1 + " to put " + poison2 + " on the enemy!" );
         }else{
-            monster.addBuff(new Buff(3,-(int)(getTmpPower() * 0.4),0, buff2));
+            monster.addBuff(new Buff(3,-(int)(getTmpPower() * 0.35),0, buff2));
             return new BattleLog(getFullName() + " used " + getSecondAbilityName() + ", putting " + buff2 + " on the enemy!" );
         }
     }
@@ -57,14 +57,14 @@ public final class Plagueman extends Unit {
         if(monster.buffNumber() > monster.dotNumber()){
             double scale = 0.3 + 0.2*monster.buffNumber();
             if(scale > 1.1) scale = 1.1;
-            int power = -(int)(getTmpPower() * scale);
+            int power = (int)(getTmpPower() * scale);
             
             monster.addOrRefreshDot(new Dot(3, power, poison3), true);
             return new BattleLog(getFullName() + " used " + getUltAbilityName() + ", putting " + poison3 + " on the enemy!" );
         }else{
             double scale = 0.2 + 0.1*monster.dotNumber();
             if(scale > 0.6) scale = 0.6;
-            int power = (int)(getTmpPower() * scale);
+            int power = -(int)(getTmpPower() * scale);
             
             monster.addOrRefreshBuff(new Buff(3, 0, power, buff3), false);
             return new BattleLog(getFullName() + " used " + getUltAbilityName() + ", putting " + buff3 + " on the enemy!" );

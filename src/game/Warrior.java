@@ -7,9 +7,9 @@ public final class Warrior extends Monster {
         super();
         setSpeed(60);
         
-        int power = 85 + 25*i;
-        int health = 1300 + 600*i;
-        int shield = -25 + 8*i;
+        int power = 75 + 25*i;
+        int health = 1000 + 500*i;
+        int shield = -30;
         
         super.power.set(power);
         super.health.set(health);
@@ -33,7 +33,7 @@ public final class Warrior extends Monster {
     }
     
     public BattleLog secondAbility(Combat combat, Armory armory){
-        addOrRefreshBuff(new Buff(5, 0, 45, getSecondAbilityName()), true);
+        addOrRefreshBuff(new Buff(5, 0, (int)(getTmpPower() * 0.5), getSecondAbilityName()), true);
         addEnergy(25);
         return new BattleLog(BattleLog.getSelfBuffLog(getName(), getSecondAbilityName(), getSecondAbilityName()));
     }
@@ -49,8 +49,8 @@ public final class Warrior extends Monster {
         int dmgDone = unit.takeDamage(dmg);
         
         if(unit.isAlive() == 0){
-            heal(20);
-            healed = ", healing itself for 20";
+            int healDone = -heal((int)(getTmpPower()*0.3));
+            healed = ", healing itself for " + healDone;
         }
         addEnergy(-20);
         

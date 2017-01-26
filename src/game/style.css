@@ -25,3 +25,9 @@
 .red{
     -fx-fill: red;
 }
+.musicOn{
+    -fx-background-color: green;
+}
+.musicOff{
+    -fx-background-color: grey;
+}

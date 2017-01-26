@@ -35,6 +35,7 @@ public class TopMenuController implements Initializable {
     @FXML private Label cryDisplay;
     @FXML private Label roundDisplay;
     @FXML private Label apDisplay;
+    @FXML private Button btnMusic;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -50,9 +51,19 @@ public class TopMenuController implements Initializable {
         cryDisplay.textProperty().bind(Bindings.concat("Crystals: ", game.getPlayer().getCrystalsStringBind()));
         roundDisplay.textProperty().bind(Bindings.concat("Round: ", game.getRoundProperty().asString()));
         apDisplay.textProperty().bind(Bindings.concat("Ap: ", game.getPlayer().getApStringBind(), " / ", game.getPlayer().getMaxApStringBind()));
+        
+        btnMusic.getStyleClass().add("musicOn");
     }
     public void toggleMusic(){
         game.toggleMusic();
+        if(game.getMusic()){
+            btnMusic.getStyleClass().remove("musicOff");
+            btnMusic.getStyleClass().add("musicOn");
+        }
+        else{
+            btnMusic.getStyleClass().remove("musicOn");
+            btnMusic.getStyleClass().add("musicOff");
+        }
     }
     
 }

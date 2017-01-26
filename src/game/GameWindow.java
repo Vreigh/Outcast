@@ -37,11 +37,11 @@ import javafx.scene.media.MediaPlayer.Status;
 public class GameWindow extends Application {
     
     public static final int shrineCryCost = 100;
-    public static final int shrineApCost = 5;
+    public static final int shrineApCost = 10;
     public static final int extRage = 40;
     public static final int manaIncome = 5;
     public static final int rageDecay = 10;
-    public static final int rageIncome = 20;
+    public static final int rageIncome = 15;
     
     public static final int extCost = 5;
     public static final int litCost = 5;
@@ -93,6 +93,8 @@ public class GameWindow extends Application {
     
     private MediaPlayer nMediaP;
     private MediaPlayer cMediaP;
+    
+    private boolean music = true;
     
     @Override
     public void start(Stage stage) throws Exception {
@@ -177,9 +179,17 @@ public class GameWindow extends Application {
         MediaPlayer player = nMediaP;
         if(isCombat) player = cMediaP;
         
-        boolean playing = player.getStatus().equals(Status.PLAYING);
-        if(playing) player.pause();
-        else player.play();
+        if(music){
+            player.pause();
+            music = false;
+        }
+        else{
+            player.play();
+            music = true;
+        }
+    }
+    public boolean getMusic(){
+        return music;
     }
     public void switchView(int i){
         switch(i){
@@ -249,6 +259,7 @@ public class GameWindow extends Application {
             
             nMediaP.stop();
             cMediaP.play();
+            if(!music) cMediaP.pause();
             
             layout.setCenter(combatView);
             combatController.bind();
@@ -272,7 +283,10 @@ public class GameWindow extends Application {
         isCombat = false;
         layout.setCenter(nonCombatView);
         nonCombatController.bind();
+        
         nMediaP.play();
+        if(!music) nMediaP.pause();
+        
         player.combatWon(this);
     }
     private void combatLost(){ // TO DO

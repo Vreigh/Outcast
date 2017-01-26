@@ -33,7 +33,7 @@ public final class Butcher extends Unit {
         int j = AlertWindow.getTarget(armory, armory.getUnits(), null);
         if((j == -1) || (i == j)) return null;
         
-        int dur1 = 1; int dur2 = 1;
+        int dur1 = 2; int dur2 = 2;
         if(i == getPosition()) dur1++;
         if(j == getPosition()) dur2++;
         Unit target1 = armory.get(i);
@@ -57,17 +57,17 @@ public final class Butcher extends Unit {
         addEnergy(-100);
         
         if(i == 5){
-            int dmgDone = monster.takeDamage(RNG.randomize((int)(getTmpPower() * 1.0), GameWindow.RAND));
-            monster.addOrRefreshDot(new Dot(2, (int)(getTmpPower() * 1.0), getUltAbilityName()), true);
-            monster.addOrRefreshBuff(new Buff(2, (int)(getTmpPower() * 1.0),0, getUltAbilityName()), false);
+            int dmgDone = monster.takeDamage(RNG.randomize((int)(getTmpPower() * 1.5), GameWindow.RAND));
+            monster.addOrRefreshDot(new Dot(2, (int)(getTmpPower() * 1.5), getUltAbilityName()), true);
+            monster.addOrRefreshBuff(new Buff(2, (int)(getTmpPower() * 1.5),0, getUltAbilityName()), false);
             return new BattleLog(BattleLog.getUnitDmgLog(getFullName(), getUltAbilityName(), dmgDone) + " and putting " + getUltAbilityName() + " on it!");
         }else{
             int dur = 2;
             if(i == getPosition()) dur++;
             Unit target = armory.get(i);
-            int heal = -target.heal(RNG.randomize((int)(getTmpPower() * 1.0), GameWindow.RAND));
-            target.addOrRefreshDot(new Dot(2, (int)(getTmpPower() * 1.0), getUltAbilityName()), false);
-            target.addOrRefreshBuff(new Buff(dur, (int)(getTmpPower() * 1.0),0, getUltAbilityName()), true);
+            int heal = -target.heal(RNG.randomize((int)(getTmpPower() * 1.5), GameWindow.RAND));
+            target.addOrRefreshDot(new Dot(2, (int)(getTmpPower() * 1.5), getUltAbilityName()), false);
+            target.addOrRefreshBuff(new Buff(dur, (int)(getTmpPower() * 1.5),0, getUltAbilityName()), true);
             return new BattleLog(getFullName() + " used " + getUltAbilityName() + " healing " + target.getFullName() + " for " + heal + " and putting " + getUltAbilityName() + " on it!");
         }
     }

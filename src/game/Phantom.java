@@ -43,7 +43,7 @@ public final class Phantom extends Unit {
             }
             
             target1.addBuff(new Buff(debDur, -debVal, 0, "Soul Down"));
-            target2.addOrRefreshBuff(new Buff(bufDur, (int)(debVal * 2), 0, "Soul Up"), true);
+            target2.addOrRefreshBuff(new Buff(bufDur, (int)(debVal * 1.75), 0, "Soul Up"), true);
             
             addEnergy(50);
             
@@ -51,7 +51,7 @@ public final class Phantom extends Unit {
         }
     }
     public String getMainAbilityName(){
-        return "Power Shift";
+        return "Preparation";
     }
     public BattleLog secondAbility(Combat combat, Armory armory, Monster monster){
         if(!checkEnergy(40)) return null;
@@ -68,10 +68,10 @@ public final class Phantom extends Unit {
     public BattleLog ultAbility(Combat combat, Armory armory, Monster monster){
         if(!checkEnergy(100)) return null;
         for(Unit unit : armory.getUnits()){
-            if(unit.isAlive() == 1) unit.takeRealDamage(RNG.randomize((int)(getTmpPower() * 0.25), GameWindow.RAND));
+            if(unit.isAlive() == 1) unit.takeRealDamage(RNG.randomize((int)(getTmpPower() * 0.3), GameWindow.RAND));
         }
         for(Unit unit : armory.getUnits()){
-            if(unit.isAlive() == 1) unit.addOrRefreshBuff(new Buff(3, (int)(getTmpPower() * 0.9), 0, getUltAbilityName()), true);
+            if(unit.isAlive() == 1) unit.addOrRefreshBuff(new Buff(2, (int)(getTmpPower() * 0.5), 0, getUltAbilityName()), true);
         }
         findBuff(getUltAbilityName()).increaseTime();
         addEnergy(-100);

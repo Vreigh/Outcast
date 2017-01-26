@@ -152,15 +152,6 @@ public class CombatController implements Initializable {
             
             showBox.get(i).getChildren().addAll(btnShowBuffs.get(i), btnShowDots.get(i));
             
-            unitContainer.get(i).getChildren().addAll(
-                    unitName.get(i),
-                    powerLabel.get(i),
-                    shieldLabel.get(i),
-                    healthPane.get(i),
-                    energyLabel.get(i),
-                    showBox.get(i)
-            );
-            
             unitsContainer.getChildren().add(unitContainer.get(i));
             
             TableColumn<Buff, Integer> powerColumn = new TableColumn<Buff, Integer>("Power");
@@ -218,6 +209,17 @@ public class CombatController implements Initializable {
         
         for(int i=0; i<5; i++){
             Unit unit = game.getPlayer().getUnit(i);
+            
+            unitContainer.get(i).getChildren().clear();
+            unitContainer.get(i).getChildren().addAll(
+                    unitName.get(i),
+                    powerLabel.get(i),
+                    shieldLabel.get(i),
+                    healthPane.get(i),
+                    energyLabel.get(i),
+                    showBox.get(i)
+            );
+            
             if( unit != null ){
                 unitName.get(i).setText(unit.getName());
                 healthLabel.get(i).textProperty().bind(Bindings.concat("Hp: ", unit.getTmpHealthStringBind(), " / ", unit.getHealthStringBind()));

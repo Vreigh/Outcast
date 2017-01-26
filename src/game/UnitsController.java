@@ -175,13 +175,23 @@ public class UnitsController implements Initializable {
     }
     
     public void upPower(int i){
-        game.getPlayer().upPower(i);
+        int cost = game.getPlayer().getUnit(i).getPowerCost();
+        boolean sure = AlertWindow.confirmBox("Upgrading unit", "Upgrading this stat will cost: " + cost + " crystals and " 
+                + GameWindow.upgradeUnitApCost + " ap. Are you sure?", "Upgrade" );
+        if(sure) game.getPlayer().upPower(i);
+        
     }
     public void upShield(int i){
-        game.getPlayer().upShield(i);
+        int cost = game.getPlayer().getUnit(i).getShieldCost();
+        boolean sure = AlertWindow.confirmBox("Upgrading unit", "Upgrading this stat will cost: " + cost + " crystals and " 
+                + GameWindow.upgradeUnitApCost + " ap. Are you sure?", "Upgrade" );
+        if(sure) game.getPlayer().upShield(i);
     }
     public void upHealth(int i){
-        game.getPlayer().upHealth(i);
+        int cost = game.getPlayer().getUnit(i).getHealthCost();
+        boolean sure = AlertWindow.confirmBox("Upgrading unit", "Upgrading this stat will cost: " + cost + " crystals and " 
+                + GameWindow.upgradeUnitApCost + " ap. Are you sure?", "Upgrade" );
+        if(sure) game.getPlayer().upHealth(i);
     }
     
     public void swapLeft(int i){
