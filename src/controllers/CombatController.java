@@ -1,6 +1,14 @@
-package game;
+package controllers;
 
+import game.Buff;
+import game.Combat;
+import game.Dot;
+import helpers.BattleLog;
+import helpers.AlertWindow;
 import game.GameWindow;
+import game.GameWindow;
+import game.Monster;
+import game.Unit;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;

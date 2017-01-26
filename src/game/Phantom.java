@@ -1,4 +1,7 @@
 package game;
+import helpers.BattleLog;
+import helpers.RNG;
+import helpers.AlertWindow;
 import java.util.ArrayList;
 
 public final class Phantom extends Unit {

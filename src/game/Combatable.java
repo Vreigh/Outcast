@@ -1,4 +1,6 @@
 package game;
+import helpers.BattleLog;
+import helpers.RNG;
 import java.util.ArrayList;
 import java.util.Random;
 import javafx.beans.property.*;

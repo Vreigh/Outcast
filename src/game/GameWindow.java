@@ -5,6 +5,15 @@
  */
 package game;
 
+import controllers.UnitsController;
+import controllers.MainController;
+import controllers.UpgradesController;
+import controllers.NonCombatController;
+import controllers.CombatController;
+import controllers.TopMenuController;
+import controllers.LeftMenuController;
+import helpers.Log;
+import helpers.AlertWindow;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -112,42 +121,42 @@ public class GameWindow extends Application {
         cMediaP.setVolume(0.15);
         cMediaP.setCycleCount(MediaPlayer.INDEFINITE);
         
-        FXMLLoader leftLoader = new FXMLLoader(getClass().getResource("leftMenu.fxml"));
+        FXMLLoader leftLoader = new FXMLLoader(getClass().getResource("/views/leftMenu.fxml"));
         leftMenu = (VBox) leftLoader.load();
         leftMenuController = leftLoader.<LeftMenuController>getController();
         leftMenuController.setGame(this);
         
-        FXMLLoader topLoader = new FXMLLoader(getClass().getResource("topMenu.fxml")); 
+        FXMLLoader topLoader = new FXMLLoader(getClass().getResource("/views/topMenu.fxml")); 
         topMenu = (HBox) topLoader.load();
         topMenuController = topLoader.<TopMenuController>getController();
         topMenuController.setGame(this);
         topMenuController.bind();
         
-        FXMLLoader mainLoader = new FXMLLoader(getClass().getResource("mainView.fxml"));
+        FXMLLoader mainLoader = new FXMLLoader(getClass().getResource("/views/mainView.fxml"));
         mainView = (VBox) mainLoader.load();
         mainController = mainLoader.<MainController>getController();
         mainController.setGame(this);
         mainController.bind();
         
-        FXMLLoader upgradesLoader = new FXMLLoader(getClass().getResource("upgradesView.fxml"));
+        FXMLLoader upgradesLoader = new FXMLLoader(getClass().getResource("/views/upgradesView.fxml"));
         upgradesView = (VBox) upgradesLoader.load();
         upgradesController = upgradesLoader.<UpgradesController>getController();
         upgradesController.setGame(this);
         upgradesController.bind();
         
-        FXMLLoader unitsLoader = new FXMLLoader(getClass().getResource("unitsView.fxml"));
+        FXMLLoader unitsLoader = new FXMLLoader(getClass().getResource("/views/unitsView.fxml"));
         unitsView = (VBox) unitsLoader.load();
         unitsController = unitsLoader.<UnitsController>getController();
         unitsController.setGame(this);
         unitsController.bind();
         
-        FXMLLoader nonCombatLoader = new FXMLLoader(getClass().getResource("nonCombatView.fxml"));
+        FXMLLoader nonCombatLoader = new FXMLLoader(getClass().getResource("/views/nonCombatView.fxml"));
         nonCombatView = (VBox) nonCombatLoader.load();
         nonCombatController = nonCombatLoader.<NonCombatController>getController();
         nonCombatController.setGame(this);
         nonCombatController.bind();
         
-        FXMLLoader combatLoader = new FXMLLoader(getClass().getResource("combatView.fxml"));
+        FXMLLoader combatLoader = new FXMLLoader(getClass().getResource("/views/combatView.fxml"));
         combatView = (VBox) combatLoader.load();
         combatController = combatLoader.<CombatController>getController();
         combatController.setGame(this);

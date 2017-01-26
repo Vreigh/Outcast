@@ -1,4 +1,5 @@
 package game;
+import helpers.Log;
 import javafx.beans.property.*;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.StringBinding;

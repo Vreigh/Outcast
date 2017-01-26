@@ -1,4 +1,6 @@
-package game;
+package helpers;
+
+import game.Unit;
 
 public class BattleLog {
     private String content;

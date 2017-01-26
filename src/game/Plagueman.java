@@ -1,4 +1,5 @@
 package game;
+import helpers.BattleLog;
 import java.util.ArrayList;
 
 public final class Plagueman extends Unit {

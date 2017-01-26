@@ -1,5 +1,10 @@
-package game;
+package helpers;
 
+import game.Armory;
+import game.Buff;
+import game.Dot;
+import game.Monster;
+import game.Unit;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
