@@ -201,42 +201,16 @@ public class GameWindow extends Application {
         return music;
     }
     public void switchView(int i){
-        switch(i){
-            case 0:
-                if(!isCombat){
-                    layout.setCenter(mainView);
-                }else{
-                    AlertWindow.showInfo("You are in combat!", "You have to finish your combat first!");
-                }
-                break;
-            case 1:
-                if(!isCombat){
-                    layout.setCenter(upgradesView);
-                }else{
-                    AlertWindow.showInfo("You are in combat!", "You have to finish your combat first!");
-                }
-                break;
-            case 2:
-                if(!isCombat){
-                    layout.setCenter(unitsView);
-                }else{
-                    AlertWindow.showInfo("You are in combat!", "You have to finish your combat first!");
-                }
-                break;
-            case 3:
-                if(!isCombat){
-                    layout.setCenter(table);
-                }else{
-                    AlertWindow.showInfo("You are in combat!", "You have to finish your combat first!");
-                }
-                break;
-            case 4:
-                if(!isCombat){
-                    layout.setCenter(nonCombatView);
-                }else{
-                    //
-                }
-                break;
+        if(isCombat){
+            AlertWindow.showInfo("You are in combat!", "You have to finish your combat first!");
+        }else{
+            switch(i){
+                case 0: layout.setCenter(mainView); break;
+                case 1: layout.setCenter(upgradesView); break;
+                case 2: layout.setCenter(unitsView); break;
+                case 3: layout.setCenter(table); break;
+                case 4: layout.setCenter(nonCombatView);break;
+            }
         }
     }
     public static void main(String[] args) {
