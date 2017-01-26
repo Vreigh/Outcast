@@ -6,7 +6,7 @@
 package controllers;
 
 import game.GameWindow;
-import game.Lore;
+import helpers.Lore;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;

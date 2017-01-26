@@ -1,4 +1,5 @@
 package game;
+import helpers.Lore;
 import helpers.Log;
 import helpers.RNG;
 import helpers.AlertWindow;
@@ -71,7 +72,7 @@ public class Player {
         cementary.getCapacityProperty().bind(upgrades.get(3).getLvlProperty().multiply(Upgrade.cemCap).add(Cementary.baseCapacity));
         cementary.getSingleOutputProperty().bind(upgrades.get(2).getLvlProperty().multiply(Upgrade.cryIncome).add(Cementary.baseOutput));
         
-        logs.add(new Log(0, "You have begun your journey or some shit")); 
+        logs.add(new Log(0, "You have begun Your quest")); 
     }
     // gettery
     public StringBinding getSanityStringBind(){

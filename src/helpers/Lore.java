@@ -1,4 +1,4 @@
-package game;
+package helpers;
 
 public class Lore {
     public static String getCombatWonLore(int i){

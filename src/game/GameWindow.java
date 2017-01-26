@@ -260,6 +260,7 @@ public class GameWindow extends Application {
     public void endTurn(){
         round.set(round.get() + 1);
         player.endTurn(round.get() - 1);
+        nonCombatController.bind();
     }
     public void startCombat(){
         if(player.getUnitsSize() > 0){
@@ -291,7 +292,6 @@ public class GameWindow extends Application {
     private void combatWon(){
         isCombat = false;
         layout.setCenter(nonCombatView);
-        nonCombatController.bind();
         
         nMediaP.play();
         if(!music) nMediaP.pause();
